@@ -1,5 +1,8 @@
 import "./App.css";
 import React, { Component } from "react";
+import { Router } from "@reach/router";
+import ErrorHandling from "./Components/Error-handling";
+import { UserContext } from "../src/Contexts/User";
 
 class App extends Component {
   state = {
@@ -21,13 +24,9 @@ class App extends Component {
         value={{ loggedInUser, login: this.login, logout: this.logout }}
       >
         <div className="App">
-          <Nav-bar />
-          <Router>
-            <ErrorHandling
-              default
-              errorMsg="This isn't the page you're looking for..."
-            />
-          </Router>
+          {/* <Router>
+            <ErrorHandling default errorMsg="ERROR" />
+          </Router> */}
         </div>
       </UserContext.Provider>
     );
