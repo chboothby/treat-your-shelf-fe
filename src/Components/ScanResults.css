@@ -1,0 +1,23 @@
+.scan-results {
+  text-align: center;
+  margin: 4%;
+}
+
+.book-card {
+  border: dotted black 0.5px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  margin: 2%;
+  text-align: center;
+}
+
+.book-info {
+  padding: 1%;
+  width: 100%;
+  background: rgba(128, 128, 128, 0.603);
+}
+
+.book-card img {
+  min-width: 30%;
+}

@@ -1,0 +1,26 @@
+.search-results-container {
+  border: solid;
+}
+
+.results-list {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  text-align: center;
+}
+
+.results-list .book {
+  border: solid grey 0.5px;
+  border-radius: 4px;
+  margin: 1%;
+  padding: 2%;
+  transition: background 0.5s;
+}
+
+.results-list .book:hover {
+  background: rgb(206, 205, 205);
+}
+
+.search-form {
+  display: flex;
+  flex-direction: column;
+}

@@ -1,6 +1,17 @@
 import "./App.css";
 import React, { Component } from "react";
 
+import Header from "./Components/Header";
+import Bookshelf from "./Components/Bookshelf";
+import SimpleBottomNavigation from "./Components/SimpleBottomNavigation";
+import { Router } from "@reach/router";
+import Scanner from "./Components/Scanner";
+import BookDetails from "./Components/BookDetails";
+import Messages from "./Components/Messages";
+import Search from "./Components/Search";
+import Help from "./Components/Help";
+import Account from "./Components/Account";
+
 class App extends Component {
   state = {
     loggedInUser: null,
@@ -17,19 +28,33 @@ class App extends Component {
   render() {
     const { loggedInUser } = this.state;
     return (
-      <UserContext.Provider
-        value={{ loggedInUser, login: this.login, logout: this.logout }}
-      >
-        <div className="App">
-          <Nav-bar />
-          <Router>
-            <ErrorHandling
-              default
-              errorMsg="This isn't the page you're looking for..."
-            />
-          </Router>
-        </div>
-      </UserContext.Provider>
+      <div className="App">
+        <Header></Header>
+        <Router primary={false}>
+          <Bookshelf path="/"></Bookshelf>
+          <Scanner path="/scan"></Scanner>
+          <BookDetails path="/book"></BookDetails>
+          <Messages path="/messages"></Messages>
+          <Search path="/search"></Search>
+          <Help path="/help"></Help>
+          <Account path="/account"></Account>
+        </Router>
+        <SimpleBottomNavigation></SimpleBottomNavigation>
+
+        {/* // <UserContext.Provider
+        //   value={{ loggedInUser, login: this.login, logout: this.logout }}
+        // >
+        //   <div className="App">
+        //     <Nav-bar />
+        //     <Router>
+        //       <ErrorHandling
+        //         default
+        //         errorMsg="This isn't the page you're looking for..."
+        //       />
+        //     </Router>
+        //   </div>
+        // </UserContext.Provider> */}
+      </div>
     );
   }
 }
