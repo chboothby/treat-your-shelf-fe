@@ -1,5 +1,13 @@
 import "./App.css";
 import React, { Component } from "react";
+// import ErrorHandling from "./Components/ErrorHandling";
+import { AuthProvider } from "./Contexts/UserAuth";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import LogIn from "./Components/LogIn";
+import SignUp from "./Components/SignUp";
+import Bookshelf from "./Components/Bookshelf";
+import PrivateRoute from "./Components/PrivateRoute";
+import ForgotPassword from "./Components/ForgotPassword";
 
 import Header from "./Components/Header";
 import Bookshelf from "./Components/Bookshelf";
@@ -18,20 +26,26 @@ class App extends Component {
     loggedInUser: null,
   };
 
-  login = (user) => {
-    this.setState({ loggedInUser: user });
-  };
-
-  logout = () => {
-    this.setState({ loggedInUser: null });
-  };
 
   render() {
     const { loggedInUser } = this.state;
+
+
     return (
+      
       <div className="App">
         {/* <Header></Header> */}
-        <ButtonAppBar></ButtonAppBar>
+        
+
+       
+        <Router>
+          <AuthProvider>
+            <Switch>
+              <PrivateRoute exact path="/" component={Bookshelf} />
+              <Route path="/signup" component={SignUp} />
+              <Route path="/login" component={LogIn} />
+              <Route path="/forgot-password" component={ForgotPassword} />
+      <ButtonAppBar></ButtonAppBar>
         <Router primary={false}>
           <Bookshelf path="/"></Bookshelf>
           <Scanner path="/scan"></Scanner>
@@ -42,20 +56,10 @@ class App extends Component {
           <Account path="/account"></Account>
         </Router>
         <SimpleBottomNavigation></SimpleBottomNavigation>
+            </Switch>
+          </AuthProvider>
+        </Router>
 
-        {/* // <UserContext.Provider
-        //   value={{ loggedInUser, login: this.login, logout: this.logout }}
-        // >
-        //   <div className="App">
-        //     <Nav-bar />
-        //     <Router>
-        //       <ErrorHandling
-        //         default
-        //         errorMsg="This isn't the page you're looking for..."
-        //       />
-        //     </Router>
-        //   </div>
-        // </UserContext.Provider> */}
       </div>
     );
   }
