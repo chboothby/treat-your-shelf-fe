@@ -5,7 +5,6 @@ import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 import MenuBookIcon from "@material-ui/icons/MenuBook";
 import SearchIcon from "@material-ui/icons/Search";
 import ChatIcon from "@material-ui/icons/Chat";
-import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import { Link } from "@reach/router";
 
@@ -49,7 +48,7 @@ export default function SimpleBottomNavigation() {
         label="Messages"
         icon={<ChatIcon />}
       />
-      <BottomNavigationAction
+      {/* <BottomNavigationAction
         component={Link}
         to="/help"
         label="Help"
@@ -60,7 +59,7 @@ export default function SimpleBottomNavigation() {
         to="/account"
         label="Account"
         icon={<AccountBoxIcon />}
-      />
+      /> */}
     </BottomNavigation>
   );
 }

@@ -11,6 +11,7 @@ import Messages from "./Components/Messages";
 import Search from "./Components/Search";
 import Help from "./Components/Help";
 import Account from "./Components/Account";
+import ButtonAppBar from "./Components/ButtonAppBar";
 
 class App extends Component {
   state = {
@@ -29,7 +30,8 @@ class App extends Component {
     const { loggedInUser } = this.state;
     return (
       <div className="App">
-        <Header></Header>
+        {/* <Header></Header> */}
+        <ButtonAppBar></ButtonAppBar>
         <Router primary={false}>
           <Bookshelf path="/"></Bookshelf>
           <Scanner path="/scan"></Scanner>
