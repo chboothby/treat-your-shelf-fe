@@ -31,13 +31,13 @@ class App extends Component {
 
         <Router>
           <AuthProvider>
+            <ButtonAppBar></ButtonAppBar>
             <Switch>
               <PrivateRoute exact path="/" component={Bookshelf} />
               <Route path="/signup" component={SignUp} />
               <Route path="/login" component={LogIn} />
               <Route path="/forgot-password" component={ForgotPassword} />
 
-              <ButtonAppBar />
               <Router primary={false}>
                 <Route path="/messages" component={Messages} />
                 <Route path="/scan" component={Scanner} />
@@ -46,8 +46,8 @@ class App extends Component {
                 <Route path="/help" component={Help} />
                 <Route path="/account" component={Account} />
               </Router>
-              <SimpleBottomNavigation></SimpleBottomNavigation>
             </Switch>
+            <SimpleBottomNavigation></SimpleBottomNavigation>
           </AuthProvider>
         </Router>
       </div>

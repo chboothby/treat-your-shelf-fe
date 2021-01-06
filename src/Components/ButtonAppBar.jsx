@@ -5,7 +5,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import { Link } from "@reach/router";
+import { Link } from "react-router-dom";
 import { HelpOutline } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({

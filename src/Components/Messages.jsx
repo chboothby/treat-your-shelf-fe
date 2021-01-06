@@ -7,7 +7,6 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { Button, TextField } from "@material-ui/core";
 import "./Messages.css";
-import { CodeSharp } from "@material-ui/icons";
 
 const dbConfig = {
   apiKey: "AIzaSyDHXh0FlBcSAOQo-BT7Zz5bT9GGmNyNDuI",
@@ -35,26 +34,31 @@ function Messages() {
 }
 
 function ChatRoom() {
-  const messagesRef = firestore
+  const getMessagesRef = firestore
     .collection("chats")
     .doc("UbnOvg12YVKQ7a5Ol8KB") //
-    .collection("messages");
+    .collection("messages")
+    .orderBy("time");
 
   const [formValue, setFormValue] = useState("");
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
-  const noMessages = messages.length === 0;
 
   useEffect(() => {
-    messagesRef.onSnapshot((querySnapshot) => {
+    getMessagesRef.onSnapshot((querySnapshot) => {
       const items = [];
       querySnapshot.forEach((doc) => {
         items.push(doc.data());
-        setLoading(false);
       });
+      setLoading(false);
       setMessages(items);
     });
   }, []);
+
+  const messagesRef = firestore
+    .collection("chats")
+    .doc("UbnOvg12YVKQ7a5Ol8KB") //
+    .collection("messages");
 
   const sendMessage = async (event) => {
     event.preventDefault();
@@ -68,6 +72,7 @@ function ChatRoom() {
 
     setFormValue("");
   };
+
   return (
     <div className="messages">
       {loading ? (
@@ -75,10 +80,11 @@ function ChatRoom() {
       ) : (
         <div className="message-content-container">
           {messages.map((message) => {
+            // const time = message.time.toDate().toString();
             return (
               <div className="message-content">
                 <p>Message: {message.message}</p>
-                <p>{message.time.toDate().toString()}</p>
+                {/* <p>{time}</p> >>> getting an error  */}
               </div>
             );
           })}
