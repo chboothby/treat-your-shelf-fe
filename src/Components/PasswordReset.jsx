@@ -14,7 +14,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Alert from "@material-ui/lab/Alert";
 import { useAuth } from "../Contexts/UserAuth";
-import { useHistory } from "react-router-dom";
 
 function Copyright() {
   return (
@@ -55,29 +54,30 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#1A5AFF",
   },
   link: {
+    margin: theme.spacing(0),
     color: "#1A5AFF",
   },
 }));
 
-export default function ForgotPassword() {
+export default function PasswordReset() {
   const classes = useStyles();
   const emailRef = useRef();
-  const passwordRef = useRef();
-  const { logIn, currentUser } = useAuth();
+  const { resetPassword } = useAuth();
   const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-  const history = useHistory();
 
   async function handleSubmit(e) {
     e.preventDefault();
 
     try {
+      setMessage("");
       setError("");
       setLoading(true);
-      //await logIn(emailRef.current.value, passwordRef.current.value);
-      history.push("/");
+      await resetPassword(emailRef.current.value);
+      setMessage("Check your inbox for further instructions");
     } catch {
-      setError("Log in failed");
+      setError("Password reset failed");
     }
 
     setLoading(false);
@@ -90,14 +90,14 @@ export default function ForgotPassword() {
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" variant="h4">
           Password Reset
         </Typography>
 
-        <form className={classes.form} noValidate>
+        <form className={classes.form} onSubmit={handleSubmit} noValidate>
           <Grid item xs={12}>
-            {currentUser && currentUser.email}
             {error && <Alert severity="error">{error}</Alert>}
+            {message && <Alert severity="success">{message}</Alert>}
           </Grid>
           <Grid item xs={12}>
             <TextField
@@ -121,13 +121,13 @@ export default function ForgotPassword() {
           >
             Reset Password
           </Button>
-          <Grid container>
-            <Grid item xs={0} spacing={2}>
-              <Link href="/login" variant="body2" className={classes.link}>
-                Go to Log In
-              </Link>
-            </Grid>
-            <Grid item xs={0}>
+          <Grid container justify="center">
+            <Link href="/login" variant="body1" className={classes.link}>
+              Log In
+            </Link>
+          </Grid>
+          <Grid container justify="center">
+            <Grid item>
               Don't have an account?{" "}
               <Link
                 type="link"
