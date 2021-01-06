@@ -1,8 +1,13 @@
 import "./App.css";
 import React, { Component } from "react";
-import { Router } from "@reach/router";
-import ErrorHandling from "./Components/Error-handling";
-import { UserContext } from "../src/Contexts/User";
+// import ErrorHandling from "./Components/ErrorHandling";
+import { AuthProvider } from "./Contexts/UserAuth";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import LogIn from "./Components/LogIn";
+import SignUp from "./Components/SignUp";
+import Bookshelf from "./Components/Bookshelf";
+import PrivateRoute from "./Components/PrivateRoute";
+import ForgotPassword from "./Components/ForgotPassword";
 
 class App extends Component {
   state = {
@@ -19,16 +24,24 @@ class App extends Component {
 
   render() {
     const { loggedInUser } = this.state;
+
+    {
+      /* value={{ loggedInUser, login: this.login, logout: this.logout }} */
+    }
+
     return (
-      <UserContext.Provider
-        value={{ loggedInUser, login: this.login, logout: this.logout }}
-      >
-        <div className="App">
-          {/* <Router>
-            <ErrorHandling default errorMsg="ERROR" />
-          </Router> */}
-        </div>
-      </UserContext.Provider>
+      <div className="App">
+        <Router>
+          <AuthProvider>
+            <Switch>
+              <PrivateRoute exact path="/" component={Bookshelf} />
+              <Route path="/signup" component={SignUp} />
+              <Route path="/login" component={LogIn} />
+              <Route path="/forgot-password" component={ForgotPassword} />
+            </Switch>
+          </AuthProvider>
+        </Router>
+      </div>
     );
   }
 }
