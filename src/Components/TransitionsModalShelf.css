@@ -1,0 +1,8 @@
+.modal-content {
+  display: flex;
+}
+
+.modal-buttons {
+  display: flex;
+  flex-direction: column;
+}

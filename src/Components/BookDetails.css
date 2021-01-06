@@ -1,0 +1,50 @@
+.book-details {
+  margin: 4%;
+  display: flex;
+  flex-direction: column;
+}
+
+.single-book-header {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  border-bottom: dotted rgba(128, 128, 128, 0.486) 0.25px;
+}
+
+.single-book-header img {
+  width: 60%;
+}
+
+.single-book-info {
+  background: rgba(128, 128, 128, 0.301);
+  width: 40%;
+  height: fit-content;
+  text-align: center;
+  border-radius: 4px;
+}
+
+.single-book-description {
+  background: rgba(128, 128, 128, 0.301);
+  margin-top: 6%;
+  padding: 1%;
+  border-radius: 4px;
+}
+
+.owner-card {
+  padding: 2%;
+  background: rgba(128, 128, 128, 0.301);
+  border: solid rgb(179, 179, 179) 0.5px;
+  margin: 10%;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 4px;
+}
+
+.owner-card img {
+  border: dotted rgba(128, 128, 128, 0.486) 0.25px;
+  border-radius: 4px;
+}
+
+.owner-info {
+  text-align: center;
+}
