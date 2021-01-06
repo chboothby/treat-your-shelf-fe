@@ -59,10 +59,12 @@ function ChatRoom() {
   const sendMessage = async (event) => {
     event.preventDefault();
 
-    await messagesRef.add({
-      message: formValue,
-      time: firebase.firestore.FieldValue.serverTimestamp(),
-    });
+    await messagesRef
+      .add({
+        message: formValue,
+        time: firebase.firestore.FieldValue.serverTimestamp(),
+      })
+      .catch();
 
     setFormValue("");
   };

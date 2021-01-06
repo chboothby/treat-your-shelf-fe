@@ -1,11 +1,11 @@
-
 import React, { Component } from "react";
 import bookplaceholder from "../bookplaceholder.jpg";
 import "./Bookshelf.css";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import IconButton from "@material-ui/core/IconButton";
-import { Link } from "@reach/router";
+import { Link } from "react-router-dom";
 import TransitionsModalShelf from "./TransitionsModalShelf";
+import ButtonAppBar from "../Components/ButtonAppBar";
 
 class Bookshelf extends Component {
   state = {
@@ -27,36 +27,36 @@ class Bookshelf extends Component {
     const { books } = this.state;
 
     return (
-      <div className="bookshelf-container">
-        <div className="bookshelf-header">
-          <h3>Users bookshelf </h3>
+      <>
+        <div className="bookshelf-container">
+          <div className="bookshelf-header">
+            <h3>Users bookshelf </h3>
 
-          <Link to="/scan">
-            <IconButton>
-              <AddCircleOutlineIcon
-                style={{ fontSize: "36px" }}
-                className="add-icon"
-              ></AddCircleOutlineIcon>
-            </IconButton>
-          </Link>
-        </div>
+            <Link to="/scan">
+              <IconButton>
+                <AddCircleOutlineIcon
+                  style={{ fontSize: "36px" }}
+                  className="add-icon"
+                ></AddCircleOutlineIcon>
+              </IconButton>
+            </Link>
+          </div>
 
-        <div className="book-grid">
-          {books.map((book) => {
-            return (
-              <div className="book-list-card">
-                <img alt="book" src={book.image}></img>
-                <p>{book.title}</p>
-                <TransitionsModalShelf book={book}></TransitionsModalShelf>
-              </div>
-            );
-          })}
+          <div className="book-grid">
+            {books.map((book) => {
+              return (
+                <div className="book-list-card">
+                  <img alt="book" src={book.image}></img>
+                  <p>{book.title}</p>
+                  <TransitionsModalShelf book={book}></TransitionsModalShelf>
+                </div>
+              );
+            })}
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 }
 
 export default Bookshelf;
-
-

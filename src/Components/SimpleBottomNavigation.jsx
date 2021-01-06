@@ -5,8 +5,7 @@ import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 import MenuBookIcon from "@material-ui/icons/MenuBook";
 import SearchIcon from "@material-ui/icons/Search";
 import ChatIcon from "@material-ui/icons/Chat";
-import AccountBoxIcon from "@material-ui/icons/AccountBox";
-import { Link } from "@reach/router";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({
   root: {

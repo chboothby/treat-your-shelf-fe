@@ -5,14 +5,10 @@ import { AuthProvider } from "./Contexts/UserAuth";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import LogIn from "./Components/LogIn";
 import SignUp from "./Components/SignUp";
-import Bookshelf from "./Components/Bookshelf";
 import PrivateRoute from "./Components/PrivateRoute";
 import ForgotPassword from "./Components/ForgotPassword";
-
-import Header from "./Components/Header";
 import Bookshelf from "./Components/Bookshelf";
 import SimpleBottomNavigation from "./Components/SimpleBottomNavigation";
-import { Router } from "@reach/router";
 import Scanner from "./Components/Scanner";
 import BookDetails from "./Components/BookDetails";
 import Messages from "./Components/Messages";
@@ -26,18 +22,13 @@ class App extends Component {
     loggedInUser: null,
   };
 
-
   render() {
     const { loggedInUser } = this.state;
 
-
     return (
-      
       <div className="App">
         {/* <Header></Header> */}
-        
 
-       
         <Router>
           <AuthProvider>
             <Switch>
@@ -45,21 +36,20 @@ class App extends Component {
               <Route path="/signup" component={SignUp} />
               <Route path="/login" component={LogIn} />
               <Route path="/forgot-password" component={ForgotPassword} />
-      <ButtonAppBar></ButtonAppBar>
-        <Router primary={false}>
-          <Bookshelf path="/"></Bookshelf>
-          <Scanner path="/scan"></Scanner>
-          <BookDetails path="/book"></BookDetails>
-          <Messages path="/messages"></Messages>
-          <Search path="/search"></Search>
-          <Help path="/help"></Help>
-          <Account path="/account"></Account>
-        </Router>
-        <SimpleBottomNavigation></SimpleBottomNavigation>
+
+              <ButtonAppBar />
+              <Router primary={false}>
+                <Route path="/messages" component={Messages} />
+                <Route path="/scan" component={Scanner} />
+                <Route path="/book" component={BookDetails} />
+                <Route path="/search" component={Search} />
+                <Route path="/help" component={Help} />
+                <Route path="/account" component={Account} />
+              </Router>
+              <SimpleBottomNavigation></SimpleBottomNavigation>
             </Switch>
           </AuthProvider>
         </Router>
-
       </div>
     );
   }
