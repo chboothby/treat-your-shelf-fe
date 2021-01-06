@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   },
   form: {
     width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing(1),
     "& .MuiOutlinedInput-root": {
       "&.Mui-focused fieldset": {
         borderColor: "#1A5AFF",
@@ -59,12 +59,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignUp() {
+export default function ForgotPassword() {
   const classes = useStyles();
   const emailRef = useRef();
   const passwordRef = useRef();
-  const confirmPasswordRef = useRef();
-  const { signUp } = useAuth();
+  const { logIn, currentUser } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const history = useHistory();
@@ -72,17 +71,13 @@ export default function SignUp() {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    if (passwordRef.current.value !== confirmPasswordRef.current.value) {
-      return setError("Passwords do not match");
-    }
-
     try {
       setError("");
       setLoading(true);
-      await signUp(emailRef.current.value, passwordRef.current.value);
+      //await logIn(emailRef.current.value, passwordRef.current.value);
       history.push("/");
     } catch {
-      setError("Account creation failed");
+      setError("Log in failed");
     }
 
     setLoading(false);
@@ -96,63 +91,26 @@ export default function SignUp() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign Up
+          Password Reset
         </Typography>
 
-        <form className={classes.form} onSubmit={handleSubmit} noValidate>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              {error && <Alert severity="error">{error}</Alert>}
-            </Grid>
-            <Grid item xs={12} lg={1}>
-              <TextField
-                autoComplete="username"
-                name="username"
-                variant="outlined"
-                fullWidth
-                id="username"
-                label="Username"
-                autoFocus
-                // inputRef={usernameRef}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                inputRef={emailRef}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                inputRef={passwordRef}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="confirm-password"
-                label="Confirm Password"
-                type="password"
-                id="confirm-password"
-                inputRef={confirmPasswordRef}
-              />
-            </Grid>
+        <form className={classes.form} noValidate>
+          <Grid item xs={12}>
+            {currentUser && currentUser.email}
+            {error && <Alert severity="error">{error}</Alert>}
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              inputRef={emailRef}
+            />
           </Grid>
           <Button
             type="submit"
@@ -160,21 +118,30 @@ export default function SignUp() {
             variant="contained"
             className={classes.submit}
             disabled={loading}
-            // style={{backgroundColor="blue"}}
           >
-            Sign Up
+            Reset Password
           </Button>
-          <Grid container justify="center">
-            <Grid item>
-              Already have an account?{" "}
+          <Grid container>
+            <Grid item xs={0} spacing={2}>
               <Link href="/login" variant="body2" className={classes.link}>
-                Log in
+                Go to Log In
+              </Link>
+            </Grid>
+            <Grid item xs={0}>
+              Don't have an account?{" "}
+              <Link
+                type="link"
+                href="/signup"
+                variant="body2"
+                className={classes.link}
+              >
+                {"Sign Up"}
               </Link>
             </Grid>
           </Grid>
         </form>
       </div>
-      <Box mt={5}>
+      <Box mt={8}>
         <Copyright />
       </Box>
     </Container>

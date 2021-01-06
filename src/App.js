@@ -6,6 +6,8 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import LogIn from "./Components/LogIn";
 import SignUp from "./Components/SignUp";
 import Bookshelf from "./Components/Bookshelf";
+import PrivateRoute from "./Components/PrivateRoute";
+import ForgotPassword from "./Components/ForgotPassword";
 
 class App extends Component {
   state = {
@@ -32,9 +34,10 @@ class App extends Component {
         <Router>
           <AuthProvider>
             <Switch>
-              <Route exact path="/" component={Bookshelf} />
+              <PrivateRoute exact path="/" component={Bookshelf} />
               <Route path="/signup" component={SignUp} />
               <Route path="/login" component={LogIn} />
+              <Route path="/forgot-password" component={ForgotPassword} />
             </Switch>
           </AuthProvider>
         </Router>

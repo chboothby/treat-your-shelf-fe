@@ -11,12 +11,12 @@ export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
 
-  const logIn = (email, password) => {
-    return auth.signInWithEmailAndPassword(email, password);
-  };
-
   const signUp = (email, password) => {
     return auth.createUserWithEmailAndPassword(email, password);
+  };
+
+  const logIn = (email, password) => {
+    return auth.signInWithEmailAndPassword(email, password);
   };
 
   useEffect(() => {

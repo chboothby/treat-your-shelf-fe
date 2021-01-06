@@ -14,6 +14,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Alert from "@material-ui/lab/Alert";
 import { useAuth } from "../Contexts/UserAuth";
+import { useHistory } from "react-router-dom";
 
 function Copyright() {
   return (
@@ -60,12 +61,12 @@ const useStyles = makeStyles((theme) => ({
 
 export default function LogIn() {
   const classes = useStyles();
-
   const emailRef = useRef();
   const passwordRef = useRef();
-  const { logIn } = useAuth();
+  const { logIn, currentUser } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const history = useHistory();
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -74,6 +75,7 @@ export default function LogIn() {
       setError("");
       setLoading(true);
       await logIn(emailRef.current.value, passwordRef.current.value);
+      history.push("/");
     } catch {
       setError("Log in failed");
     }
@@ -94,6 +96,7 @@ export default function LogIn() {
 
         <form className={classes.form} noValidate>
           <Grid item xs={12}>
+            {currentUser && currentUser.email}
             {error && <Alert severity="error">{error}</Alert>}
           </Grid>
           <Grid item xs={12}>
@@ -138,9 +141,13 @@ export default function LogIn() {
             Log In
           </Button>
           <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2" className={classes.link}>
-                Forgot password?
+            <Grid item xs={0}>
+              <Link
+                href="/forgot-password"
+                variant="body2"
+                className={classes.link}
+              >
+                Forgot your password?
               </Link>
             </Grid>
             <Grid item>
