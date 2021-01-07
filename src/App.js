@@ -41,7 +41,7 @@ class App extends Component {
               <Router primary={false}>
                 <Route path="/messages" component={Messages} />
                 <Route path="/scan" component={Scanner} />
-                <Route path="/book" component={BookDetails} />
+                <Route path="/books/:book_id" component={BookDetails} />
                 <Route path="/search" component={Search} />
                 <Route path="/help" component={Help} />
                 <Route path="/account" component={Account} />

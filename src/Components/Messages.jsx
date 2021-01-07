@@ -84,7 +84,7 @@ function ChatRoom() {
             return (
               <div className="message-content">
                 <p>Message: {message.message}</p>
-                {/* <p>{time}</p> >>> getting an error  */}
+                {/* <p>{time}</p> */}
               </div>
             );
           })}
