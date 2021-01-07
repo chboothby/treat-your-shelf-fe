@@ -24,7 +24,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function TransitionsModalSearch(props) {
-  const { title, author, image } = props.book;
+  console.log(props);
+  const { title, author, thumbnail, book_id } = props.book;
+
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -39,8 +41,8 @@ export default function TransitionsModalSearch(props) {
   return (
     <div>
       <Button
-        component={Link}
-        to="/book"
+        // component={Link}
+        // to="/book"
         variant="outlined"
         size="medium"
         onClick={handleOpen}
@@ -63,23 +65,20 @@ export default function TransitionsModalSearch(props) {
         <Fade in={open}>
           <div className={classes.paper}>
             <div className="modal-content">
-              <img alt="book" src={image}></img>
+              <img alt="book" src={thumbnail}></img>
               <div className="modal-book-info">
                 <p>{title}</p>
                 <p>{author}</p>
                 <div className="user-info">
                   <p>Username</p>
-                  <Button variant="outlined" size="medium" color="primary">
-                    View
-                  </Button>
+                  <Link to={`/books/${book_id}`}>
+                    <Button variant="outlined" size="medium" color="primary">
+                      View
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </div>
-
-            {/* <div className="modal-footer">
-              <h2 id="transition-modal-title">{title}</h2>
-              <p id="transition-modal-description">{author}</p>
-            </div> */}
           </div>
         </Fade>
       </Modal>

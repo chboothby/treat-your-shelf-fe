@@ -15,3 +15,9 @@ export const getSingleBook = (book_id) => {
     return data.data;
   });
 };
+
+export const getUserBookshelf = (user_id) => {
+  return treatApi.get(`/users/${user_id}/books`).then((data) => {
+    return data.data;
+  });
+};

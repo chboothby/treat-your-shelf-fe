@@ -1,9 +1,26 @@
 import { Button } from "@material-ui/core";
-import React from "react";
+import React, { useState } from "react";
 import stockProfileImage from "../stockProfileImage.jpg";
 import "./Account.css";
+import { useAuth } from "../Contexts/UserAuth";
+import { useHistory } from "react-router-dom";
 
-const Account = () => {
+export default function Account() {
+  const [error, setError] = useState("");
+  const { currentUser, logout } = useAuth();
+  const history = useHistory();
+
+  async function handleLogout() {
+    setError("");
+
+    try {
+      await logout();
+      history.push("/loggedout");
+    } catch {
+      setError("Log out failed");
+    }
+  }
+
   return (
     <div className="account-container">
       <div className="account-header">
@@ -32,12 +49,11 @@ const Account = () => {
         <Button
           style={{ background: "white", margin: "3%" }}
           variant="outlined"
+          onClick={handleLogout}
         >
           Logout
         </Button>
       </div>
     </div>
   );
-};
-
-export default Account;
+}

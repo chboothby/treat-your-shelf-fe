@@ -1,33 +1,43 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import bookplaceholder from "../bookplaceholder.jpg";
 import "./BookDetails.css";
 import stockProfileImage from "../stockProfileImage.jpg";
 import { Button } from "@material-ui/core";
-const BookDetails = () => {
+import { getSingleBook } from "../api";
+import { Link } from "react-router-dom";
+
+function BookDetails(props) {
+  const [book, setBook] = useState({});
+  const [loading, setLoading] = useState(true);
+  const { book_id } = props.match.params;
+  console.log(book_id);
+  useEffect(() => {
+    getSingleBook(book_id).then(({ book }) => {
+      setBook(book);
+      setLoading(false);
+      console.log(book);
+    });
+  }, []);
+
   return (
     <div className="book-details">
       <div className="single-book-header">
-        <img alt="book" src={bookplaceholder}></img>
+        <img alt="book" src={book.thumbnail}></img>
         <div className="single-book-info">
-          <h4>Title</h4>
-          <h4>Author</h4>
+          <h4>{book.title}</h4>
+          <h4>{book.authors}</h4>
         </div>
       </div>
       <div className="single-book-description">
-        <p>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ratione non
-          maiores omnis sit perspiciatis? Minima quo maiores a quasi accusamus
-          repudiandae, excepturi, autem fugit quisquam expedita earum iste
-          debitis magni.
-        </p>
+        <p>{book.description}</p>
       </div>
       <div className="owner-card">
         <p>Owner:</p>
         <img alt="stock profile" src={stockProfileImage}></img>
         <div className="owner-info">
-          <a href="#">
+          <Link to={`/users/${book.owner_id}/books`}>
             <p>charlie123</p>
-          </a>
+          </Link>
           <p>📍 Salford (2.0 miles away)</p>
         </div>
       </div>
@@ -41,7 +51,7 @@ const BookDetails = () => {
       </Button>
     </div>
   );
-};
+}
 
 export default BookDetails;
 

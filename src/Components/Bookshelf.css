@@ -17,6 +17,7 @@ img {
   padding: 2%;
   transition: background 0.5s;
   background: white;
+  width: 100px;
 }
 
 .book-list-card:hover {
@@ -24,8 +25,8 @@ img {
 }
 
 .book-grid {
-  display: grid;
-  grid-template-columns: auto auto auto;
+  display: flex;
+  justify-content: space-around;
   flex-wrap: wrap;
 }
 
