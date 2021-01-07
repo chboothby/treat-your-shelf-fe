@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import LogIn from "./Components/LogIn";
 import SignUp from "./Components/SignUp";
 import PrivateRoute from "./Components/PrivateRoute";
-import ForgotPassword from "./Components/ForgotPassword";
+import PasswordReset from "./Components/PasswordReset";
 import Bookshelf from "./Components/Bookshelf";
 import SimpleBottomNavigation from "./Components/SimpleBottomNavigation";
 import Scanner from "./Components/Scanner";
@@ -36,7 +36,7 @@ class App extends Component {
               <PrivateRoute exact path="/" component={Bookshelf} />
               <Route path="/signup" component={SignUp} />
               <Route path="/login" component={LogIn} />
-              <Route path="/forgot-password" component={ForgotPassword} />
+              <Route path="/password-reset" component={PasswordReset} />
 
               <Router primary={false}>
                 <Route path="/messages" component={Messages} />

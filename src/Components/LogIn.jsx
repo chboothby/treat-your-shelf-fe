@@ -57,13 +57,14 @@ const useStyles = makeStyles((theme) => ({
   link: {
     color: "#1A5AFF",
   },
+  checkbox: {},
 }));
 
 export default function LogIn() {
   const classes = useStyles();
   const emailRef = useRef();
   const passwordRef = useRef();
-  const { logIn, currentUser } = useAuth();
+  const { logIn } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const history = useHistory();
@@ -90,13 +91,12 @@ export default function LogIn() {
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" variant="h4">
           Log In
         </Typography>
 
-        <form className={classes.form} noValidate>
+        <form className={classes.form} onSubmit={handleSubmit} noValidate>
           <Grid item xs={12}>
-            {currentUser && currentUser.email}
             {error && <Alert severity="error">{error}</Alert>}
           </Grid>
           <Grid item xs={12}>
@@ -128,8 +128,15 @@ export default function LogIn() {
             />
           </Grid>
           <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
+            control={
+              <Checkbox
+                value="remember"
+                className={classes.checkbox}
+                color="primary"
+              />
+            }
             label="Remember me"
+            justify="center"
           />
           <Button
             type="submit"
@@ -140,8 +147,8 @@ export default function LogIn() {
           >
             Log In
           </Button>
-          <Grid container>
-            <Grid item xs={0}>
+          <Grid container justify="center" spacing={3}>
+            <Grid item>
               <Link
                 href="/forgot-password"
                 variant="body2"
@@ -150,6 +157,8 @@ export default function LogIn() {
                 Forgot your password?
               </Link>
             </Grid>
+          </Grid>
+          <Grid container justify="center" spacing={2}>
             <Grid item>
               Don't have an account?{" "}
               <Link
