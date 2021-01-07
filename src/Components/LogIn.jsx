@@ -48,7 +48,6 @@ const useStyles = makeStyles((theme) => ({
         borderColor: "#1A5AFF",
       },
     },
-    "&$focused": { color: "#1A5AFF" },
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
@@ -65,7 +64,7 @@ export default function LogIn() {
   const classes = useStyles();
   const emailRef = useRef();
   const passwordRef = useRef();
-  const { logIn, currentUser } = useAuth();
+  const { logIn } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const history = useHistory();
