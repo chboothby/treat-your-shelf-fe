@@ -7,7 +7,7 @@ import LogIn from "./Components/LogIn";
 import SignUp from "./Components/SignUp";
 import PrivateRoute from "./Components/PrivateRoute";
 import PasswordReset from "./Components/PasswordReset";
-import Bookshelf from "./Components/Bookshelf";
+import MyBookshelf from "./Components/MyBookshelf";
 import SimpleBottomNavigation from "./Components/SimpleBottomNavigation";
 import Scanner from "./Components/Scanner";
 import BookDetails from "./Components/BookDetails";
@@ -24,7 +24,7 @@ export default function App() {
         <AuthProvider>
           <ButtonAppBar></ButtonAppBar>
           <Switch>
-            <PrivateRoute exact path="/" component={Bookshelf} />
+            <PrivateRoute exact path="/" component={MyBookshelf} />
             <Route path="/signup" component={SignUp} />
             <Route path="/login" component={LogIn} />
             <Route path="/password-reset" component={PasswordReset} />

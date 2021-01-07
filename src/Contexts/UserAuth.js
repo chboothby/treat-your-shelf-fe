@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { auth } from "../firebase";
+import { createNewUser } from "../api";
 
 export const AuthContext = React.createContext();
 
@@ -14,9 +15,14 @@ export const AuthProvider = ({ children }) => {
   const signUp = (displayName, email, password) => {
     return auth.createUserWithEmailAndPassword(email, password).then((res) => {
       const user = auth.currentUser;
-      return user.updateProfile({
-        displayName: displayName,
-      });
+      return user
+        .updateProfile({
+          displayName: displayName,
+        })
+        .then((user) => {
+          console.log(user);
+          createNewUser(user.uid, user.displayName, user.email);
+        });
     });
   };
 
