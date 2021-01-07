@@ -6,14 +6,20 @@ import IconButton from "@material-ui/core/IconButton";
 import { Link } from "react-router-dom";
 import TransitionsModalShelf from "./TransitionsModalShelf";
 import ButtonAppBar from "../Components/ButtonAppBar";
-import { getAllBooks } from "../api";
+import { getUserBookshelf } from "../api";
+
 function Bookshelf() {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const user_id = 1;
 
-  // const { books } = this.state;
+  useEffect(() => {
+    getUserBookshelf(user_id).then(({ books }) => {
+      setBooks(books);
+      setLoading(false);
+    });
+  }, []);
 
-  console.log(books);
   return (
     <>
       <div className="bookshelf-container">
@@ -31,7 +37,7 @@ function Bookshelf() {
         </div>
 
         <div className="book-grid">
-          {/* {loading ? (
+          {loading ? (
             <p>Loading</p>
           ) : (
             books.books.map((book) => {
@@ -44,7 +50,7 @@ function Bookshelf() {
                 </div>
               );
             })
-          )} */}
+          )}
         </div>
       </div>
     </>

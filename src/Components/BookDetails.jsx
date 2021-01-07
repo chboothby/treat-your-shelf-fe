@@ -4,6 +4,7 @@ import "./BookDetails.css";
 import stockProfileImage from "../stockProfileImage.jpg";
 import { Button } from "@material-ui/core";
 import { getSingleBook } from "../api";
+import { Link } from "react-router-dom";
 
 function BookDetails(props) {
   const [book, setBook] = useState({});
@@ -34,9 +35,9 @@ function BookDetails(props) {
         <p>Owner:</p>
         <img alt="stock profile" src={stockProfileImage}></img>
         <div className="owner-info">
-          <a href="#">
+          <Link to={`/users/${book.owner_id}/books`}>
             <p>charlie123</p>
-          </a>
+          </Link>
           <p>📍 Salford (2.0 miles away)</p>
         </div>
       </div>

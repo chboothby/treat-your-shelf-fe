@@ -16,6 +16,7 @@ import Search from "./Components/Search";
 import Help from "./Components/Help";
 import Account from "./Components/Account";
 import ButtonAppBar from "./Components/ButtonAppBar";
+import LogOutPage from "./Components/LogOutPage";
 
 class App extends Component {
   state = {
@@ -36,16 +37,15 @@ class App extends Component {
               <PrivateRoute exact path="/" component={Bookshelf} />
               <Route path="/signup" component={SignUp} />
               <Route path="/login" component={LogIn} />
+              <Route path="/loggedout" component={LogOutPage} />
               <Route path="/password-reset" component={PasswordReset} />
-
-              <Router primary={false}>
-                <Route path="/messages" component={Messages} />
-                <Route path="/scan" component={Scanner} />
-                <Route path="/books/:book_id" component={BookDetails} />
-                <Route path="/search" component={Search} />
-                <Route path="/help" component={Help} />
-                <Route path="/account" component={Account} />
-              </Router>
+              <Route path="/users/:user_id/books" component={Bookshelf} />
+              <Route path="/messages" component={Messages} />
+              <Route path="/scan" component={Scanner} />
+              <Route path="/books/:book_id" component={BookDetails} />
+              <Route path="/search" component={Search} />
+              <Route path="/help" component={Help} />
+              <Route path="/account" component={Account} />
             </Switch>
             <SimpleBottomNavigation></SimpleBottomNavigation>
           </AuthProvider>
