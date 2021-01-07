@@ -8,7 +8,6 @@ import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
@@ -36,10 +35,6 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     alignItems: "center",
   },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
   form: {
     width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(1),
@@ -64,7 +59,7 @@ export default function LogIn() {
   const classes = useStyles();
   const emailRef = useRef();
   const passwordRef = useRef();
-  const { logIn } = useAuth();
+  const { logIn, currentUser } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const history = useHistory();
@@ -88,15 +83,13 @@ export default function LogIn() {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
         <Typography component="h1" variant="h4">
           Log In
         </Typography>
 
         <form className={classes.form} onSubmit={handleSubmit} noValidate>
           <Grid item xs={12}>
+            {currentUser && currentUser.email}
             {error && <Alert severity="error">{error}</Alert>}
           </Grid>
           <Grid item xs={12}>
@@ -127,17 +120,6 @@ export default function LogIn() {
               inputRef={passwordRef}
             />
           </Grid>
-          <FormControlLabel
-            control={
-              <Checkbox
-                value="remember"
-                className={classes.checkbox}
-                color="primary"
-              />
-            }
-            label="Remember me"
-            justify="center"
-          />
           <Button
             type="submit"
             fullWidth

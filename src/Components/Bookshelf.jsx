@@ -5,7 +5,9 @@ import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import IconButton from "@material-ui/core/IconButton";
 import { Link } from "react-router-dom";
 import TransitionsModalShelf from "./TransitionsModalShelf";
-import ButtonAppBar from "../Components/ButtonAppBar";
+import { useAuth } from "../Contexts/UserAuth";
+
+
 
 class Bookshelf extends Component {
   state = {
@@ -25,12 +27,13 @@ class Bookshelf extends Component {
 
   render() {
     const { books } = this.state;
+    const { currentUser } = useAuth();
 
     return (
       <>
         <div className="bookshelf-container">
           <div className="bookshelf-header">
-            <h3>Users bookshelf </h3>
+            <h3>{currentUser.displayName} bookshelf </h3>
 
             <Link to="/scan">
               <IconButton>
