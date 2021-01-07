@@ -18,23 +18,44 @@ function Search() {
     { title: "book 10", image: bookplaceholder, author: "author 10" },
   ]);
 
+  const [formValue, setFormValue] = useState({});
+
+  const handleChange = (event) => {
+    setFormValue({ ...formValue, [event.target.name]: event.target.value });
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // API request in here
+    console.log("submitted");
+    setFormValue({});
+  };
+
   return (
     <div className="search-results-container">
       <div>
-        <form className="search-form">
+        <form onSubmit={handleSubmit} className="search-form">
           <TextField
             style={{ margin: "1%" }}
             id="title"
+            name="title"
             label="Title"
             variant="filled"
+            onChange={handleChange}
           />
           <TextField
+            name="author"
+            onChange={handleChange}
             style={{ margin: "1%" }}
             id="author"
             label="Author"
             variant="filled"
           />
-          <Button variant="outlined" style={{ width: "70%", margin: "0 auto" }}>
+          <Button
+            type="submit"
+            variant="outlined"
+            style={{ width: "70%", margin: "0 auto" }}
+          >
             Search
           </Button>
         </form>
