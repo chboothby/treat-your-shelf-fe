@@ -15,6 +15,12 @@ export const getSingleBook = (book_id) => {
     return data.data;
   });
 };
+export const createNewUser = (user_id, username, email) => {
+  console.log({ user_id, username, email });
+  return treatApi.post(`/users`, { user_id, username, email }).catch((err) => {
+    console.log(err);
+  });
+};
 
 export const getUserBookshelf = (user_id) => {
   return treatApi.get(`/users/${user_id}/books`).then((data) => {

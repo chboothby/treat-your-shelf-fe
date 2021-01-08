@@ -3,24 +3,11 @@ import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
 import "firebase/analytics";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { useCollectionData } from "react-firebase-hooks/firestore";
+import app from "../firebase";
 import { Button, TextField } from "@material-ui/core";
 import "./Messages.css";
 
-const dbConfig = {
-  apiKey: "AIzaSyDHXh0FlBcSAOQo-BT7Zz5bT9GGmNyNDuI",
-  authDomain: "treat-yo--shelf.firebaseapp.com",
-  projectId: "treat-yo--shelf",
-  storageBucket: "treat-yo--shelf.appspot.com",
-  messagingSenderId: "1043126135539",
-  appId: "1:1043126135539:web:503450c7c93ee62ce0e586",
-  measurementId: "G-M2WEX0WKVY",
-};
-
-if (firebase.apps.length === 0) {
-  firebase.initializeApp(dbConfig);
-}
+const dbConfig = app;
 
 const firestore = firebase.firestore();
 
