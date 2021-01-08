@@ -24,6 +24,7 @@ function Messages() {
 function Chats() {
   const [loading, setLoading] = useState(true);
   const [chats, setChats] = useState([]);
+  const [chatIds, setChatIds] = useState([]);
 
   const {
     currentUser: { uid, displayName },
@@ -32,6 +33,7 @@ function Chats() {
   const getChatsRef = firestore
     .collection("chats")
     .where("users", "array-contains", uid);
+
   // .doc(chatId) //
   // .collection("messages")
   // .orderBy("time");
@@ -39,11 +41,15 @@ function Chats() {
   useEffect(() => {
     getChatsRef.onSnapshot((querySnapshot) => {
       const items = [];
+      const chatIds = [];
       querySnapshot.forEach((doc) => {
-        items.push(doc.id);
+        items.push(doc.data().names);
+        chatIds.push(doc.id);
       });
+
       setLoading(false);
       setChats(items);
+      setChatIds(chatIds);
     });
   }, []);
 
@@ -53,11 +59,18 @@ function Chats() {
         <p>Loading</p>
       ) : (
         <div className="message-content-container">
-          {chats.map((chat, i) => {
+          {chatIds.map((chatId, i) => {
             return (
-              <Link to="/message">
+              <Link to="/message" chatId={chatId}>
                 <div key={i} className="message-content">
-                  <p>{chat}</p>
+                  {chats[i].map((name) => {
+                    console.log(name, displayName);
+                    {
+                      if (displayName !== name) {
+                        return name;
+                      }
+                    }
+                  })}
                 </div>
               </Link>
             );
