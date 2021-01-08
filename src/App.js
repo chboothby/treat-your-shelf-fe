@@ -17,6 +17,7 @@ import Help from "./Components/Help";
 import Account from "./Components/Account";
 import ButtonAppBar from "./Components/ButtonAppBar";
 import LogOutPage from "./Components/LogOutPage";
+import EmailVerifyNotice from "./Components/EmailVerifyNotice";
 
 export default function App() {
   return (
@@ -34,8 +35,9 @@ export default function App() {
             <Route path="/book" component={BookDetails} />
             <Route path="/search" component={Search} />
             <Route path="/help" component={Help} />
-            <Route path="/loggedout" component={LogOutPage}></Route>
             <PrivateRoute path="/account" component={Account} />
+            <Route path="/loggedout" component={LogOutPage}></Route>
+            <PrivateRoute path="/email-verify" component={EmailVerifyNotice}></PrivateRoute>
           </Switch>
           <SimpleBottomNavigation></SimpleBottomNavigation>
         </AuthProvider>

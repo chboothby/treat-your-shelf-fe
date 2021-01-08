@@ -24,7 +24,7 @@ function Bookshelf(props) {
     <>
       <div className="bookshelf-container">
         <div className="bookshelf-header">
-          <h3>Users bookshelf </h3>
+          <h3>Users bookshelf</h3>
 
           <Link to="/scan">
             <IconButton>

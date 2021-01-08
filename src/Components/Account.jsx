@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button } from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
 import stockProfileImage from "../stockProfileImage.jpg";
 import "./Account.css";
 import { useAuth } from "../Contexts/UserAuth";
@@ -24,6 +25,7 @@ export default function Account() {
 
   return (
     <div className="account-container">
+      {error && <Alert severity="error">{error}</Alert>}
       <div className="account-header">
         <h2>{currentUser.displayName}'s Profile</h2>
         <img src={stockProfileImage}></img>

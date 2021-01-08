@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
-import { auth } from "../firebase";
-import { createNewUser } from "../api";
+import { auth, user } from "../firebase";
+import { createNewUser, changeUsername } from "../api";
 
 export const AuthContext = React.createContext();
 
@@ -18,6 +18,9 @@ export const AuthProvider = ({ children }) => {
       return user
         .updateProfile({
           displayName: displayName,
+        })
+        .then(() => {
+          return user.sendEmailVerification();
         })
         .then(() => {
           createNewUser(user.uid, user.displayName, user.email);
