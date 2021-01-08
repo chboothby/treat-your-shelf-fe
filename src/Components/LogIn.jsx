@@ -59,7 +59,7 @@ export default function LogIn() {
   const classes = useStyles();
   const emailRef = useRef();
   const passwordRef = useRef();
-  const { logIn, currentUser } = useAuth();
+  const { logIn } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const history = useHistory();
@@ -89,7 +89,6 @@ export default function LogIn() {
 
         <form className={classes.form} onSubmit={handleSubmit} noValidate>
           <Grid item xs={12}>
-            {currentUser && currentUser.email}
             {error && <Alert severity="error">{error}</Alert>}
           </Grid>
           <Grid item xs={12}>
