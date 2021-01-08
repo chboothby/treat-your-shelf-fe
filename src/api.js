@@ -45,3 +45,9 @@ export const addBookToMyBookshelf = (book, user_id) => {
     console.log(res);
   });
 };
+
+export const deleteBookFromBookshelf = (book_id) => {
+  return treatApi.delete(`/books/${book_id}`).then((res) => {
+    console.log(res);
+  });
+};
