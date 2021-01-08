@@ -27,3 +27,21 @@ export const getUserBookshelf = (user_id) => {
     return data.data;
   });
 };
+
+export const addBookToMyBookshelf = (book, user_id) => {
+  console.log(book);
+  const { title, authors, description, publishedDate, images } = book;
+  console.log(images.thumbnail);
+
+  const newBook = {
+    title,
+    authors,
+    description,
+    quality: 5,
+    thumbnail: images.thumbnail,
+  };
+
+  return treatApi.post(`/users/${user_id}/books`, newBook).then((res) => {
+    console.log(res);
+  });
+};

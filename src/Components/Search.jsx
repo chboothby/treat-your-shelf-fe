@@ -11,7 +11,6 @@ function Search() {
 
   useEffect(() => {
     getAllBooks().then((data) => {
-      console.log(data.books);
       setBooks(data.books);
       setLoading(false);
     });
@@ -26,7 +25,7 @@ function Search() {
   const handleSubmit = (event) => {
     event.preventDefault();
     // API request in here
-    console.log("submitted");
+
     setFormValue({});
   };
 

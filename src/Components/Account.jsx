@@ -16,7 +16,7 @@ export default function Account() {
 
     try {
       await logout();
-      history.push("/login");
+      history.push("/loggedout");
     } catch {
       setError("Log out failed");
     }
