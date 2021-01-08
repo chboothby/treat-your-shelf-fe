@@ -3,3 +3,7 @@
   border-radius: 3px;
   padding: 3%;
 }
+
+.modal-content img {
+  width: 70%;
+}

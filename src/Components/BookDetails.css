@@ -12,7 +12,7 @@
 }
 
 .single-book-header img {
-  width: 60%;
+  width: 40%;
 }
 
 .single-book-info {
@@ -26,8 +26,10 @@
 .single-book-description {
   background: rgba(128, 128, 128, 0.301);
   margin-top: 6%;
-  padding: 1%;
+  padding: 2%;
   border-radius: 4px;
+  max-height: 300px;
+  overflow: scroll;
 }
 
 .owner-card {
@@ -43,6 +45,8 @@
 .owner-card img {
   border: dotted rgba(128, 128, 128, 0.486) 0.25px;
   border-radius: 4px;
+  width: 30%;
+  padding: 3%;
 }
 
 .owner-info {
