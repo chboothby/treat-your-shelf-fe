@@ -65,6 +65,23 @@ export default function SignUp() {
   async function handleSubmit(e) {
     e.preventDefault();
 
+    const userRegEx = new RegExp("^[a-zA-Z0-9_-]{5,}[a-zA-Z]+[0-9]*$");
+    if (!usernameRef.current.value) {
+      return setError(
+        "Your username must only consist of alphanumeric characters, at least one letter, underscores or hyphens"
+      );
+    }
+
+    const passRegEx = new RegExp(
+      "(?:(?:(?=.*?[0-9])(?=.*?[-!@#$%&*ˆ+=_])|(?:(?=.*?[0-9])|(?=.*?[A-Z])|(?=.*?[-!@#$%&*ˆ+=_])))|(?=.*?[a-z])(?=.*?[0-9])(?=.*?[-!@#$%&*ˆ+=_]))[A-Za-z0-9-!@#$%&*ˆ+=_]{6,20}"
+    );
+
+    if (!passRegEx.test(passwordRef.current.value)) {
+      return setError(
+        "Please ensure that your password is between 6-20 characters and includes at least 1 capital letter and 1 number"
+      );
+    }
+
     if (passwordRef.current.value !== confirmPasswordRef.current.value) {
       return setError("Passwords do not match");
     }
@@ -77,7 +94,7 @@ export default function SignUp() {
         emailRef.current.value,
         passwordRef.current.value
       );
-      history.push("/");
+      history.push("/email-verify");
     } catch {
       setError("Account creation failed");
     }
@@ -107,14 +124,12 @@ export default function SignUp() {
                 id="username"
                 label="Username"
                 autoFocus
-                required
                 inputRef={usernameRef}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
-                required
                 fullWidth
                 id="email"
                 label="Email Address"
@@ -126,7 +141,6 @@ export default function SignUp() {
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
-                required
                 fullWidth
                 name="password"
                 label="Password"
@@ -139,7 +153,6 @@ export default function SignUp() {
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
-                required
                 fullWidth
                 name="confirm-password"
                 label="Confirm Password"

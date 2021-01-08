@@ -95,7 +95,6 @@ export default function LogIn() {
             <TextField
               variant="outlined"
               margin="normal"
-              required
               fullWidth
               id="email"
               label="Email Address"
@@ -109,7 +108,6 @@ export default function LogIn() {
             <TextField
               variant="outlined"
               margin="normal"
-              required
               fullWidth
               name="password"
               label="Password"
