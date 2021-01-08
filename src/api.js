@@ -15,6 +15,7 @@ export const getSingleBook = (book_id) => {
     return data.data;
   });
 };
+
 export const createNewUser = (user_id, username, email) => {
   return treatApi.post(`/users`, { user_id, username, email }).catch((err) => {
     console.log(err);
@@ -30,5 +31,29 @@ export const getUserBookshelf = (user_id) => {
 export const changeUsername = (user_id, username) => {
   return treatApi.patch(`/users/${user_id}`, { username }).catch((err) => {
     console.log(err);
+  });
+};
+
+export const addBookToMyBookshelf = (book, user_id) => {
+  console.log(book);
+  const { title, authors, description, publishedDate, images } = book;
+  console.log(images.thumbnail);
+
+  const newBook = {
+    title,
+    authors,
+    description,
+    quality: 5,
+    thumbnail: images.thumbnail,
+  };
+
+  return treatApi.post(`/users/${user_id}/books`, newBook).then((res) => {
+    console.log(res);
+  });
+};
+
+export const deleteBookFromBookshelf = (book_id) => {
+  return treatApi.delete(`/books/${book_id}`).then((res) => {
+    console.log(res);
   });
 };

@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function TransitionsModalSearch(props) {
   const { title, author, thumbnail, book_id } = props.book;
-  console.log(props.book);
+
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
