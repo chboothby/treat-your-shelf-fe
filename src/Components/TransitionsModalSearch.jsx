@@ -24,9 +24,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function TransitionsModalSearch(props) {
-  console.log(props);
   const { title, author, thumbnail, book_id } = props.book;
-
+  console.log(props.book);
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -40,13 +39,7 @@ export default function TransitionsModalSearch(props) {
 
   return (
     <div>
-      <Button
-        // component={Link}
-        // to="/book"
-        variant="outlined"
-        size="medium"
-        onClick={handleOpen}
-      >
+      <Button variant="outlined" size="medium" onClick={handleOpen}>
         View
       </Button>
 

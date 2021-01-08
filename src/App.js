@@ -28,8 +28,6 @@ class App extends Component {
 
     return (
       <div className="App">
-        {/* <Header></Header> */}
-
         <Router>
           <AuthProvider>
             <ButtonAppBar></ButtonAppBar>
