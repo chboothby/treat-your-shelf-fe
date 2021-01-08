@@ -17,6 +17,7 @@ import Help from "./Components/Help";
 import Account from "./Components/Account";
 import ButtonAppBar from "./Components/ButtonAppBar";
 import LogOutPage from "./Components/LogOutPage";
+import IndividualChat from "./Components/IndividualChat";
 
 export default function App() {
   return (
@@ -31,6 +32,7 @@ export default function App() {
             <Route path="/login" component={LogIn} />
             <Route path="/password-reset" component={PasswordReset} />
             <PrivateRoute path="/messages" component={Messages} />
+            <PrivateRoute path="/message" component={IndividualChat} />
             <PrivateRoute path="/scan" component={Scanner} />
             <Route path="/books/:book_id" component={BookDetails} />
             <Route path="/search" component={Search} />
