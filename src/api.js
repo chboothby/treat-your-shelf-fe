@@ -17,10 +17,8 @@ export const getSingleBook = (book_id) => {
 };
 
 export const createNewUser = (user_id, username, email) => {
-  return treatApi
-    .post(`/users`)
-    .send({ user_id, username, email })
-    .then(({ body }) => {
-      console.log(body);
-    });
+  console.log({ user_id, username, email });
+  return treatApi.post(`/users`, { user_id, username, email }).catch((err) => {
+    console.log(err);
+  });
 };

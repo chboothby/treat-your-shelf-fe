@@ -19,9 +19,11 @@ export const AuthProvider = ({ children }) => {
         .updateProfile({
           displayName: displayName,
         })
-        .then((user) => {
-          console.log(user);
+        .then(() => {
           createNewUser(user.uid, user.displayName, user.email);
+        })
+        .catch((err) => {
+          console.log(err);
         });
     });
   };
