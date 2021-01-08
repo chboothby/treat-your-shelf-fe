@@ -6,6 +6,7 @@ import Fade from "@material-ui/core/Fade";
 import { Button } from "@material-ui/core";
 import "./TransitionsModalShelf.css";
 import { Link } from "react-router-dom";
+import { deleteBookFromBookshelf } from "../api";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -23,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function TransitionsModalShelf(props) {
-  const { title, author, image } = props.book;
+  const { title, author, image, book_id } = props.book;
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -33,6 +34,12 @@ export default function TransitionsModalShelf(props) {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleClick = (book_id) => {
+    deleteBookFromBookshelf(book_id).then((res) => {
+      console.log(res, "deleted!");
+    });
   };
 
   return (
@@ -70,7 +77,14 @@ export default function TransitionsModalShelf(props) {
                   Hide Book
                 </Button>
 
-                <Button style={{ background: "red" }}>Remove Book</Button>
+                <Button
+                  onClick={() => {
+                    handleClick(book_id);
+                  }}
+                  style={{ background: "red" }}
+                >
+                  Remove Book
+                </Button>
               </div>
             </div>
 
