@@ -4,19 +4,19 @@ import axios from "axios";
 import "./ScanResults.css";
 import bookplaceholder from "../bookplaceholder.jpg";
 import { Button, Link } from "@material-ui/core";
+import { useAuth } from "../Contexts/UserAuth";
+import { addBookToMyBookshelf } from "../api";
 
 function Scanner() {
   const [data, setData] = useState("Not Found");
   const [books, setBooks] = useState([]);
   const [error, setError] = useState("");
   const [clicked, setClick] = useState(false);
+  const { currentUser } = useAuth();
 
   const handleClick = (book) => {
-    // make API request in here to add book to database
-    console.log("clicked");
-    console.log(book);
     setClick(true);
-    console.log(clicked);
+    addBookToMyBookshelf(book, currentUser.uid).then((res) => {});
   };
 
   const getBookByISBN = (isbn) => {

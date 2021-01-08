@@ -41,6 +41,7 @@ function ChatRoom() {
   const [formValue, setFormValue] = useState("");
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { currentUser } = useAuth();
 
   useEffect(() => {
     getMessagesRef.onSnapshot((querySnapshot) => {

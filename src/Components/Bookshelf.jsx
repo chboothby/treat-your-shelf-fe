@@ -7,17 +7,28 @@ import { Link } from "react-router-dom";
 import TransitionsModalShelf from "./TransitionsModalShelf";
 import ButtonAppBar from "./ButtonAppBar";
 import { getUserBookshelf } from "../api";
+import { useAuth } from "../Contexts/UserAuth";
 
 function Bookshelf(props) {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { user_id } = props.match.params;
+  const { owner_id } = props.match.params;
+  const { currentUser } = useAuth();
 
   useEffect(() => {
-    getUserBookshelf(user_id).then(({ books }) => {
-      setBooks(books);
-      setLoading(false);
-    });
+    const paramsLength = Object.keys(props.match.params).length;
+
+    if (paramsLength === 0) {
+      getUserBookshelf(currentUser.uid).then(({ books }) => {
+        setBooks(books);
+        setLoading(false);
+      });
+    } else {
+      getUserBookshelf(owner_id).then(({ books }) => {
+        setBooks(books);
+        setLoading(false);
+      });
+    }
   }, []);
 
   return (
@@ -41,7 +52,6 @@ function Bookshelf(props) {
             <p>Loading</p>
           ) : (
             books.books.map((book) => {
-              console.log(book);
               return (
                 <div className="book-list-card">
                   <img alt="book" src={book.thumbnail}></img>
