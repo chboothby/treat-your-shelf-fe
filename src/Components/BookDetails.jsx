@@ -40,6 +40,7 @@ function BookDetails(props) {
           <p>📍 Salford (2.0 miles away)</p>
         </div>
       </div>
+      // add route to messages page, pass through book owner_id and book details
       <Button
         style={{ width: "60%", margin: "0 auto" }}
         variant="outlined"

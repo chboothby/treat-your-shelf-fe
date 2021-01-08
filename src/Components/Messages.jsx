@@ -7,6 +7,7 @@ import app from "../firebase";
 import { Button, TextField } from "@material-ui/core";
 import "./Messages.css";
 import { useAuth } from "../Contexts/UserAuth";
+import { Link } from "react-router-dom";
 
 const dbConfig = app;
 
@@ -15,52 +16,42 @@ const firestore = firebase.firestore();
 function Messages() {
   return (
     <div className="messages-container">
-      <h1>Messages</h1>
-      <ChatRoom />
+      <h1>Chats</h1>
+      <Chats />
     </div>
   );
 }
-
-function ChatRoom() {
-  const getMessagesRef = firestore
-    .collection("chats")
-    .doc("UbnOvg12YVKQ7a5Ol8KB") //
-    .collection("messages")
-    .orderBy("time");
-
-  const [formValue, setFormValue] = useState("");
-  const [messages, setMessages] = useState([]);
+function Chats() {
   const [loading, setLoading] = useState(true);
-  const { currentUser } = useAuth();
+  const [chats, setChats] = useState([]);
+  const [chatIds, setChatIds] = useState([]);
+
+  const {
+    currentUser: { uid, displayName },
+  } = useAuth();
+
+  const getChatsRef = firestore
+    .collection("chats")
+    .where("users", "array-contains", uid);
+
+  // .doc(chatId) //
+  // .collection("messages")
+  // .orderBy("time");
 
   useEffect(() => {
-    getMessagesRef.onSnapshot((querySnapshot) => {
+    getChatsRef.onSnapshot((querySnapshot) => {
       const items = [];
+      const chatIds = [];
       querySnapshot.forEach((doc) => {
-        items.push(doc.data());
+        items.push(doc.data().names);
+        chatIds.push(doc.id);
       });
+
       setLoading(false);
-      setMessages(items);
+      setChats(items);
+      setChatIds(chatIds);
     });
   }, []);
-
-  const messagesRef = firestore
-    .collection("chats")
-    .doc("UbnOvg12YVKQ7a5Ol8KB") //
-    .collection("messages");
-
-  const sendMessage = async (event) => {
-    event.preventDefault();
-
-    await messagesRef
-      .add({
-        message: formValue,
-        time: firebase.firestore.FieldValue.serverTimestamp(),
-      })
-      .catch();
-
-    setFormValue("");
-  };
 
   return (
     <div className="messages">
@@ -68,35 +59,24 @@ function ChatRoom() {
         <p>Loading</p>
       ) : (
         <div className="message-content-container">
-          {messages.map((message) => {
-            // const time = message.time.toDate().toString();
+          {chatIds.map((chatId, i) => {
             return (
-              <div className="message-content">
-                <p>Message: {message.message}</p>
-                {/* <p>{time}</p> */}
-              </div>
+              <Link to="/message" chatId={chatId}>
+                <div key={i} className="message-content">
+                  {chats[i].map((name) => {
+                    console.log(name, displayName);
+                    {
+                      if (displayName !== name) {
+                        return name;
+                      }
+                    }
+                  })}
+                </div>
+              </Link>
             );
           })}
         </div>
       )}
-
-      <form onSubmit={sendMessage} className="message-form">
-        <TextField
-          autoComplete="off"
-          onChange={(e) => setFormValue(e.target.value)}
-          value={formValue}
-          style={{ marginRight: "2%", width: "100%" }}
-          id="message"
-          label="Message"
-        ></TextField>
-        <Button
-          type="submit"
-          style={{ marginRight: "3%", background: "green", color: "white" }}
-          variant="outlined"
-        >
-          Send
-        </Button>
-      </form>
     </div>
   );
 }
