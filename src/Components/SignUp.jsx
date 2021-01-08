@@ -68,7 +68,7 @@ export default function SignUp() {
     const userRegEx = new RegExp("^[a-zA-Z0-9_-]{5,}[a-zA-Z]+[0-9]*$");
     if (!usernameRef.current.value) {
       return setError(
-        "Your username must only consist of alphanumeric characters, at least one letter, underscores or hyphons"
+        "Your username must only consist of alphanumeric characters, at least one letter, underscores or hyphens"
       );
     }
 
