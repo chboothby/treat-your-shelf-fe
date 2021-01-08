@@ -6,6 +6,7 @@ import "firebase/analytics";
 import app from "../firebase";
 import { Button, TextField } from "@material-ui/core";
 import "./Messages.css";
+import { useAuth } from "../Contexts/UserAuth";
 
 const dbConfig = app;
 
@@ -21,9 +22,17 @@ function Messages() {
 }
 
 function ChatRoom() {
+  // get current user_id
+  const { currentUser } = useAuth();
+  // get book owners user_id
+  const bookOwner = "knQicRC1k1UGAROHO5HlnSYUIfS2";
+  // generate their chatId
+  const chatId = [currentUser.uid, bookOwner].sort().join("");
+
+  // get messages from their chat/ create new chat if that chat doesn't exist
   const getMessagesRef = firestore
     .collection("chats")
-    .doc("UbnOvg12YVKQ7a5Ol8KB") //
+    .doc(chatId) //
     .collection("messages")
     .orderBy("time");
 
@@ -44,7 +53,7 @@ function ChatRoom() {
 
   const messagesRef = firestore
     .collection("chats")
-    .doc("UbnOvg12YVKQ7a5Ol8KB") //
+    .doc(chatId) //
     .collection("messages");
 
   const sendMessage = async (event) => {
