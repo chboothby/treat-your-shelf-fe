@@ -23,11 +23,13 @@ function Messages() {
 
 function ChatRoom() {
   // get current user_id
-  const { currentUser } = useAuth();
+  const {
+    currentUser: { uid },
+  } = useAuth();
   // get book owners user_id
-  const bookOwner = "knQicRC1k1UGAROHO5HlnSYUIfS2";
+  const bookOwner = "vQyKA3FuWdSAxBVs8MX3rKYCefi1";
   // generate their chatId
-  const chatId = [currentUser.uid, bookOwner].sort().join("");
+  const chatId = [uid, bookOwner].sort().join("");
 
   // get messages from their chat/ create new chat if that chat doesn't exist
   const getMessagesRef = firestore
@@ -53,7 +55,7 @@ function ChatRoom() {
 
   const messagesRef = firestore
     .collection("chats")
-    .doc(chatId) //
+    .doc(chatId)
     .collection("messages");
 
   const sendMessage = async (event) => {
@@ -63,6 +65,7 @@ function ChatRoom() {
       .add({
         message: formValue,
         time: firebase.firestore.FieldValue.serverTimestamp(),
+        uid,
       })
       .catch();
 
@@ -79,7 +82,10 @@ function ChatRoom() {
             // const time = message.time.toDate().toString();
             return (
               <div className="message-content">
-                <p>Message: {message.message}</p>
+                <p>
+                  {message.uid === uid ? <p>You:</p> : <p>Them:</p>}
+                  {message.message}
+                </p>
                 {/* <p>{time}</p> */}
               </div>
             );
