@@ -10,12 +10,11 @@ function BookDetails(props) {
   const [book, setBook] = useState({});
   const [loading, setLoading] = useState(true);
   const { book_id } = props.match.params;
-  console.log(book_id);
+  console.log(book.owner_id);
   useEffect(() => {
     getSingleBook(book_id).then(({ book }) => {
       setBook(book);
       setLoading(false);
-      console.log(book);
     });
   }, []);
 

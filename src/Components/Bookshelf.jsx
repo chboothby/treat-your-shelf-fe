@@ -8,10 +8,10 @@ import TransitionsModalShelf from "./TransitionsModalShelf";
 import ButtonAppBar from "../Components/ButtonAppBar";
 import { getUserBookshelf } from "../api";
 
-function Bookshelf() {
+function Bookshelf(props) {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
-  const user_id = 1;
+  const { user_id } = props.match.params;
 
   useEffect(() => {
     getUserBookshelf(user_id).then(({ books }) => {
