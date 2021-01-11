@@ -10,7 +10,6 @@ function BookDetails(props) {
   const [book, setBook] = useState({});
   const [loading, setLoading] = useState(true);
   const { book_id } = props.match.params;
-  console.log(book.owner_id);
   useEffect(() => {
     getSingleBook(book_id).then(({ book }) => {
       setBook(book);
@@ -40,15 +39,21 @@ function BookDetails(props) {
           <p>📍 Salford (2.0 miles away)</p>
         </div>
       </div>
-      // add route to messages page, pass through book owner_id and book details
-      <Button
-        style={{ width: "60%", margin: "0 auto" }}
-        variant="outlined"
-        size="medium"
-        color="primary"
+      <Link
+        to={{
+          pathname: "/message",
+          book,
+        }}
       >
-        Request Swap!
-      </Button>
+        <Button
+          style={{ width: "60%", margin: "0 auto" }}
+          variant="outlined"
+          size="medium"
+          color="primary"
+        >
+          Request Swap!
+        </Button>
+      </Link>
     </div>
   );
 }

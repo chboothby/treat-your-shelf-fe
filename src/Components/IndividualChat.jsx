@@ -13,27 +13,33 @@ const dbConfig = app;
 
 const firestore = firebase.firestore();
 
-function IndividualChat() {
+function IndividualChat(props) {
   return (
     <div className="messages-container">
       <h1>Messages</h1>
       <Link to="/messages">
         <p>Back to chats</p>
       </Link>
-      <ChatRoom />
+      <ChatRoom info={props.location} />
     </div>
   );
 }
 
-function ChatRoom() {
+function ChatRoom(props) {
   // get current user_id
   const {
     currentUser: { uid, displayName },
   } = useAuth();
+  // if routed from messages screen use chatId from props else if routed from book swap request use book ownerid
+  let chatId;
+  if (props.info.chatId) {
+    chatId = props.info.chatId;
+  } else if (props.info.book) {
+    chatId = [uid, props.info.book.owner_id].sort().join("");
+  }
+
   // get book owners user_id
-  const bookOwner = "knQicRC1k1UGAROHO5HlnSYUIfS2";
   // generate their chatId
-  const chatId = [uid, bookOwner].sort().join("");
 
   // get messages from their chat/ create new chat if that chat doesn't exist
   const getMessagesRef = firestore
@@ -45,7 +51,6 @@ function ChatRoom() {
   const [formValue, setFormValue] = useState("");
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { currentUser } = useAuth();
 
   useEffect(() => {
     getMessagesRef.onSnapshot((querySnapshot) => {
@@ -73,7 +78,9 @@ function ChatRoom() {
         uid,
         displayName,
       })
-      .catch();
+      .catch((err) => {
+        console.log(err);
+      });
 
     setFormValue("");
   };
@@ -84,6 +91,7 @@ function ChatRoom() {
         <p>Loading</p>
       ) : (
         <div className="message-content-container">
+          {/* <p>Chatting with: {props.location.book.owner_id}</p> */}
           {messages.map((message) => {
             // const time = message.time.toDate().toString();
             return (

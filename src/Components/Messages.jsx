@@ -61,13 +61,12 @@ function Chats() {
         <div className="message-content-container">
           {chatIds.map((chatId, i) => {
             return (
-              <Link to="/message" chatId={chatId}>
+              <Link to={{ pathname: "/message", chatId }}>
                 <div key={i} className="message-content">
-                  {chats[i].map((name) => {
-                    console.log(name, displayName);
+                  {chats[i].filter((name) => {
                     {
                       if (displayName !== name) {
-                        return name;
+                        return <p key={name}>{name}</p>;
                       }
                     }
                   })}
@@ -81,8 +80,8 @@ function Chats() {
   );
 }
 
-function ChatMessage(props) {
-  const { message, time } = props.message;
-}
+// function ChatMessage(props) {
+//   const { message, time } = props.message;
+// }
 
 export default Messages;
