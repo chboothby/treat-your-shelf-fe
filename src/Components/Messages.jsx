@@ -8,6 +8,7 @@ import { Button, TextField } from "@material-ui/core";
 import "./Messages.css";
 import { useAuth } from "../Contexts/UserAuth";
 import { Link } from "react-router-dom";
+const { getUserName } = require("../api");
 
 const dbConfig = app;
 
@@ -23,7 +24,7 @@ function Messages() {
 }
 function Chats() {
   const [loading, setLoading] = useState(true);
-  const [chats, setChats] = useState([]);
+  const [users, setUsers] = useState([]);
   const [chatIds, setChatIds] = useState([]);
 
   const {
@@ -40,16 +41,23 @@ function Chats() {
 
   useEffect(() => {
     getChatsRef.onSnapshot((querySnapshot) => {
-      const items = [];
       const chatIds = [];
-      querySnapshot.forEach((doc) => {
-        items.push(doc.data().names);
+      querySnapshot.forEach((doc, i) => {
         chatIds.push(doc.id);
+        doc
+          .data()
+          .users.filter((id) => id !== uid)
+          .forEach((id) => {
+            getUserName(id).then((response) => {
+              const newUsers = [...users];
+              newUsers.push(response);
+              setUsers(newUsers);
+            });
+          });
       });
 
-      setLoading(false);
-      setChats(items);
       setChatIds(chatIds);
+      setLoading(false);
     });
   }, []);
 
@@ -61,15 +69,9 @@ function Chats() {
         <div className="message-content-container">
           {chatIds.map((chatId, i) => {
             return (
-              <Link to={{ pathname: "/message", chatId }}>
+              <Link to={{ pathname: "/message", chatId }} key={i}>
                 <div key={i} className="message-content">
-                  {chats[i].filter((name) => {
-                    {
-                      if (displayName !== name) {
-                        return <p key={name}>{name}</p>;
-                      }
-                    }
-                  })}
+                  <p>{users[i]}</p>
                 </div>
               </Link>
             );

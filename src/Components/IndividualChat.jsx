@@ -36,6 +36,9 @@ function ChatRoom(props) {
     chatId = props.info.chatId;
   } else if (props.info.book) {
     chatId = [uid, props.info.book.owner_id].sort().join("");
+    // create new chat and add names + ids to it;
+
+    // firestore.collection('users').doc(chatId).set({'names': [], "users": [uid, props.info.book.owner_id]});
   }
 
   // get book owners user_id

@@ -57,3 +57,14 @@ export const deleteBookFromBookshelf = (book_id) => {
     console.log(res);
   });
 };
+
+export const getUserName = (id) => {
+  return treatApi
+    .get(`/users/${id}`)
+    .then(({ data }) => {
+      return data.user.username;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
