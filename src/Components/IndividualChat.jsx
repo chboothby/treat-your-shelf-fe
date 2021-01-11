@@ -13,47 +13,43 @@ const dbConfig = app;
 
 const firestore = firebase.firestore();
 
-function IndividualChat(props) {
+function IndividualChat({ location }) {
   return (
     <div className="messages-container">
       <h1>Messages</h1>
-      <Link to="/messages">
-        <p>Back to chats</p>
-      </Link>
-      <ChatRoom info={props.location} />
+      <Link to="/messages"></Link>
+      <ChatRoom info={location} />
     </div>
   );
 }
 
-function ChatRoom(props) {
+function ChatRoom({ info }) {
+  const [formValue, setFormValue] = useState("");
+  const [messages, setMessages] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [defaultMessage, setDefault] = useState(true);
   // get current user_id
   const {
     currentUser: { uid, displayName },
   } = useAuth();
   // if routed from messages screen use chatId from props else if routed from book swap request use book ownerid
   let chatId;
-  if (props.info.chatId) {
-    chatId = props.info.chatId;
-  } else if (props.info.book) {
-    chatId = [uid, props.info.book.owner_id].sort().join("");
-    // create new chat and add names + ids to it;
-
-    // firestore.collection('users').doc(chatId).set({'names': [], "users": [uid, props.info.book.owner_id]});
+  if (info.chat) {
+    chatId = info.chat.chat_id;
+  } else if (info.book) {
+    const { owner_id } = info.book;
+    chatId = [uid, owner_id].sort().join("");
+    firestore
+      .collection("chats")
+      .doc(chatId)
+      .set({ users: [uid, owner_id] });
   }
 
-  // get book owners user_id
-  // generate their chatId
-
-  // get messages from their chat/ create new chat if that chat doesn't exist
   const getMessagesRef = firestore
     .collection("chats")
-    .doc(chatId) //
+    .doc(chatId)
     .collection("messages")
     .orderBy("time");
-
-  const [formValue, setFormValue] = useState("");
-  const [messages, setMessages] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     getMessagesRef.onSnapshot((querySnapshot) => {
@@ -63,6 +59,15 @@ function ChatRoom(props) {
       });
       setLoading(false);
       setMessages(items);
+      if (info.book && defaultMessage) {
+        setFormValue(
+          `Hi there! I'd like to request to swap "${info.book.title}".`
+        );
+        setDefault(false);
+      }
+      if (!defaultMessage) {
+        setFormValue("");
+      }
     });
   }, []);
 

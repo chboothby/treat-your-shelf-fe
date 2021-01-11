@@ -24,8 +24,7 @@ function Messages() {
 }
 function Chats() {
   const [loading, setLoading] = useState(true);
-  const [users, setUsers] = useState([]);
-  const [chatIds, setChatIds] = useState([]);
+  const [chats, setChats] = useState([]);
 
   const {
     currentUser: { uid, displayName },
@@ -41,22 +40,16 @@ function Chats() {
 
   useEffect(() => {
     getChatsRef.onSnapshot((querySnapshot) => {
-      const chatIds = [];
-      querySnapshot.forEach((doc, i) => {
-        chatIds.push(doc.id);
-        doc
-          .data()
-          .users.filter((id) => id !== uid)
-          .forEach((id) => {
-            getUserName(id).then((response) => {
-              const newUsers = [...users];
-              newUsers.push(response);
-              setUsers(newUsers);
-            });
-          });
+      const chatInfo = [];
+
+      querySnapshot.forEach(async (doc, i) => {
+        const other_user = doc.id.split(uid).filter((el) => el !== "");
+        getUserName(other_user[0]).then((user) => {
+          chatInfo.push({ chat_id: doc.id, other_user: user });
+        });
       });
 
-      setChatIds(chatIds);
+      setChats(chatInfo);
       setLoading(false);
     });
   }, []);
@@ -67,15 +60,19 @@ function Chats() {
         <p>Loading</p>
       ) : (
         <div className="message-content-container">
-          {chatIds.map((chatId, i) => {
-            return (
-              <Link to={{ pathname: "/message", chatId }} key={i}>
-                <div key={i} className="message-content">
-                  <p>{users[i]}</p>
-                </div>
-              </Link>
-            );
-          })}
+          {chats.length === 0 ? (
+            <p>You have no active chats</p>
+          ) : (
+            chats.map((chat, i) => {
+              return (
+                <Link to={{ pathname: "/message", chat }} key={i}>
+                  <div key={i} className="message-content">
+                    <p>{chat.other_user}</p>
+                  </div>
+                </Link>
+              );
+            })
+          )}
         </div>
       )}
     </div>
