@@ -11,6 +11,9 @@ import Container from "@material-ui/core/Container";
 import Alert from "@material-ui/lab/Alert";
 import { useAuth } from "../Contexts/UserAuth";
 import { useHistory } from "react-router-dom";
+import Geocode from "react-geocode";
+Geocode.setApiKey("AIzaSyBzdjkehz-69slvbPIwKPOVGzIkG_fuU3I");
+Geocode.setRegion("gb");
 
 function Copyright() {
   return (
@@ -57,9 +60,12 @@ export default function SignUp() {
   const passwordRef = useRef();
   const usernameRef = useRef();
   const confirmPasswordRef = useRef();
+  const cityRef = useRef();
+  const postCodeRef = useRef();
   const { signUp } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [userLocation, setUserLocation] = useState({});
   const history = useHistory();
 
   async function handleSubmit(e) {
@@ -89,10 +95,13 @@ export default function SignUp() {
     try {
       setError("");
       setLoading(true);
+
       await signUp(
         usernameRef.current.value,
         emailRef.current.value,
-        passwordRef.current.value
+        passwordRef.current.value,
+        cityRef.current.value,
+        postCodeRef.current.value
       );
       history.push("/email-verify");
     } catch {
@@ -136,6 +145,27 @@ export default function SignUp() {
                 name="email"
                 autoComplete="email"
                 inputRef={emailRef}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                fullWidth
+                id="city"
+                label="City"
+                name="email"
+                autoComplete="city"
+                inputRef={cityRef}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                fullWidth
+                id="postcode"
+                label="First section of post-code (e.g M16)"
+                name="postcode"
+                inputRef={postCodeRef}
               />
             </Grid>
             <Grid item xs={12}>

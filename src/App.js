@@ -40,7 +40,10 @@ export default function App() {
             <Route path="/help" component={Help} />
             <PrivateRoute path="/account" component={Account} />
             <Route path="/loggedout" component={LogOutPage}></Route>
-            <PrivateRoute path="/email-verify" component={EmailVerifyNotice}></PrivateRoute>
+            <PrivateRoute
+              path="/email-verify"
+              component={EmailVerifyNotice}
+            ></PrivateRoute>
           </Switch>
           <SimpleBottomNavigation></SimpleBottomNavigation>
         </AuthProvider>

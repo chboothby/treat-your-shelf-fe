@@ -1,9 +1,11 @@
 import React, { useContext, useState, useEffect } from "react";
 import { auth, user } from "../firebase";
 import { createNewUser, changeUsername } from "../api";
+import Geocode from "react-geocode";
+Geocode.setApiKey("AIzaSyBzdjkehz-69slvbPIwKPOVGzIkG_fuU3I");
+Geocode.setRegion("gb");
 
 export const AuthContext = React.createContext();
-
 export const useAuth = () => {
   return useContext(AuthContext);
 };
@@ -11,10 +13,12 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
+  const [location, setLocation] = useState({});
 
-  const signUp = (displayName, email, password) => {
+  const signUp = (displayName, email, password, city, postcode) => {
     return auth.createUserWithEmailAndPassword(email, password).then((res) => {
       const user = auth.currentUser;
+
       return user
         .updateProfile({
           displayName: displayName,
@@ -23,7 +27,17 @@ export const AuthProvider = ({ children }) => {
           return user.sendEmailVerification();
         })
         .then(() => {
-          createNewUser(user.uid, user.displayName, user.email);
+          Geocode.fromAddress(`${city} ${postcode}`).then(
+            (response) => {
+              const { lat, lng } = response.results[0].geometry.location;
+              const location = [];
+              location.push(lat, lng);
+              createNewUser(user.uid, user.displayName, user.email, location);
+            },
+            (error) => {
+              console.error(error);
+            }
+          );
         })
         .catch((err) => {
           console.log(err);
