@@ -13,39 +13,43 @@ const dbConfig = app;
 
 const firestore = firebase.firestore();
 
-function IndividualChat() {
+function IndividualChat({ location }) {
   return (
     <div className="messages-container">
       <h1>Messages</h1>
-      <Link to="/messages">
-        <p>Back to chats</p>
-      </Link>
-      <ChatRoom />
+      <Link to="/messages"></Link>
+      <ChatRoom info={location} />
     </div>
   );
 }
 
-function ChatRoom() {
+function ChatRoom({ info }) {
+  const [formValue, setFormValue] = useState("");
+  const [messages, setMessages] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [defaultMessage, setDefault] = useState(true);
   // get current user_id
   const {
     currentUser: { uid, displayName },
   } = useAuth();
-  // get book owners user_id
-  const bookOwner = "knQicRC1k1UGAROHO5HlnSYUIfS2";
-  // generate their chatId
-  const chatId = [uid, bookOwner].sort().join("");
+  // if routed from messages screen use chatId from props else if routed from book swap request use book ownerid
+  let chatId;
+  if (info.chat) {
+    chatId = info.chat.chat_id;
+  } else if (info.book) {
+    const { owner_id } = info.book;
+    chatId = [uid, owner_id].sort().join("");
+    firestore
+      .collection("chats")
+      .doc(chatId)
+      .set({ users: [uid, owner_id] });
+  }
 
-  // get messages from their chat/ create new chat if that chat doesn't exist
   const getMessagesRef = firestore
     .collection("chats")
-    .doc(chatId) //
+    .doc(chatId)
     .collection("messages")
     .orderBy("time");
-
-  const [formValue, setFormValue] = useState("");
-  const [messages, setMessages] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const { currentUser } = useAuth();
 
   useEffect(() => {
     getMessagesRef.onSnapshot((querySnapshot) => {
@@ -55,6 +59,15 @@ function ChatRoom() {
       });
       setLoading(false);
       setMessages(items);
+      if (info.book && defaultMessage) {
+        setFormValue(
+          `Hi there! I'd like to request to swap "${info.book.title}".`
+        );
+        setDefault(false);
+      }
+      if (!defaultMessage) {
+        setFormValue("");
+      }
     });
   }, []);
 
@@ -73,7 +86,9 @@ function ChatRoom() {
         uid,
         displayName,
       })
-      .catch();
+      .catch((err) => {
+        console.log(err);
+      });
 
     setFormValue("");
   };
@@ -84,6 +99,7 @@ function ChatRoom() {
         <p>Loading</p>
       ) : (
         <div className="message-content-container">
+          {/* <p>Chatting with: {props.location.book.owner_id}</p> */}
           {messages.map((message) => {
             // const time = message.time.toDate().toString();
             return (
