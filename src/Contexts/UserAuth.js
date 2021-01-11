@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
-import { auth, user } from "../firebase";
-import { createNewUser, changeUsername } from "../api";
+import { auth } from "../firebase";
+import { createNewUser, changeUsername, changeAvatar } from "../api";
 
 export const AuthContext = React.createContext();
 
@@ -18,6 +18,8 @@ export const AuthProvider = ({ children }) => {
       return user
         .updateProfile({
           displayName: displayName,
+          photoURL:
+            "https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg",
         })
         .then(() => {
           return user.sendEmailVerification();
@@ -43,6 +45,24 @@ export const AuthProvider = ({ children }) => {
     return auth.sendPasswordResetEmail(email);
   };
 
+  const changeDisplayName = (displayName) => {
+    const user = auth.currentUser;
+    return user.updateProfile({ displayName: displayName }).then(() => {
+      changeUsername(user.uid, user.displayName).catch((err) => {
+        console.log(err);
+      });
+    });
+  };
+
+  const changePhotoURL = (photoURL) => {
+    const user = auth.currentUser;
+    return user.updateProfile({ photoURL: photoURL }).then(() => {
+      changeAvatar(user.uid, user.photoURL).catch((err) => {
+        console.log(err);
+      });
+    });
+  };
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setCurrentUser(user);
@@ -52,7 +72,15 @@ export const AuthProvider = ({ children }) => {
     return unsubscribe;
   }, []);
 
-  const value = { currentUser, signUp, logIn, logout, resetPassword };
+  const value = {
+    currentUser,
+    signUp,
+    logIn,
+    logout,
+    resetPassword,
+    changeDisplayName,
+    changePhotoURL,
+  };
 
   return (
     <AuthContext.Provider value={value}>
