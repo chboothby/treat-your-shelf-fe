@@ -31,6 +31,7 @@ export const createNewUser = (user_id, username, email, location) => {
 
 export const getUserBookshelf = (user_id) => {
   return treatApi.get(`/users/${user_id}/books`).then((data) => {
+    console.log(data.data);
     return data.data;
   });
 };

@@ -4,11 +4,11 @@ import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import { Button } from "@material-ui/core";
-import "../CSS/TransitionsModalShelf.css";
+import "../CSS/TransitionsModalScanner.css";
 import { Link } from "react-router-dom";
-import { deleteBookFromBookshelf } from "../api";
+import Alert from "@material-ui/lab/Alert";
 import { useAuth } from "../Contexts/UserAuth";
-import { useHistory } from "react-router-dom";
+import { addBookToMyBookshelf } from "../api";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -25,33 +25,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function TransitionsModalShelf(props) {
+export default function TransitionsModalScanner(props) {
   const { title, author, image, book_id } = props.book;
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const { refreshBookshelf } = props;
+  const [added, setAdded] = React.useState("Book added to bookshelf!");
   const { currentUser } = useAuth();
-  const history = useHistory();
 
   const handleOpen = () => {
+    const book = props.book;
     setOpen(true);
+    addBookToMyBookshelf(book, currentUser.uid).then((res) => {});
   };
 
   const handleClose = () => {
     setOpen(false);
   };
 
-  const handleClick = (book_id) => {
-    deleteBookFromBookshelf(book_id).then((res) => {
-      console.log(res, "deleted!");
-      refreshBookshelf();
-    });
-  };
-
   return (
     <div>
       <Button onClick={handleOpen} variant="outlined">
-        View
+        Add Book
       </Button>
       <Modal
         aria-labelledby="transition-modal-title"
@@ -67,37 +61,25 @@ export default function TransitionsModalShelf(props) {
       >
         <Fade in={open}>
           <div className={classes.paper}>
-            <div className="modal-content">
-              <img alt="book" src={image}></img>
+            <div className="modal-scanners-content">
+              <h3 id="transition-modal-title">{title}</h3>
+              <Alert style={{ marginBottom: "5%" }} severity="success">
+                Book added to bookshelf!
+              </Alert>
               <div className="modal-buttons">
                 <Button
                   component={Link}
                   //this path will need to be a parametric endpoint
-                  to="/book"
-                  style={{ border: "solid black 0.5px" }}
+                  to={`/users/${currentUser.uid}/books`}
+                  style={{ border: "solid black 0.5px", marginBottom: "3%" }}
                 >
-                  View Book
+                  View Bookshelf
                 </Button>
 
-                <Button style={{ border: "solid black 0.5px" }}>
-                  Hide Book
-                </Button>
-
-                <Button
-                  onClick={() => {
-                    handleClick(book_id);
-                  }}
-                  // href={`/users/${currentUser.uid}/books`}
-                  style={{ background: "red" }}
-                >
-                  Remove Book
+                <Button href="/scan" style={{ border: "solid black 0.5px" }}>
+                  Scan another book
                 </Button>
               </div>
-            </div>
-
-            <div className="modal-footer">
-              <h2 id="transition-modal-title">{title}</h2>
-              <p id="transition-modal-description">{author}</p>
             </div>
           </div>
         </Fade>
