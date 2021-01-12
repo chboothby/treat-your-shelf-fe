@@ -28,31 +28,33 @@ function ChatRoom({ info }) {
   const [formValue, setFormValue] = useState("");
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [otherUser, setOtherUser] = useState({});
   // get current user_id
   const {
     currentUser: { uid, displayName },
   } = useAuth();
 
-  let chatId;
-  let otherUser;
-  if (info.chat) {
-    chatId = info.chat.chat_id;
-    otherUser = info.chat.other_user;
-  } else if (info.book) {
-    const user = {};
-    const { owner_id } = info.book;
-    getUserName(owner_id).then((name) => {
-      user.name = name;
-      user.id = owner_id;
-      otherUser = user;
-    });
+  let chatId = info?.chat.chat_id;
 
-    chatId = [uid, owner_id].sort().join("");
-    firestore
-      .collection("chats")
-      .doc(chatId)
-      .set({ users: [uid, owner_id] });
-  }
+  useEffect(() => {
+    if (info.chat) {
+      setOtherUser(info.chat.other_user);
+    } else if (info.bookInfo) {
+      const user = {};
+      const { owner_id } = info.bookInfo;
+      user.id = owner_id;
+      getUserName(owner_id).then((name) => {
+        user.name = name;
+        setOtherUser(user);
+      });
+
+      chatId = [uid, owner_id].sort().join("");
+      firestore
+        .collection("chats")
+        .doc(chatId)
+        .set({ users: [uid, owner_id] });
+    }
+  });
 
   const getMessagesRef = firestore
     .collection("chats")
@@ -90,9 +92,9 @@ function ChatRoom({ info }) {
       });
       setLoading(false);
       setMessages(items);
-      if (info.book) {
+      if (info.bookInfo) {
         setFormValue(
-          `Hi there! I'd like to request to swap "${info.book.title}".`
+          `Hi there! I'd like to request to swap "${info.bookInfo.title}".`
         );
       }
     });
