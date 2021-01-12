@@ -42,7 +42,9 @@ function BookDetails(props) {
               longitude: `-${user.location.y}`,
             },
           ]);
-          const converted = Math.round(geolib.convertDistance(distance, "mi"));
+          const converted = Math.round(
+            geolib.convertDistance(distance, "mi") / 10
+          );
 
           setUserDistance(converted);
           setLoading(false);
@@ -87,7 +89,6 @@ function BookDetails(props) {
       )}
 
       <TransitionsModalRequest book={bookInfo} />
-
     </div>
   );
 }

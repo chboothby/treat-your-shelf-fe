@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function TransitionsModalShelf(props) {
   const { title, authors, thumbnail, book_id } = props.book;
-  console.log(props.book);
+
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const { refreshBookshelf } = props;
@@ -43,7 +43,6 @@ export default function TransitionsModalShelf(props) {
 
   const handleClick = (book_id) => {
     deleteBookFromBookshelf(book_id).then((res) => {
-      console.log(res, "deleted!");
       refreshBookshelf();
     });
   };

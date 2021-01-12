@@ -107,48 +107,47 @@ export default function Account() {
         </Grid>
       </div>
       <Grid container className="account-body" justify="center">
-        <div className="classes.username">
-          <Grid item xs={12}>
-            <FormControlLabel
-              style={{ background: "white", margin: "3%" }}
-              control={
-                <Button variant="outlined" onClick={handleUsernameDrop}>
-                  Change Username
-                </Button>
-              }
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Collapse in={usernameChange} collapsedHeight={0}>
-              <TextField
-                style={{ background: "white", margin: "3%" }}
-                name="username"
-                variant="outlined"
-                id="username"
-                label="Username"
-                size="small"
-                defaultValue={currentUser.displayName}
-                inputRef={usernameRef}
-              />
-              <Button
-                style={{ background: "white", margin: "3%" }}
-                variant="outlined"
-                onClick={handleChangeUsername}
-              >
-                Update
+        <Grid item xs={12}>
+          <FormControlLabel
+            style={{ background: "white", margin: "3%" }}
+            control={
+              <Button variant="outlined" onClick={handleUsernameDrop}>
+                Change Username
               </Button>
-            </Collapse>
-          </Grid>
-        </div>
-        <Button
-          style={{ background: "white", margin: "3%" }}
-          variant="outlined"
-          component={RouterLink}
-          to="/password-reset"
-        >
-          Change Password
-        </Button>
-
+            }
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Collapse in={usernameChange} collapsedHeight={0}>
+            <TextField
+              style={{ background: "white", margin: "3%" }}
+              name="username"
+              variant="outlined"
+              id="username"
+              label="Username"
+              size="small"
+              defaultValue={currentUser.displayName}
+              inputRef={usernameRef}
+            />
+            <Button
+              style={{ background: "white", margin: "3%" }}
+              variant="outlined"
+              onClick={handleChangeUsername}
+            >
+              Update
+            </Button>
+          </Collapse>
+        </Grid>
+        <Grid item xs={12}>
+          <Button
+            style={{ background: "white", margin: "3%" }}
+            variant="outlined"
+            component={RouterLink}
+            to="/password-reset"
+          >
+            Change Password
+          </Button>
+        </Grid>
         <Grid item xs={12}>
           <Button
             style={{ background: "white", margin: "3%" }}

@@ -1,10 +1,10 @@
 import { Button, TextField } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-import bookplaceholder from "../bookplaceholder.jpg";
 import "../CSS/Search.css";
 import TransitionsModalSearch from "./TransitionsModalSearch";
 import { getAllBooks } from "../api";
 import { useAuth } from "../Contexts/UserAuth";
+
 function Search() {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -17,27 +17,37 @@ function Search() {
       });
       setBooks(filtered);
       setLoading(false);
-      console.log(filtered);
     });
   }, []);
 
   const [formValue, setFormValue] = useState({});
-  console.log(books);
   const handleChange = (event) => {
     setFormValue({ ...formValue, [event.target.name]: event.target.value });
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // API request in here
+    const { title } = formValue;
+    const { author } = formValue;
 
-    setFormValue({});
+    getAllBooks(title, author).then((data) => {
+      const filtered = data.books.books.filter((book) => {
+        return book.owner_id !== currentUser.uid;
+      });
+      setBooks(filtered);
+      setLoading(false);
+    });
   };
 
   return (
     <div className="search-results-container">
       <div>
-        <form onSubmit={handleSubmit} className="search-form">
+        <form
+          onSubmit={(event) => {
+            handleSubmit(event);
+          }}
+          className="search-form"
+        >
           <TextField
             style={{ margin: "1%" }}
             id="title"
@@ -65,15 +75,20 @@ function Search() {
       </div>
       <div className="results-list">
         {loading ? (
-          <p>Loading Bookshelf</p>
+          <p>Loading books...</p>
         ) : (
           books.map((book) => {
             return (
               // book div below need an ID from our backend
               <div className="book">
                 <img src={book.thumbnail} alt="book"></img>
-                <p>{book.title}</p>
-                <TransitionsModalSearch book={book}></TransitionsModalSearch>
+                <div className="search-book-info">
+                  <strong>{book.title}</strong>
+                  <p>{book.authors}</p>
+                  <TransitionsModalSearch
+                    book={book}
+                  ></TransitionsModalSearch>{" "}
+                </div>
               </div>
             );
           })

@@ -5,11 +5,13 @@ const treatApi = axios.create({
   baseURL: "https://treat-yo-shelf-backend.herokuapp.com/api/",
 });
 
-export const getAllBooks = () => {
-  return treatApi.get("/books").then((data) => {
+export const getAllBooks = (title, author) => {
+  return treatApi.get(`/books`, { params: { title, author } }).then((data) => {
     return data.data;
   });
 };
+
+//
 
 export const getSingleBook = (book_id) => {
   return treatApi.get(`/books/${book_id}`).then((data) => {
@@ -77,6 +79,7 @@ export const getUserInfo = (user_id) => {
     return data.data;
   });
 };
+
 export const getUserName = (id) => {
   return treatApi
     .get(`/users/${id}`)

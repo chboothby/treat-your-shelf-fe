@@ -2,10 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import BarcodeScannerComponent from "react-webcam-barcode-scanner";
 import axios from "axios";
 import "../CSS/ScanResults.css";
-import bookplaceholder from "../bookplaceholder.jpg";
 import { Button, Link } from "@material-ui/core";
-import { useAuth } from "../Contexts/UserAuth";
-import { addBookToMyBookshelf } from "../api";
 import TransitionsModalScanner from "./TransitionsModalScanner";
 
 function Scanner() {
@@ -15,7 +12,9 @@ function Scanner() {
 
   const getBookByISBN = (isbn) => {
     return axios
-      .get(`https://www.googleapis.com/books/v1/volumes?q=${isbn}+isbn`)
+      .get(
+        `https://www.googleapis.com/books/v1/volumes?q=${isbn}+isbn&maxResults=10`
+      )
       .then(({ data: { items } }) => {
         if (!items) {
           setError("No books found");

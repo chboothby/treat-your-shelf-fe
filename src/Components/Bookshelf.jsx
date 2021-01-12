@@ -1,11 +1,9 @@
-import React, { useState, setState, useEffect, useRef } from "react";
-import bookplaceholder from "../bookplaceholder.jpg";
+import React, { useState, useEffect, useRef } from "react";
 import "../CSS/Bookshelf.css";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import IconButton from "@material-ui/core/IconButton";
 import { Link } from "react-router-dom";
 import TransitionsModalShelf from "./TransitionsModalShelf";
-import ButtonAppBar from "./ButtonAppBar";
 import { getUserBookshelf } from "../api";
 import { useAuth } from "../Contexts/UserAuth";
 
@@ -56,17 +54,22 @@ function Bookshelf(props) {
 
         <div className="book-grid">
           {loading ? (
-            <p>Loading</p>
+            <p>Loading...</p>
           ) : (
             books.books.map((book) => {
               return (
                 <div className="book-list-card">
                   <img alt="book" src={book.thumbnail}></img>
-                  <p>{book.title}</p>
-                  <TransitionsModalShelf
-                    refreshBookshelf={refreshBookshelf}
-                    book={book}
-                  ></TransitionsModalShelf>
+                  <div className="my-book-info">
+                    <strong>{book.title}</strong>
+                    <p>{book.authors}</p>
+                    <div>
+                      <TransitionsModalShelf
+                        refreshBookshelf={refreshBookshelf}
+                        book={book}
+                      ></TransitionsModalShelf>{" "}
+                    </div>{" "}
+                  </div>
                 </div>
               );
             })
