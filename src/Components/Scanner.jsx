@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import BarcodeScannerComponent from "react-webcam-barcode-scanner";
 import axios from "axios";
 import "../CSS/ScanResults.css";
@@ -6,18 +6,12 @@ import bookplaceholder from "../bookplaceholder.jpg";
 import { Button, Link } from "@material-ui/core";
 import { useAuth } from "../Contexts/UserAuth";
 import { addBookToMyBookshelf } from "../api";
+import TransitionsModalScanner from "./TransitionsModalScanner";
 
 function Scanner() {
   const [data, setData] = useState("Not Found");
   const [books, setBooks] = useState([]);
   const [error, setError] = useState("");
-  const [clicked, setClick] = useState(false);
-  const { currentUser } = useAuth();
-
-  const handleClick = (book) => {
-    setClick(true);
-    addBookToMyBookshelf(book, currentUser.uid).then((res) => {});
-  };
 
   const getBookByISBN = (isbn) => {
     return axios
@@ -93,20 +87,10 @@ function Scanner() {
                   <p>Title: {book.title}</p>
                   <p>Author(s): {book.authors.map((author) => author)}</p>
                   <p>Published: {book.publishedDate}</p>
-                  {!clicked ? (
-                    <Button
-                      onClick={() => {
-                        handleClick(book);
-                      }}
-                      style={{ background: "white" }}
-                    >
-                      Add to bookshelf
-                    </Button>
-                  ) : (
-                    <Button style={{ background: "green", color: "white" }}>
-                      Added!
-                    </Button>
-                  )}
+
+                  <TransitionsModalScanner
+                    book={book}
+                  ></TransitionsModalScanner>
                 </div>
               </div>
             );

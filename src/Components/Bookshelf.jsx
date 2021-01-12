@@ -1,4 +1,4 @@
-import React, { useState, setState, useEffect } from "react";
+import React, { useState, setState, useEffect, useRef } from "react";
 import bookplaceholder from "../bookplaceholder.jpg";
 import "../CSS/Bookshelf.css";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
@@ -14,7 +14,7 @@ function Bookshelf(props) {
   const [loading, setLoading] = useState(true);
   const { owner_id } = props.match.params;
   const { currentUser } = useAuth();
-
+  const ref = useRef();
   useEffect(() => {
     const paramsLength = Object.keys(props.match.params).length;
 
@@ -30,6 +30,13 @@ function Bookshelf(props) {
       });
     }
   }, []);
+
+  const refreshBookshelf = () => {
+    getUserBookshelf(currentUser.uid).then(({ books }) => {
+      setBooks(books);
+      setLoading(false);
+    });
+  };
 
   return (
     <>
@@ -56,7 +63,10 @@ function Bookshelf(props) {
                 <div className="book-list-card">
                   <img alt="book" src={book.thumbnail}></img>
                   <p>{book.title}</p>
-                  <TransitionsModalShelf book={book}></TransitionsModalShelf>
+                  <TransitionsModalShelf
+                    refreshBookshelf={refreshBookshelf}
+                    book={book}
+                  ></TransitionsModalShelf>
                 </div>
               );
             })
