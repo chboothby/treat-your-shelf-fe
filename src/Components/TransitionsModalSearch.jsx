@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
@@ -6,6 +6,7 @@ import Fade from "@material-ui/core/Fade";
 import { Button } from "@material-ui/core";
 import "../CSS/TransitionsModalSearch.css";
 import { Link } from "react-router-dom";
+import { getUserInfo } from "../api";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -24,18 +25,24 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function TransitionsModalSearch(props) {
-  const { title, author, thumbnail, book_id } = props.book;
-
+  const { title, author, thumbnail, book_id, owner_id } = props.book;
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [ownerInfo, setOwnerInfo] = useState({});
 
   const handleOpen = () => {
     setOpen(true);
+    getUserInfo(owner_id).then(({ user }) => {
+      console.log(user);
+      setOwnerInfo(user);
+    });
   };
 
   const handleClose = () => {
     setOpen(false);
   };
+
+  useEffect(() => {}, []);
 
   return (
     <div>
@@ -63,7 +70,9 @@ export default function TransitionsModalSearch(props) {
                 <p>{title}</p>
                 <p>{author}</p>
                 <div className="user-info">
-                  <p>Username</p>
+                  <Link to={`/users/${owner_id}/books`}>
+                    {ownerInfo.username}
+                  </Link>
                   <Link to={`/books/${book_id}`}>
                     <Button variant="outlined" size="medium" color="primary">
                       View

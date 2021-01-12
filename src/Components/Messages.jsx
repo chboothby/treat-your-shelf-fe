@@ -21,6 +21,7 @@ function Messages() {
 function Chats() {
   const [loading, setLoading] = useState(true);
   const [chats, setChats] = useState([]);
+  const [gotChats, setGotChats] = useState(false);
 
   const {
     currentUser: { uid },
@@ -31,9 +32,9 @@ function Chats() {
     .where("users", "array-contains", uid);
 
   useEffect(() => {
+    console.log("1st");
+    const chatInfo = [];
     getChatsRef.onSnapshot((querySnapshot) => {
-      const chatInfo = [];
-
       querySnapshot.forEach(async (doc, i) => {
         const other_user = doc.id.split(uid).filter((el) => el !== "");
         getUserName(other_user[0]).then((user) => {
@@ -42,10 +43,11 @@ function Chats() {
             other_user: { name: user, id: other_user[0] },
           });
         });
+        setGotChats(true);
       });
-
       setChats(chatInfo);
       setLoading(false);
+      console.log(chats);
     });
   }, []);
 
@@ -55,10 +57,11 @@ function Chats() {
         <p>Loading</p>
       ) : (
         <div className="message-content-container">
-          {chats.length === 0 ? (
+          {!gotChats ? (
             <p>You have no active chats</p>
           ) : (
             chats.map((chat, i) => {
+              console.log(chat);
               return (
                 <Link to={{ pathname: "/message", chat }} key={i}>
                   <div key={i} className="message-content">

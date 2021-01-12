@@ -27,15 +27,15 @@ function Search() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    setFormValue({});
-    console.log(formValue);
-
     const { title } = formValue;
     const { author } = formValue;
 
-    getAllBooks(currentUser.uid, title, author).then((data) => {
-      setBooks(data.books.books);
+    getAllBooks(title, author).then((data) => {
+      const filtered = data.books.books.filter((book) => {
+        return book.owner_id !== currentUser.uid;
+      });
+      setBooks(filtered);
+      setLoading(false);
     });
   };
 
@@ -82,8 +82,13 @@ function Search() {
               // book div below need an ID from our backend
               <div className="book">
                 <img src={book.thumbnail} alt="book"></img>
-                <p>{book.title}</p>
-                <TransitionsModalSearch book={book}></TransitionsModalSearch>
+                <div className="search-book-info">
+                  <strong>{book.title}</strong>
+                  <p>{book.authors}</p>
+                  <TransitionsModalSearch
+                    book={book}
+                  ></TransitionsModalSearch>{" "}
+                </div>
               </div>
             );
           })

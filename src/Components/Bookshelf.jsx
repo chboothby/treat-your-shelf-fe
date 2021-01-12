@@ -60,11 +60,16 @@ function Bookshelf(props) {
               return (
                 <div className="book-list-card">
                   <img alt="book" src={book.thumbnail}></img>
-                  <p>{book.title}</p>
-                  <TransitionsModalShelf
-                    refreshBookshelf={refreshBookshelf}
-                    book={book}
-                  ></TransitionsModalShelf>
+                  <div className="my-book-info">
+                    <strong>{book.title}</strong>
+                    <p>{book.authors}</p>
+                    <div>
+                      <TransitionsModalShelf
+                        refreshBookshelf={refreshBookshelf}
+                        book={book}
+                      ></TransitionsModalShelf>{" "}
+                    </div>{" "}
+                  </div>
                 </div>
               );
             })
