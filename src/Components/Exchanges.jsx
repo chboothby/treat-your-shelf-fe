@@ -3,6 +3,7 @@ import { useAuth } from "../Contexts/UserAuth";
 import Button from "@material-ui/core/Button";
 import { getSingleBook, getUserName } from "../api";
 import "../CSS/Exchanges.css";
+import { getAllExchanges, sendBook, receiveBook, removeRequest } from "../api";
 
 function Exchanges() {
   return (
@@ -18,69 +19,102 @@ function YourRequests() {
   const {
     currentUser: { uid },
   } = useAuth();
-  const [exchanges, setExchanges] = useState([
-    {
-      exchange_id: 1,
-      owner_id: "knQicRC1k1UGAROHO5HlnSYUIfS2",
-      requester_id: "vQyKA3FuWdSAxBVs8MX3rKYCefi1",
-      book_id: 4,
-      book_sent: false,
-      book_recieved: false,
-    },
-  ]);
+  const [exchanges, setExchanges] = useState([]);
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     const updatedExchanges = [];
-    exchanges.forEach((exchange) => {
-      const { book_id, owner_id } = exchange;
-      const username = getUserName(owner_id);
-      const book = getSingleBook(book_id);
-      return Promise.all([username, book]).then(([username, book]) => {
-        exchange.owner_name = username;
-        exchange.artwork = book.book.thumbnail;
-        updatedExchanges.push(exchange);
-      });
+    getAllExchanges(uid).then((exchanges) => {
+      exchanges
+        .filter((exchange) => exchange.requester_id === uid)
+        .forEach((exchange) => {
+          const { book_id, owner_id } = exchange;
+          const username = getUserName(owner_id);
+          const book = getSingleBook(book_id);
+          return Promise.all([username, book]).then(([username, book]) => {
+            exchange.owner_name = username;
+            exchange.artwork = book.book.thumbnail;
+            updatedExchanges.push(exchange);
+          });
+        });
     });
+
     setExchanges(updatedExchanges);
     setLoading(false);
-  }, []);
+  }, [setExchanges]);
+
+  const handleReceived = (exchange_id, i) => {
+    receiveBook(exchange_id, uid);
+    const newExchanges = [...exchanges];
+    newExchanges[i].book_sent = true;
+    setExchanges(newExchanges);
+  };
+
+  const handleCancel = (exchange_id, i) => {
+    removeRequest(exchange_id, uid);
+    setExchanges(exchanges.splice(i, 1));
+  };
 
   if (isLoading) {
     return <p>Loading</p>;
   } else {
     return (
-      <div className="requests-container">
-        <h2>Your requests</h2>
-        {exchanges.map((exchange, i) => {
-          return (
-            <div className="exchange-container" key={i}>
-              <div className="book-artwork">
-                <p>Owner: {exchange.owner_name}</p>
-                <img src={exchange.artwork}></img>
+      <div className="container">
+        <h2>Books you have requested</h2>
+        <div className="requests-container">
+          {exchanges.map((exchange, i) => {
+            return (
+              <div className="exchange-container" key={i}>
+                <div className="book-artwork">
+                  <p>Owner: {exchange.owner_name}</p>
+                  <img src={exchange.artwork}></img>
+                </div>
+                {exchange.book_received ? (
+                  <Button
+                    style={{ width: "40%", margin: "0 auto" }}
+                    variant="outlined"
+                    size="medium"
+                    disabled={exchange.book_received}
+                  >
+                    Pending...
+                  </Button>
+                ) : (
+                  <div className="actions">
+                    {" "}
+                    <Button
+                      onClick={() => {
+                        handleReceived(exchange.exchange_id, i);
+                      }}
+                      style={{
+                        background: "blue",
+                        width: "40%",
+                        margin: "0 auto",
+                      }}
+                      variant="outlined"
+                      size="medium"
+                    >
+                      Received
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        handleCancel(exchange.exchange_id, i);
+                      }}
+                      style={{
+                        background: "red",
+                        width: "40%",
+                        margin: "0 auto",
+                      }}
+                      variant="outlined"
+                      size="medium"
+                    >
+                      Cancel
+                    </Button>
+                  </div>
+                )}
               </div>
-              <div className="actions">
-                {" "}
-                <Button
-                  style={{ width: "40%", margin: "0 auto" }}
-                  variant="outlined"
-                  size="medium"
-                  color="primary"
-                >
-                  Received
-                </Button>
-                <Button
-                  style={{ width: "40%", margin: "0 auto" }}
-                  variant="outlined"
-                  size="medium"
-                  color="secondary"
-                >
-                  Cancel
-                </Button>
-              </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     );
   }
@@ -89,66 +123,99 @@ function TheirRequests() {
   const {
     currentUser: { uid },
   } = useAuth();
-  const [exchanges, setExchanges] = useState([
-    {
-      exchange_id: 1,
-      owner_id: "vQyKA3FuWdSAxBVs8MX3rKYCefi1",
-      requester_id: "knQicRC1k1UGAROHO5HlnSYUIfS2",
-      book_id: 1,
-      book_sent: false,
-      book_recieved: false,
-    },
-  ]);
+  const [exchanges, setExchanges] = useState([]);
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     const updatedExchanges = [];
-    exchanges.forEach((exchange) => {
-      const { book_id } = exchange;
-
-      getSingleBook(book_id).then((book) => {
-        exchange.artwork = book.book.thumbnail;
-        updatedExchanges.push(exchange);
-      });
+    getAllExchanges(uid).then((exchanges) => {
+      exchanges
+        .filter((exchange) => exchange.requester_id != uid)
+        .forEach((exchange) => {
+          const { book_id, owner_id } = exchange;
+          const username = getUserName(owner_id);
+          const book = getSingleBook(book_id);
+          return Promise.all([username, book]).then(([username, book]) => {
+            exchange.owner_name = username;
+            exchange.artwork = book.book.thumbnail;
+            updatedExchanges.push(exchange);
+          });
+        });
     });
 
     setExchanges(updatedExchanges);
+
     setLoading(false);
-  }, []);
+  }, [setExchanges]);
+
+  const handleSend = (book_id, i) => {
+    sendBook(book_id, uid);
+    const newExchanges = [...exchanges];
+    newExchanges[i].book_sent = true;
+  };
+
+  const handleDecline = (exchange_id, i) => {
+    removeRequest(exchange_id, uid);
+    setExchanges(exchanges.splice(i, 1));
+  };
 
   if (isLoading) {
     return <p>Loading</p>;
   } else {
     return (
-      <div className="requests-container">
-        <h2>Their requests</h2>
-        {exchanges.map((exchange, i) => {
-          return (
-            <div className="exchange-container" key={i}>
-              <div className="book-artwork">
-                <img src={exchange.artwork}></img>
+      <div className="container">
+        <h2>Books others have requested from you</h2>
+        <div className="requests-container">
+          {exchanges.map((exchange, i) => {
+            return (
+              <div className="exchange-container" key={i}>
+                <div className="book-artwork">
+                  <img src={exchange.artwork}></img>
+                </div>
+                {exchange.book_sent ? (
+                  <Button
+                    style={{ width: "40%", margin: "0 auto" }}
+                    variant="outlined"
+                    size="medium"
+                  >
+                    Pending...
+                  </Button>
+                ) : (
+                  <div className="actions">
+                    <Button
+                      onClick={() => {
+                        handleSend(exchange.exchange_id, i);
+                      }}
+                      style={{
+                        background: "blue",
+                        width: "40%",
+                        margin: "0 auto",
+                      }}
+                      variant="outlined"
+                      size="medium"
+                    >
+                      Send
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        handleDecline(exchange.exchange_id, i);
+                      }}
+                      style={{
+                        background: "red",
+                        width: "40%",
+                        margin: "0 auto",
+                      }}
+                      variant="outlined"
+                      size="medium"
+                    >
+                      Decline
+                    </Button>
+                  </div>
+                )}
               </div>
-              <div className="actions">
-                <Button
-                  style={{ width: "40%", margin: "0 auto" }}
-                  variant="outlined"
-                  size="medium"
-                  color="primary"
-                >
-                  Send
-                </Button>
-                <Button
-                  style={{ width: "40%", margin: "0 auto" }}
-                  variant="outlined"
-                  size="medium"
-                  color="secondary"
-                >
-                  Decline
-                </Button>
-              </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     );
   }

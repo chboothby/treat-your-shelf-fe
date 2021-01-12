@@ -34,7 +34,7 @@ function ChatRoom({ info }) {
     currentUser: { uid, displayName },
   } = useAuth();
 
-  let chatId = info?.chat.chat_id;
+  let chatId = info?.chat?.chat_id;
 
   useEffect(() => {
     if (info.chat) {

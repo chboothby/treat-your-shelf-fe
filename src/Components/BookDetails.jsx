@@ -6,6 +6,7 @@ import { getSingleBook, getUserInfo } from "../api";
 import { Link } from "react-router-dom";
 import Geocode from "react-geocode";
 import { useAuth } from "../Contexts/UserAuth";
+import TransitionsModalRequest from "./TransitionsModalRequest";
 const geolib = require("geolib");
 
 function BookDetails(props) {
@@ -79,16 +80,7 @@ function BookDetails(props) {
           </div>
         </>
       )}
-      <Link to={{ pathname: "/message", bookInfo }}>
-        <Button
-          style={{ width: "60%", margin: "0 auto" }}
-          variant="outlined"
-          size="medium"
-          color="primary"
-        >
-          Request Swap!
-        </Button>
-      </Link>
+      <TransitionsModalRequest book={bookInfo} />
     </div>
   );
 }
