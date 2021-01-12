@@ -84,14 +84,20 @@ function BookDetails(props) {
           </div>
         </>
       )}
-      <Button
-        style={{ width: "60%", margin: "0 auto" }}
-        variant="outlined"
-        size="medium"
-        color="primary"
-      >
-        Request Swap!
-      </Button>
+
+    
+
+      <Link to={{ pathname: "/message", bookInfo }}>
+        <Button
+          style={{ width: "60%", margin: "0 auto" }}
+          variant="outlined"
+          size="medium"
+          color="primary"
+        >
+          Request Swap!
+        </Button>
+      </Link>
+
     </div>
   );
 }

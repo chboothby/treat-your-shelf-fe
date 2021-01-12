@@ -1,0 +1,33 @@
+.exchanges-container {
+  margin-top: 10%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+img {
+  width: 100%;
+}
+
+.request-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.exchange-container {
+  text-align: center;
+  border: solid grey 0.5px;
+  border-radius: 4px;
+  margin: 1%;
+  padding: 2%;
+  transition: background 0.5s;
+  background: white;
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+}
+
+.exchange-container:hover {
+  background: rgb(206, 205, 205);
+}

@@ -6,6 +6,7 @@ import MenuBookIcon from "@material-ui/icons/MenuBook";
 import SearchIcon from "@material-ui/icons/Search";
 import ChatIcon from "@material-ui/icons/Chat";
 import { Link } from "react-router-dom";
+import AutorenewIcon from "@material-ui/icons/Autorenew";
 
 const useStyles = makeStyles({
   root: {
@@ -46,6 +47,13 @@ export default function SimpleBottomNavigation() {
         to="/messages"
         label="Messages"
         icon={<ChatIcon />}
+      />
+
+      <BottomNavigationAction
+        component={Link}
+        to="/exchanges"
+        label="Exchanges"
+        icon={<AutorenewIcon />}
       />
       {/* <BottomNavigationAction
         component={Link}
