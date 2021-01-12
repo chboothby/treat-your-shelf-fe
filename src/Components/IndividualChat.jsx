@@ -33,28 +33,34 @@ function ChatRoom({ info }) {
   const {
     currentUser: { uid, displayName },
   } = useAuth();
+  let chatId;
+  if (info.chat) {
+    chatId = info.chat.chat_id;
+  }
+  if (info.book) {
+    const { owner_id } = info.book;
+    chatId = [uid, owner_id].sort().join("");
 
-  let chatId = info?.chat?.chat_id;
+    firestore
+      .collection("chats")
+      .doc(chatId)
+      .set({ users: [uid, owner_id] });
+  }
 
   useEffect(() => {
     if (info.chat) {
       setOtherUser(info.chat.other_user);
-    } else if (info.bookInfo) {
+    } else if (info.book) {
       const user = {};
-      const { owner_id } = info.bookInfo;
+      const { owner_id } = info.book;
+
       user.id = owner_id;
       getUserName(owner_id).then((name) => {
         user.name = name;
         setOtherUser(user);
       });
-
-      chatId = [uid, owner_id].sort().join("");
-      firestore
-        .collection("chats")
-        .doc(chatId)
-        .set({ users: [uid, owner_id] });
     }
-  });
+  }, []);
 
   const getMessagesRef = firestore
     .collection("chats")
