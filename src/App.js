@@ -19,6 +19,7 @@ import ButtonAppBar from "./Components/ButtonAppBar";
 import LogOutPage from "./Components/LogOutPage";
 import EmailVerifyNotice from "./Components/EmailVerifyNotice";
 import IndividualChat from "./Components/IndividualChat";
+import Exchanges from "./Components/Exchanges";
 
 export default function App() {
   return (
@@ -40,6 +41,7 @@ export default function App() {
             <Route path="/help" component={Help} />
             <PrivateRoute path="/account" component={Account} />
             <Route path="/loggedout" component={LogOutPage}></Route>
+            <PrivateRoute path="/exchanges" component={Exchanges} />
             <PrivateRoute
               path="/email-verify"
               component={EmailVerifyNotice}
