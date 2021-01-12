@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import "./BookDetails.css";
+import "../CSS/BookDetails.css";
 import stockProfileImage from "../stockProfileImage.jpg";
 import { Button } from "@material-ui/core";
 import { getSingleBook, getUserInfo } from "../api";
 import { Link } from "react-router-dom";
 import Geocode from "react-geocode";
 import { useAuth } from "../Contexts/UserAuth";
-import { getPreciseDistance } from "geolib";
 const geolib = require("geolib");
 
 function BookDetails(props) {

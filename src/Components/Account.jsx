@@ -5,7 +5,7 @@ import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Collapse from "@material-ui/core/Collapse";
-import "./Account.css";
+import "../CSS/Account.css";
 import { useAuth } from "../Contexts/UserAuth";
 import { useHistory } from "react-router-dom";
 import { Link as RouterLink } from "react-router-dom";

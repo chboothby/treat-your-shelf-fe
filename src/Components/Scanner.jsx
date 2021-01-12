@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import BarcodeScannerComponent from "react-webcam-barcode-scanner";
 import axios from "axios";
-import "./ScanResults.css";
+import "../CSS/ScanResults.css";
 import bookplaceholder from "../bookplaceholder.jpg";
 import { Button, Link } from "@material-ui/core";
 import { useAuth } from "../Contexts/UserAuth";

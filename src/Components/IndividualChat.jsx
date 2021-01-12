@@ -5,7 +5,7 @@ import "firebase/auth";
 import "firebase/analytics";
 import app from "../firebase";
 import { Button, TextField } from "@material-ui/core";
-import "./Messages.css";
+import "../CSS/Messages.css";
 import { useAuth } from "../Contexts/UserAuth";
 import { Link } from "react-router-dom";
 
