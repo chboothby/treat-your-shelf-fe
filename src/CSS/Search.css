@@ -4,13 +4,17 @@
 }
 
 .results-list {
-  margin-top: 20%;
+  /* margin-top: 20%;
   display: grid;
   grid-template-columns: auto auto auto;
   flex-wrap: wrap;
   text-align: center;
   max-width: 70%;
-  margin: 0 auto;
+  margin: 0 auto; */
+
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
 }
 
 .results-list .book {
@@ -20,10 +24,11 @@
   margin: 2%;
   padding: 2%;
   transition: background 0.5s;
+  width: 40%;
 }
 
 .results-list img {
-  max-width: 70%;
+  max-width: 100%;
 }
 
 .results-list .book:hover {

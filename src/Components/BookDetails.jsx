@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../CSS/BookDetails.css";
-import stockProfileImage from "../stockProfileImage.jpg";
+
 import { Button } from "@material-ui/core";
 import { getSingleBook, getUserInfo } from "../api";
 import { Link } from "react-router-dom";
@@ -68,7 +68,12 @@ function BookDetails(props) {
           </div>
           <div className="owner-card">
             <p>Owner</p>
-            <img alt="stock profile" src={stockProfileImage}></img>
+            <img
+              alt="stock profile"
+              src={
+                "https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg"
+              }
+            ></img>
             <div className="owner-info">
               <Link to={`/users/${bookInfo.owner_id}/books`}>
                 <p>{userInfo.name}</p>
@@ -79,6 +84,9 @@ function BookDetails(props) {
           </div>
         </>
       )}
+
+    
+
       <Link to={{ pathname: "/message", bookInfo }}>
         <Button
           style={{ width: "60%", margin: "0 auto" }}
@@ -89,6 +97,7 @@ function BookDetails(props) {
           Request Swap!
         </Button>
       </Link>
+
     </div>
   );
 }
