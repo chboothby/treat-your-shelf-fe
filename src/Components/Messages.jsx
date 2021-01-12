@@ -3,14 +3,10 @@ import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
 import "firebase/analytics";
-import app from "../firebase";
-import { Button, TextField } from "@material-ui/core";
-import "../CSS/Messages.css";
+import "./Messages.css";
 import { useAuth } from "../Contexts/UserAuth";
 import { Link } from "react-router-dom";
 const { getUserName } = require("../api");
-
-const dbConfig = app;
 
 const firestore = firebase.firestore();
 
@@ -27,16 +23,12 @@ function Chats() {
   const [chats, setChats] = useState([]);
 
   const {
-    currentUser: { uid, displayName },
+    currentUser: { uid },
   } = useAuth();
 
   const getChatsRef = firestore
     .collection("chats")
     .where("users", "array-contains", uid);
-
-  // .doc(chatId) //
-  // .collection("messages")
-  // .orderBy("time");
 
   useEffect(() => {
     getChatsRef.onSnapshot((querySnapshot) => {
@@ -45,7 +37,10 @@ function Chats() {
       querySnapshot.forEach(async (doc, i) => {
         const other_user = doc.id.split(uid).filter((el) => el !== "");
         getUserName(other_user[0]).then((user) => {
-          chatInfo.push({ chat_id: doc.id, other_user: user });
+          chatInfo.push({
+            chat_id: doc.id,
+            other_user: { name: user, id: other_user[0] },
+          });
         });
       });
 
@@ -67,7 +62,7 @@ function Chats() {
               return (
                 <Link to={{ pathname: "/message", chat }} key={i}>
                   <div key={i} className="message-content">
-                    <p>{chat.other_user}</p>
+                    <p>{chat.other_user.name}</p>
                   </div>
                 </Link>
               );
@@ -78,9 +73,5 @@ function Chats() {
     </div>
   );
 }
-
-// function ChatMessage(props) {
-//   const { message, time } = props.message;
-// }
 
 export default Messages;
