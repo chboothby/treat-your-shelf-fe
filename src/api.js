@@ -90,3 +90,44 @@ export const getUserName = (id) => {
       console.log(err);
     });
 };
+
+export const addExchangeRequest = (book_id, user_id) => {
+  return treatApi
+    .post(`/users/${user_id}/exchanges`, { book_id })
+    .then((response) => {
+      console.log(response);
+    });
+};
+
+export const getAllExchanges = (user_id) => {
+  return treatApi.get(`/users/${user_id}/exchanges`).then(({ data }) => {
+    console.log(data);
+    return data.exchanges;
+  });
+};
+
+export const sendBook = (exchange_id, user_id) => {
+  return treatApi
+    .patch(`/users/${user_id}/exchanges/${exchange_id}`, { book_sent: true })
+    .then(({ data }) => {
+      console.log(data);
+    });
+};
+
+export const receiveBook = (exchange_id, user_id) => {
+  return treatApi
+    .patch(`/users/${user_id}/exchanges/${exchange_id}`, {
+      book_received: true,
+    })
+    .then(({ data }) => {
+      console.log(data);
+    });
+};
+
+export const removeRequest = (exchange_id, user_id) => {
+  return treatApi
+    .delete(`/users/${user_id}/exchanges/${exchange_id}`)
+    .catch((err) => {
+      console.log(err);
+    });
+};

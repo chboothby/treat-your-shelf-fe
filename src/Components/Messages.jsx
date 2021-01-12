@@ -27,15 +27,14 @@ function Chats() {
     currentUser: { uid },
   } = useAuth();
 
-  const getChatsRef = firestore
-    .collection("chats")
-    .where("users", "array-contains", uid);
-
   useEffect(() => {
-    console.log("1st");
-    const chatInfo = [];
+    const getChatsRef = firestore
+      .collection("chats")
+      .where("users", "array-contains", uid);
+
     getChatsRef.onSnapshot((querySnapshot) => {
-      querySnapshot.forEach(async (doc, i) => {
+      const chatInfo = [];
+      querySnapshot.forEach((doc, i) => {
         const other_user = doc.id.split(uid).filter((el) => el !== "");
         getUserName(other_user[0]).then((user) => {
           chatInfo.push({
@@ -57,20 +56,15 @@ function Chats() {
         <p>Loading</p>
       ) : (
         <div className="message-content-container">
-          {!gotChats ? (
-            <p>You have no active chats</p>
-          ) : (
-            chats.map((chat, i) => {
-              console.log(chat);
-              return (
-                <Link to={{ pathname: "/message", chat }} key={i}>
-                  <div key={i} className="message-content">
-                    <p>{chat.other_user.name}</p>
-                  </div>
-                </Link>
-              );
-            })
-          )}
+          {chats.map((chat, i) => {
+            return (
+              <Link to={{ pathname: "/message", chat }} key={i}>
+                <div key={i} className="message-content">
+                  <p>{chat.other_user.name}</p>
+                </div>
+              </Link>
+            );
+          })}
         </div>
       )}
     </div>
