@@ -12,13 +12,6 @@ function Scanner() {
   const [data, setData] = useState("Not Found");
   const [books, setBooks] = useState([]);
   const [error, setError] = useState("");
-  const [clicked, setClicked] = useState(false);
-
-  const buttonRef = useRef();
-
-  const { currentUser } = useAuth();
-
-  const handleClick = (book) => {};
 
   const getBookByISBN = (isbn) => {
     return axios

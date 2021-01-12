@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function TransitionsModalScanner(props) {
-  const { title, author, image, book_id } = props.book;
+  const { title, authors, image, book_id } = props.book;
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [added, setAdded] = React.useState("Book added to bookshelf!");
@@ -47,7 +47,9 @@ export default function TransitionsModalScanner(props) {
       <Button onClick={handleOpen} variant="outlined">
         Add Book
       </Button>
+
       <Modal
+        path="/added"
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         className={classes.modal}
@@ -63,6 +65,7 @@ export default function TransitionsModalScanner(props) {
           <div className={classes.paper}>
             <div className="modal-scanners-content">
               <h3 id="transition-modal-title">{title}</h3>
+              <h4>{authors}</h4>
               <Alert style={{ marginBottom: "5%" }} severity="success">
                 Book added to bookshelf!
               </Alert>

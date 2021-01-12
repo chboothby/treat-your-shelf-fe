@@ -18,7 +18,6 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
-    border: "2px solid #000",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
     textAlign: "center",
@@ -26,7 +25,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function TransitionsModalShelf(props) {
-  const { title, author, image, book_id } = props.book;
+  const { title, authors, thumbnail, book_id } = props.book;
+  console.log(props.book);
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const { refreshBookshelf } = props;
@@ -50,9 +50,12 @@ export default function TransitionsModalShelf(props) {
 
   return (
     <div>
-      <Button onClick={handleOpen} variant="outlined">
-        View
-      </Button>
+      <Link>
+        <Button onClick={handleOpen} variant="outlined">
+          View
+        </Button>
+      </Link>
+
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -67,19 +70,25 @@ export default function TransitionsModalShelf(props) {
       >
         <Fade in={open}>
           <div className={classes.paper}>
+            <div className="modal-footer">
+              <h3 id="transition-modal-title">{title}</h3>
+              <p id="transition-modal-description">{authors}</p>
+            </div>
             <div className="modal-content">
-              <img alt="book" src={image}></img>
+              <img alt="book" src={thumbnail}></img>
               <div className="modal-buttons">
                 <Button
                   component={Link}
                   //this path will need to be a parametric endpoint
-                  to="/book"
-                  style={{ border: "solid black 0.5px" }}
+                  to={`/books/${book_id}`}
+                  style={{ border: "solid black 0.5px", marginBottom: "2%" }}
                 >
                   View Book
                 </Button>
 
-                <Button style={{ border: "solid black 0.5px" }}>
+                <Button
+                  style={{ border: "solid black 0.5px", marginTop: "2%" }}
+                >
                   Hide Book
                 </Button>
 
@@ -88,16 +97,11 @@ export default function TransitionsModalShelf(props) {
                     handleClick(book_id);
                   }}
                   // href={`/users/${currentUser.uid}/books`}
-                  style={{ background: "red" }}
+                  style={{ background: "red", marginTop: "2%" }}
                 >
                   Remove Book
                 </Button>
               </div>
-            </div>
-
-            <div className="modal-footer">
-              <h2 id="transition-modal-title">{title}</h2>
-              <p id="transition-modal-description">{author}</p>
             </div>
           </div>
         </Fade>

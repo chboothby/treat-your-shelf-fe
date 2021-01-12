@@ -29,12 +29,9 @@ function Bookshelf(props) {
         setLoading(false);
       });
     }
-
-    console.log("updating");
   }, []);
 
   const refreshBookshelf = () => {
-    console.log("refreshing");
     getUserBookshelf(currentUser.uid).then(({ books }) => {
       setBooks(books);
       setLoading(false);

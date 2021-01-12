@@ -4,20 +4,25 @@ import bookplaceholder from "../bookplaceholder.jpg";
 import "../CSS/Search.css";
 import TransitionsModalSearch from "./TransitionsModalSearch";
 import { getAllBooks } from "../api";
-
+import { useAuth } from "../Contexts/UserAuth";
 function Search() {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { currentUser } = useAuth();
 
   useEffect(() => {
     getAllBooks().then((data) => {
-      setBooks(data.books);
+      const filtered = data.books.books.filter((book) => {
+        return book.owner_id !== currentUser.uid;
+      });
+      setBooks(filtered);
       setLoading(false);
+      console.log(filtered);
     });
   }, []);
 
   const [formValue, setFormValue] = useState({});
-
+  console.log(books);
   const handleChange = (event) => {
     setFormValue({ ...formValue, [event.target.name]: event.target.value });
   };
@@ -62,7 +67,7 @@ function Search() {
         {loading ? (
           <p>Loading Bookshelf</p>
         ) : (
-          books.books.map((book) => {
+          books.map((book) => {
             return (
               // book div below need an ID from our backend
               <div className="book">
