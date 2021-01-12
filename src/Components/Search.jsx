@@ -1,7 +1,7 @@
 import { Button, TextField } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import bookplaceholder from "../bookplaceholder.jpg";
-import "./Search.css";
+import "../CSS/Search.css";
 import TransitionsModalSearch from "./TransitionsModalSearch";
 import { getAllBooks } from "../api";
 
