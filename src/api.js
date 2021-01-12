@@ -1,4 +1,5 @@
 import axios from "axios";
+import Geocode from "react-geocode";
 
 const treatApi = axios.create({
   baseURL: "https://treat-yo-shelf-backend.herokuapp.com/api/",
@@ -16,10 +17,16 @@ export const getSingleBook = (book_id) => {
   });
 };
 
-export const createNewUser = (user_id, username, email) => {
-  return treatApi.post(`/users`, { user_id, username, email }).catch((err) => {
-    console.log(err);
-  });
+export const createNewUser = (user_id, username, email, location) => {
+  console.log(location);
+  return treatApi
+    .post(`/users`, { user_id, username, email, location })
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 export const getUserBookshelf = (user_id) => {
@@ -64,6 +71,11 @@ export const deleteBookFromBookshelf = (book_id) => {
   });
 };
 
+export const getUserInfo = (user_id) => {
+  return treatApi.get(`/users/${user_id}`).then((data) => {
+    return data.data;
+  });
+};
 export const getUserName = (id) => {
   return treatApi
     .get(`/users/${id}`)
