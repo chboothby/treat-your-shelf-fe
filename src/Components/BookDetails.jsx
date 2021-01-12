@@ -32,8 +32,6 @@ function BookDetails(props) {
         });
         getUserInfo(currentUser.uid).then((res) => {
           setMyLocation(res.user.location);
-          console.log(res.user.location);
-          console.log(user.location);
           const distance = geolib.getPathLength([
             {
               latitude: res.user.location.x,

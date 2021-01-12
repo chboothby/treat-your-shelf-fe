@@ -8,6 +8,7 @@ import { Button, TextField } from "@material-ui/core";
 import "./Messages.css";
 import { useAuth } from "../Contexts/UserAuth";
 import { Link } from "react-router-dom";
+const { getUserName } = require("../api");
 
 const dbConfig = app;
 
@@ -24,7 +25,6 @@ function Messages() {
 function Chats() {
   const [loading, setLoading] = useState(true);
   const [chats, setChats] = useState([]);
-  const [chatIds, setChatIds] = useState([]);
 
   const {
     currentUser: { uid, displayName },
@@ -40,16 +40,17 @@ function Chats() {
 
   useEffect(() => {
     getChatsRef.onSnapshot((querySnapshot) => {
-      const items = [];
-      const chatIds = [];
-      querySnapshot.forEach((doc) => {
-        items.push(doc.data().names);
-        chatIds.push(doc.id);
+      const chatInfo = [];
+
+      querySnapshot.forEach(async (doc, i) => {
+        const other_user = doc.id.split(uid).filter((el) => el !== "");
+        getUserName(other_user[0]).then((user) => {
+          chatInfo.push({ chat_id: doc.id, other_user: user });
+        });
       });
 
+      setChats(chatInfo);
       setLoading(false);
-      setChats(items);
-      setChatIds(chatIds);
     });
   }, []);
 
@@ -59,30 +60,27 @@ function Chats() {
         <p>Loading</p>
       ) : (
         <div className="message-content-container">
-          {chatIds.map((chatId, i) => {
-            return (
-              <Link to="/message" chatId={chatId}>
-                <div key={i} className="message-content">
-                  {chats[i].map((name) => {
-                    console.log(name, displayName);
-                    {
-                      if (displayName !== name) {
-                        return name;
-                      }
-                    }
-                  })}
-                </div>
-              </Link>
-            );
-          })}
+          {chats.length === 0 ? (
+            <p>You have no active chats</p>
+          ) : (
+            chats.map((chat, i) => {
+              return (
+                <Link to={{ pathname: "/message", chat }} key={i}>
+                  <div key={i} className="message-content">
+                    <p>{chat.other_user}</p>
+                  </div>
+                </Link>
+              );
+            })
+          )}
         </div>
       )}
     </div>
   );
 }
 
-function ChatMessage(props) {
-  const { message, time } = props.message;
-}
+// function ChatMessage(props) {
+//   const { message, time } = props.message;
+// }
 
 export default Messages;

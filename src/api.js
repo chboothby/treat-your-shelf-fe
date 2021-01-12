@@ -41,6 +41,12 @@ export const changeUsername = (user_id, username) => {
   });
 };
 
+export const changeAvatar = (user_id, avatar_pic) => {
+  return treatApi.patch(`/users/${user_id}`, { avatar_pic }).catch((err) => {
+    console.log(err);
+  });
+};
+
 export const addBookToMyBookshelf = (book, user_id) => {
   console.log(book);
   const { title, authors, description, publishedDate, images } = book;
@@ -69,4 +75,14 @@ export const getUserInfo = (user_id) => {
   return treatApi.get(`/users/${user_id}`).then((data) => {
     return data.data;
   });
+};
+export const getUserName = (id) => {
+  return treatApi
+    .get(`/users/${id}`)
+    .then(({ data }) => {
+      return data.user.username;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
