@@ -1,6 +1,6 @@
 import React, { useState, setState, useEffect } from "react";
 import bookplaceholder from "../bookplaceholder.jpg";
-import "./Bookshelf.css";
+import "../CSS/Bookshelf.css";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import IconButton from "@material-ui/core/IconButton";
 import { Link } from "react-router-dom";
@@ -35,7 +35,7 @@ function Bookshelf(props) {
     <>
       <div className="bookshelf-container">
         <div className="bookshelf-header">
-          <h3>Users bookshelf</h3>
+          <h3>Yo bookshelf</h3>
 
           <Link to="/scan">
             <IconButton>
