@@ -8,6 +8,7 @@ import { Button, TextField } from "@material-ui/core";
 import "./Messages.css";
 import { useAuth } from "../Contexts/UserAuth";
 import { Link } from "react-router-dom";
+import { getUserName } from "../api";
 
 const dbConfig = app;
 
@@ -27,17 +28,25 @@ function ChatRoom({ info }) {
   const [formValue, setFormValue] = useState("");
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [defaultMessage, setDefault] = useState(true);
   // get current user_id
   const {
     currentUser: { uid, displayName },
   } = useAuth();
-  // if routed from messages screen use chatId from props else if routed from book swap request use book ownerid
+
   let chatId;
+  let otherUser;
   if (info.chat) {
     chatId = info.chat.chat_id;
+    otherUser = info.chat.other_user;
   } else if (info.book) {
+    const user = {};
     const { owner_id } = info.book;
+    getUserName(owner_id).then((name) => {
+      user.name = name;
+      user.id = owner_id;
+      otherUser = user;
+    });
+
     chatId = [uid, owner_id].sort().join("");
     firestore
       .collection("chats")
@@ -50,26 +59,6 @@ function ChatRoom({ info }) {
     .doc(chatId)
     .collection("messages")
     .orderBy("time");
-
-  useEffect(() => {
-    getMessagesRef.onSnapshot((querySnapshot) => {
-      const items = [];
-      querySnapshot.forEach((doc) => {
-        items.push(doc.data());
-      });
-      setLoading(false);
-      setMessages(items);
-      if (info.book && defaultMessage) {
-        setFormValue(
-          `Hi there! I'd like to request to swap "${info.book.title}".`
-        );
-        setDefault(false);
-      }
-      if (!defaultMessage) {
-        setFormValue("");
-      }
-    });
-  }, []);
 
   const messagesRef = firestore
     .collection("chats")
@@ -93,13 +82,32 @@ function ChatRoom({ info }) {
     setFormValue("");
   };
 
+  useEffect(() => {
+    getMessagesRef.onSnapshot((querySnapshot) => {
+      const items = [];
+      querySnapshot.forEach((doc) => {
+        items.push(doc.data());
+      });
+      setLoading(false);
+      setMessages(items);
+      if (info.book) {
+        setFormValue(
+          `Hi there! I'd like to request to swap "${info.book.title}".`
+        );
+      }
+    });
+  }, []);
+
   return (
     <div className="messages">
       {loading ? (
         <p>Loading</p>
       ) : (
         <div className="message-content-container">
-          {/* <p>Chatting with: {props.location.book.owner_id}</p> */}
+          <p>
+            Chatting with:{" "}
+            <Link to={`/users/${otherUser.id}/books`}>{otherUser.name}</Link>
+          </p>
           {messages.map((message) => {
             // const time = message.time.toDate().toString();
             return (
@@ -138,10 +146,6 @@ function ChatRoom({ info }) {
       </form>
     </div>
   );
-}
-
-function ChatMessage(props) {
-  const { message, time } = props.message;
 }
 
 export default IndividualChat;
