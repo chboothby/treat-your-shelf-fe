@@ -14,14 +14,13 @@ function Search() {
   const { currentUser } = useAuth();
   useEffect(() => {
     const geolib = require("geolib");
-    let userLocation = {};
+    let usersLocation = {};
     getUserInfo(currentUser.uid)
       .then(({ user }) => {
-        userLocation = user.location;
+        usersLocation = user.location;
+        setUserLocation(user.location);
       })
-      .then(() => {
-        console.log(userLocation);
-      })
+      .then(() => {})
       .then(() => {
         getAllBooks().then((data) => {
           const filtered = data.books.books.filter((book) => {
@@ -36,8 +35,8 @@ function Search() {
                   longitude: book.book_location.y,
                 },
                 {
-                  latitude: userLocation.x,
-                  longitude: userLocation.y,
+                  latitude: usersLocation.x,
+                  longitude: usersLocation.y,
                 },
               ]),
               book,
@@ -63,7 +62,23 @@ function Search() {
       const filtered = data.books.books.filter((book) => {
         return book.owner_id !== currentUser.uid;
       });
-      setBooks(filtered);
+
+      const sortedBooks = filtered.map((book) => {
+        return {
+          distance: geolib.getPathLength([
+            {
+              latitude: book.book_location.x,
+              longitude: book.book_location.y,
+            },
+            {
+              latitude: userLocation.x,
+              longitude: userLocation.y,
+            },
+          ]),
+          book,
+        };
+      });
+      setBooks(sortedBooks);
       setLoading(false);
     });
   };
