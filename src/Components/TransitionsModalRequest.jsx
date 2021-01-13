@@ -5,10 +5,9 @@ import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import { Button } from "@material-ui/core";
 import "../CSS/TransitionsModalShelf.css";
-import { Link } from "react-router-dom";
-import { deleteBookFromBookshelf } from "../api";
 import { useAuth } from "../Contexts/UserAuth";
-import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { addExchangeRequest } from "../api";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -18,20 +17,20 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
+    border: "2px solid #000",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
     textAlign: "center",
   },
 }));
 
-export default function TransitionsModalShelf(props) {
-  const { title, authors, thumbnail, book_id, owner_id } = props.book;
-
+export default function TransitionsModalRequest({ book }) {
+  const { title, book_id, thumbnail } = book;
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const { refreshBookshelf } = props;
-  const { currentUser } = useAuth();
-  const history = useHistory();
+  const {
+    currentUser: { uid },
+  } = useAuth();
 
   const handleOpen = () => {
     setOpen(true);
@@ -41,20 +40,15 @@ export default function TransitionsModalShelf(props) {
     setOpen(false);
   };
 
-  const handleClick = (book_id) => {
-    deleteBookFromBookshelf(book_id).then((res) => {
-      refreshBookshelf();
-    });
+  const handleClick = () => {
+    addExchangeRequest(book_id, uid);
   };
 
   return (
     <div>
-      <Link>
-        <Button onClick={handleOpen} variant="outlined">
-          View
-        </Button>
-      </Link>
-
+      <Button onClick={handleOpen} variant="outlined">
+        Request Swap
+      </Button>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -69,40 +63,33 @@ export default function TransitionsModalShelf(props) {
       >
         <Fade in={open}>
           <div className={classes.paper}>
-            <div className="modal-footer">
-              <h3 id="transition-modal-title">{title}</h3>
-              <p id="transition-modal-description">{authors}</p>
-            </div>
             <div className="modal-content">
               <img alt="book" src={thumbnail}></img>
               <div className="modal-buttons">
                 <Button
+                  onClick={() => {
+                    handleClick();
+                  }}
                   component={Link}
-                  //this path will need to be a parametric endpoint
-                  to={`/books/${book_id}`}
-                  style={{ border: "solid black 0.5px", marginBottom: "2%" }}
+                  to={{ pathname: "/message", book }}
+                  style={{ border: "solid black 0.5px" }}
                 >
-                  View Book
+                  Confirm request
                 </Button>
 
-                {/* <Button
-                  style={{ border: "solid black 0.5px", marginTop: "2%" }}
+                <Button
+                  onClick={() => {
+                    handleClose();
+                  }}
+                  style={{ background: "red" }}
                 >
-                  Hide Book
-                </Button> */}
-                {currentUser.uid === owner_id ? (
-                  <Button
-                    onClick={() => {
-                      handleClick(book_id);
-                    }}
-                    style={{ background: "red", marginTop: "2%" }}
-                  >
-                    Remove Book
-                  </Button>
-                ) : (
-                  <> </>
-                )}
+                  Cancel
+                </Button>
               </div>
+            </div>
+
+            <div className="modal-footer">
+              <h2 id="transition-modal-title">{title}</h2>
             </div>
           </div>
         </Fade>

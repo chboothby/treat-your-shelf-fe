@@ -3,13 +3,10 @@ import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
 import "firebase/analytics";
-import app from "../firebase";
-import { Button, TextField } from "@material-ui/core";
-import "./Messages.css";
+import "../CSS/Messages.css";
 import { useAuth } from "../Contexts/UserAuth";
 import { Link } from "react-router-dom";
-
-const dbConfig = app;
+const { getUserName } = require("../api");
 
 const firestore = firebase.firestore();
 
@@ -23,33 +20,34 @@ function Messages() {
 }
 function Chats() {
   const [loading, setLoading] = useState(true);
-  const [chats, setChats] = useState([]);
-  const [chatIds, setChatIds] = useState([]);
+  const [chats, setChats] = useState({});
+  const [gotChats, setGotChats] = useState(false);
 
   const {
-    currentUser: { uid, displayName },
+    currentUser: { uid },
   } = useAuth();
 
-  const getChatsRef = firestore
-    .collection("chats")
-    .where("users", "array-contains", uid);
-
-  // .doc(chatId) //
-  // .collection("messages")
-  // .orderBy("time");
-
   useEffect(() => {
-    getChatsRef.onSnapshot((querySnapshot) => {
-      const items = [];
-      const chatIds = [];
-      querySnapshot.forEach((doc) => {
-        items.push(doc.data().names);
-        chatIds.push(doc.id);
-      });
+    const getChatsRef = firestore
+      .collection("chats")
+      .where("users", "array-contains", uid);
 
-      setLoading(false);
-      setChats(items);
-      setChatIds(chatIds);
+    getChatsRef.onSnapshot((querySnapshot) => {
+      const chatInfo = [];
+      querySnapshot.forEach((doc, i) => {
+        const other_user = doc.id.split(uid).filter((el) => el !== "");
+        getUserName(other_user[0])
+          .then((user) => {
+            chatInfo.push({
+              chat_id: doc.id,
+              other_user: { name: user, id: other_user[0] },
+            });
+          })
+          .then(() => {
+            setChats(chatInfo);
+            setLoading(false);
+          });
+      });
     });
   }, []);
 
@@ -59,18 +57,11 @@ function Chats() {
         <p>Loading</p>
       ) : (
         <div className="message-content-container">
-          {chatIds.map((chatId, i) => {
+          {chats.map((chat, i) => {
             return (
-              <Link to="/message" chatId={chatId}>
+              <Link to={{ pathname: "/message", chat }} key={i}>
                 <div key={i} className="message-content">
-                  {chats[i].map((name) => {
-                    console.log(name, displayName);
-                    {
-                      if (displayName !== name) {
-                        return name;
-                      }
-                    }
-                  })}
+                  <p>{chat.other_user.name}</p>
                 </div>
               </Link>
             );
@@ -79,10 +70,6 @@ function Chats() {
       )}
     </div>
   );
-}
-
-function ChatMessage(props) {
-  const { message, time } = props.message;
 }
 
 export default Messages;

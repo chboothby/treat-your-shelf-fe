@@ -4,26 +4,37 @@
 }
 
 .results-list {
-  margin-top: 20%;
+  /* margin-top: 20%;
   display: grid;
   grid-template-columns: auto auto auto;
   flex-wrap: wrap;
   text-align: center;
   max-width: 70%;
-  margin: 0 auto;
+  margin: 0 auto; */
+
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
 }
 
 .results-list .book {
+  text-align: center;
   border: solid grey 0.5px;
-  background: white;
   border-radius: 4px;
-  margin: 2%;
+  margin: 1%;
   padding: 2%;
   transition: background 0.5s;
+  background: white;
+  width: 40%;
+  max-width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-content: space-between;
+  justify-content: center;
 }
 
 .results-list img {
-  max-width: 70%;
+  max-width: 100%;
 }
 
 .results-list .book:hover {
@@ -34,4 +45,12 @@
   margin-top: 5%;
   display: flex;
   flex-direction: column;
+}
+
+.search-book-info {
+  display: flex;
+  flex-direction: column;
+  min-height: 35%;
+  justify-content: flex-end;
+  font-size: 1em;
 }

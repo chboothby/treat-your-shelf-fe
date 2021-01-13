@@ -1,38 +1,82 @@
 import { Button, TextField } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-import bookplaceholder from "../bookplaceholder.jpg";
-import "./Search.css";
+import "../CSS/Search.css";
 import TransitionsModalSearch from "./TransitionsModalSearch";
-import { getAllBooks } from "../api";
+import { getAllBooks, getUserInfo } from "../api";
+import { useAuth } from "../Contexts/UserAuth";
+const geolib = require("geolib");
 
 function Search() {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const [userLocation, setUserLocation] = useState({});
+  const [bookLocation, setBookLocation] = useState([]);
+  const { currentUser } = useAuth();
   useEffect(() => {
-    getAllBooks().then((data) => {
-      setBooks(data.books);
-      setLoading(false);
-    });
+    const geolib = require("geolib");
+    let userLocation = {};
+    getUserInfo(currentUser.uid)
+      .then(({ user }) => {
+        userLocation = user.location;
+      })
+      .then(() => {
+        console.log(userLocation);
+      })
+      .then(() => {
+        getAllBooks().then((data) => {
+          const filtered = data.books.books.filter((book) => {
+            return book.owner_id !== currentUser.uid;
+          });
+
+          const sortedBooks = filtered.map((book) => {
+            return {
+              distance: geolib.getPathLength([
+                {
+                  latitude: book.book_location.x,
+                  longitude: book.book_location.y,
+                },
+                {
+                  latitude: userLocation.x,
+                  longitude: userLocation.y,
+                },
+              ]),
+              book,
+            };
+          });
+          setBooks(sortedBooks);
+          setLoading(false);
+        });
+      });
   }, []);
 
   const [formValue, setFormValue] = useState({});
-
   const handleChange = (event) => {
     setFormValue({ ...formValue, [event.target.name]: event.target.value });
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // API request in here
+    const { title } = formValue;
+    const { author } = formValue;
 
-    setFormValue({});
+    getAllBooks(title, author).then((data) => {
+      const filtered = data.books.books.filter((book) => {
+        return book.owner_id !== currentUser.uid;
+      });
+      setBooks(filtered);
+      setLoading(false);
+    });
   };
 
   return (
     <div className="search-results-container">
       <div>
-        <form onSubmit={handleSubmit} className="search-form">
+        <form
+          onSubmit={(event) => {
+            handleSubmit(event);
+          }}
+          className="search-form"
+        >
           <TextField
             style={{ margin: "1%" }}
             id="title"
@@ -60,15 +104,22 @@ function Search() {
       </div>
       <div className="results-list">
         {loading ? (
-          <p>Loading Bookshelf</p>
+          <p>Loading books...</p>
         ) : (
-          books.books.map((book) => {
+          books.map(({ distance, book }) => {
             return (
-              // book div below need an ID from our backend
               <div className="book">
                 <img src={book.thumbnail} alt="book"></img>
-                <p>{book.title}</p>
-                <TransitionsModalSearch book={book}></TransitionsModalSearch>
+                <div className="search-book-info">
+                  <strong>{book.title}</strong>
+                  <p>{book.authors}</p>
+                  <p>
+                    {Math.round(geolib.convertDistance(distance, "mi") / 10)}{" "}
+                    miles away
+                  </p>
+
+                  <TransitionsModalSearch book={book}></TransitionsModalSearch>
+                </div>
               </div>
             );
           })

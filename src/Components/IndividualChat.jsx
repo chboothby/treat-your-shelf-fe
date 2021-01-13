@@ -5,58 +5,68 @@ import "firebase/auth";
 import "firebase/analytics";
 import app from "../firebase";
 import { Button, TextField } from "@material-ui/core";
-import "./Messages.css";
+import "../CSS/Messages.css";
 import { useAuth } from "../Contexts/UserAuth";
 import { Link } from "react-router-dom";
+import { getUserName } from "../api";
 
 const dbConfig = app;
 
 const firestore = firebase.firestore();
 
-function IndividualChat() {
+function IndividualChat({ location }) {
   return (
     <div className="messages-container">
       <h1>Messages</h1>
-      <Link to="/messages">
-        <p>Back to chats</p>
-      </Link>
-      <ChatRoom />
+      <Link to="/messages"></Link>
+      <ChatRoom info={location} />
     </div>
   );
 }
 
-function ChatRoom() {
-  // get current user_id
-  const {
-    currentUser: { uid, displayName },
-  } = useAuth();
-  // get book owners user_id
-  const bookOwner = "knQicRC1k1UGAROHO5HlnSYUIfS2";
-  // generate their chatId
-  const chatId = [uid, bookOwner].sort().join("");
-
-  // get messages from their chat/ create new chat if that chat doesn't exist
-  const getMessagesRef = firestore
-    .collection("chats")
-    .doc(chatId) //
-    .collection("messages")
-    .orderBy("time");
-
+function ChatRoom({ info }) {
   const [formValue, setFormValue] = useState("");
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { currentUser } = useAuth();
+  const [otherUser, setOtherUser] = useState({});
+
+  const {
+    currentUser: { uid, displayName },
+  } = useAuth();
+  let chatId;
+  if (info.chat) {
+    chatId = info.chat.chat_id;
+  }
+  if (info.book) {
+    const { owner_id } = info.book;
+    chatId = [uid, owner_id].sort().join("");
+
+    firestore
+      .collection("chats")
+      .doc(chatId)
+      .set({ users: [uid, owner_id] });
+  }
 
   useEffect(() => {
-    getMessagesRef.onSnapshot((querySnapshot) => {
-      const items = [];
-      querySnapshot.forEach((doc) => {
-        items.push(doc.data());
+    if (info.chat) {
+      setOtherUser(info.chat.other_user);
+    } else if (info.book) {
+      const user = {};
+      const { owner_id } = info.book;
+
+      user.id = owner_id;
+      getUserName(owner_id).then((name) => {
+        user.name = name;
+        setOtherUser(user);
       });
-      setLoading(false);
-      setMessages(items);
-    });
+    }
   }, []);
+
+  const getMessagesRef = firestore
+    .collection("chats")
+    .doc(chatId)
+    .collection("messages")
+    .orderBy("time");
 
   const messagesRef = firestore
     .collection("chats")
@@ -73,10 +83,28 @@ function ChatRoom() {
         uid,
         displayName,
       })
-      .catch();
+      .catch((err) => {
+        console.log(err);
+      });
 
     setFormValue("");
   };
+
+  useEffect(() => {
+    getMessagesRef.onSnapshot((querySnapshot) => {
+      const items = [];
+      querySnapshot.forEach((doc) => {
+        items.push(doc.data());
+      });
+      setLoading(false);
+      setMessages(items);
+      if (info.bookInfo) {
+        setFormValue(
+          `Hi there! I'd like to request to swap "${info.bookInfo.title}".`
+        );
+      }
+    });
+  }, []);
 
   return (
     <div className="messages">
@@ -84,6 +112,10 @@ function ChatRoom() {
         <p>Loading</p>
       ) : (
         <div className="message-content-container">
+          <p>
+            Chatting with:{" "}
+            <Link to={`/users/${otherUser.id}/books`}>{otherUser.name}</Link>
+          </p>
           {messages.map((message) => {
             // const time = message.time.toDate().toString();
             return (
@@ -122,10 +154,6 @@ function ChatRoom() {
       </form>
     </div>
   );
-}
-
-function ChatMessage(props) {
-  const { message, time } = props.message;
 }
 
 export default IndividualChat;

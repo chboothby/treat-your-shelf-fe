@@ -1,4 +1,4 @@
-import "./App.css";
+import "./CSS/App.css";
 import React from "react";
 import { AuthProvider } from "./Contexts/UserAuth";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -20,6 +20,7 @@ import EmailVerifyNotice from "./Components/EmailVerifyNotice";
 import IndividualChat from "./Components/IndividualChat";
 import { ThemeProvider } from "@material-ui/core";
 import theme from "./Contexts/Theme";
+import Exchanges from "./Components/Exchanges";
 
 export default function App() {
   return (
@@ -45,6 +46,7 @@ export default function App() {
               <Route path="/help" component={Help} />
               <PrivateRoute path="/account" component={Account} />
               <Route path="/loggedout" component={LogOutPage}></Route>
+              <PrivateRoute path="/exchanges" component={Exchanges} />
               <PrivateRoute
                 path="/email-verify"
                 component={EmailVerifyNotice}

@@ -1,4 +1,4 @@
-.bookshelf-container {
+.exchanges-container {
   margin-top: 10%;
   text-align: center;
   display: flex;
@@ -9,7 +9,13 @@ img {
   width: 100%;
 }
 
-.book-list-card {
+.requests-container {
+  display: flex;
+  /* justify-content: space-around; */
+  flex-direction: row wrap;
+}
+
+.exchange-container {
   text-align: center;
   border: solid grey 0.5px;
   border-radius: 4px;
@@ -22,20 +28,6 @@ img {
   flex-direction: column;
 }
 
-.book-list-card:hover {
+.exchange-container:hover {
   background: rgb(206, 205, 205);
-}
-
-.book-grid {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-}
-
-.bookshelf-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-left: 4%;
-  margin-right: 4%;
 }
