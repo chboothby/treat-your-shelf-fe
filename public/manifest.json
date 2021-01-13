@@ -1,0 +1,21 @@
+{
+  "short_name": "treat-yo-shelf",
+  "name": "treat-yo-shelf",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/login",
+  "theme_color": "#F4BD42",
+  "background_color": "#2B2929",
+  "display": "standalone",
+  "scope": "/"
+}

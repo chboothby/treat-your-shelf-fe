@@ -29,7 +29,7 @@ function ChatRoom({ info }) {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [otherUser, setOtherUser] = useState({});
-  console.log(messages);
+
   const {
     currentUser: { uid, displayName },
   } = useAuth();

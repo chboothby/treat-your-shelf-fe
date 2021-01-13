@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "../CSS/BookDetails.css";
-
 import { Button } from "@material-ui/core";
 import { getSingleBook, getUserInfo } from "../api";
 import { Link } from "react-router-dom";
@@ -78,7 +77,9 @@ function BookDetails(props) {
               }
             ></img>
             <div className="owner-info">
-              <Link to={`/users/${bookInfo.owner_id}/books`}>
+              <Link
+                to={{ pathname: `/users/${bookInfo.owner_id}/books`, bookInfo }}
+              >
                 <p>{userInfo.name}</p>
               </Link>
               <p>📍 {location}</p>

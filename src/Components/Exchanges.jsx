@@ -33,25 +33,27 @@ function YourRequests() {
           return Promise.all([username, book]).then(([username, book]) => {
             exchange.owner_name = username;
             exchange.artwork = book.book.thumbnail;
-            const updatedExchange = exchange;
-            setExchanges([...exchanges, updatedExchange]);
+            const updatedExchanges = [...exchanges, exchange];
+            setExchanges([...new Set(updatedExchanges)]);
           });
         });
     });
 
     setLoading(false);
-  }, [setExchanges]);
+  }, []);
 
   const handleReceived = (exchange_id, i) => {
     receiveBook(exchange_id, uid);
     const newExchanges = [...exchanges];
-    newExchanges[i].book_sent = true;
+    newExchanges[i].book_received = true;
     setExchanges(newExchanges);
   };
 
   const handleCancel = (exchange_id, i) => {
+    const newExchanges = [...exchanges];
+    newExchanges.splice(i, 1);
+    setExchanges(newExchanges);
     removeRequest(exchange_id, uid);
-    setExchanges(exchanges.splice(i, 1));
   };
 
   if (isLoading) {
@@ -61,7 +63,8 @@ function YourRequests() {
       <div className="container">
         <h2>Books you have requested</h2>
         <div className="requests-container">
-          {[...new Set(exchanges)].map((exchange, i) => {
+          {console.log(exchanges)}
+          {exchanges.map((exchange, i) => {
             return (
               <div className="exchange-container" key={i}>
                 <div className="book-artwork">
@@ -136,23 +139,27 @@ function TheirRequests() {
           return Promise.all([username, book]).then(([username, book]) => {
             exchange.owner_name = username;
             exchange.artwork = book.book.thumbnail;
-            setExchanges([...exchanges, exchange]);
+            const newExchanges = [...exchanges, exchange];
+            setExchanges([...new Set(newExchanges)]);
           });
         });
     });
 
     setLoading(false);
-  }, [setExchanges]);
+  }, []);
 
   const handleSend = (book_id, i) => {
     sendBook(book_id, uid);
     const newExchanges = [...exchanges];
     newExchanges[i].book_sent = true;
+    setExchanges(newExchanges);
   };
 
   const handleDecline = (exchange_id, i) => {
+    const newExchanges = [...exchanges];
+    newExchanges.splice(i, 1);
+    setExchanges(newExchanges);
     removeRequest(exchange_id, uid);
-    setExchanges(exchanges.splice(i, 1));
   };
 
   if (isLoading) {
@@ -162,7 +169,7 @@ function TheirRequests() {
       <div className="container">
         <h2>Books others have requested from you</h2>
         <div className="requests-container">
-          {[...new Set(exchanges)].map((exchange, i) => {
+          {exchanges.map((exchange, i) => {
             return (
               <div className="exchange-container" key={i}>
                 <div className="book-artwork">

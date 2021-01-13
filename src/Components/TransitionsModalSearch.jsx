@@ -7,6 +7,7 @@ import Fade from "@material-ui/core/Fade";
 import { Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { getUserInfo } from "../api";
+import { useAuth } from "../Contexts/UserAuth";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -29,11 +30,11 @@ export default function TransitionsModalSearch(props) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [ownerInfo, setOwnerInfo] = useState({});
+  const { currentUser } = useAuth();
 
   const handleOpen = () => {
     setOpen(true);
     getUserInfo(owner_id).then(({ user }) => {
-      console.log(user);
       setOwnerInfo(user);
     });
   };
