@@ -2,22 +2,51 @@ import { Button, TextField } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import "../CSS/Search.css";
 import TransitionsModalSearch from "./TransitionsModalSearch";
-import { getAllBooks } from "../api";
+import { getAllBooks, getUserInfo } from "../api";
 import { useAuth } from "../Contexts/UserAuth";
+const geolib = require("geolib");
 
 function Search() {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [userLocation, setUserLocation] = useState({});
+  const [bookLocation, setBookLocation] = useState([]);
   const { currentUser } = useAuth();
-
   useEffect(() => {
-    getAllBooks().then((data) => {
-      const filtered = data.books.books.filter((book) => {
-        return book.owner_id !== currentUser.uid;
+    const geolib = require("geolib");
+    let userLocation = {};
+    getUserInfo(currentUser.uid)
+      .then(({ user }) => {
+        userLocation = user.location;
+      })
+      .then(() => {
+        console.log(userLocation);
+      })
+      .then(() => {
+        getAllBooks().then((data) => {
+          const filtered = data.books.books.filter((book) => {
+            return book.owner_id !== currentUser.uid;
+          });
+
+          const sortedBooks = filtered.map((book) => {
+            return {
+              distance: geolib.getPathLength([
+                {
+                  latitude: book.book_location.x,
+                  longitude: book.book_location.y,
+                },
+                {
+                  latitude: userLocation.x,
+                  longitude: userLocation.y,
+                },
+              ]),
+              book,
+            };
+          });
+          setBooks(sortedBooks);
+          setLoading(false);
+        });
       });
-      setBooks(filtered);
-      setLoading(false);
-    });
   }, []);
 
   const [formValue, setFormValue] = useState({});
@@ -77,17 +106,19 @@ function Search() {
         {loading ? (
           <p>Loading books...</p>
         ) : (
-          books.map((book) => {
+          books.map(({ distance, book }) => {
             return (
-              // book div below need an ID from our backend
               <div className="book">
                 <img src={book.thumbnail} alt="book"></img>
                 <div className="search-book-info">
                   <strong>{book.title}</strong>
                   <p>{book.authors}</p>
-                  <TransitionsModalSearch
-                    book={book}
-                  ></TransitionsModalSearch>{" "}
+                  <p>
+                    {Math.round(geolib.convertDistance(distance, "mi") / 10)}{" "}
+                    miles away
+                  </p>
+
+                  <TransitionsModalSearch book={book}></TransitionsModalSearch>
                 </div>
               </div>
             );
