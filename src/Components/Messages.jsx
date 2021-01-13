@@ -26,26 +26,32 @@ function Chats() {
     currentUser: { uid },
   } = useAuth();
 
-  const getChatsRef = firestore
-    .collection("chats")
-    .where("users", "array-contains", uid);
-
   useEffect(() => {
+    const getChatsRef = firestore
+      .collection("chats")
+      .where("users", "array-contains", uid);
+
     getChatsRef.onSnapshot((querySnapshot) => {
+      if (querySnapshot.docs.length === 0) {
+        setLoading(false);
+      }
       const chatInfo = [];
-
-      querySnapshot.forEach(async (doc, i) => {
+      let other_user;
+      let chat_id;
+      querySnapshot.forEach((doc, i) => {
         const other_user = doc.id.split(uid).filter((el) => el !== "");
-        getUserName(other_user[0]).then((user) => {
-          chatInfo.push({
-            chat_id: doc.id,
-            other_user: { name: user, id: other_user[0] },
+        getUserName(other_user[0])
+          .then((user) => {
+            chatInfo.push({
+              chat_id: doc.id,
+              other_user: { name: user, id: other_user[0] },
+            });
+          })
+          .then(() => {
+            setChats([...new Set([...chats, ...chatInfo])]);
+            setLoading(false);
           });
-        });
       });
-
-      setChats(chatInfo);
-      setLoading(false);
     });
   }, []);
 
