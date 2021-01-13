@@ -23,15 +23,17 @@ function Bookshelf(props) {
         setLoading(false);
       });
     } else {
-      getUserBookshelf(owner_id).then(({ books }) => {
-        setBooks(books);
-        setLoading(false);
-      });
-
-      getUserInfo(owner_id).then(({ user }) => {
-        setOwnerInfo(user);
-        setLoading(false);
-      });
+      getUserBookshelf(owner_id)
+        .then(({ books }) => {
+          setBooks(books);
+          setLoading(false);
+        })
+        .then(() => {
+          getUserInfo(owner_id).then(({ user }) => {
+            setOwnerInfo(user);
+            setLoading(false);
+          });
+        });
     }
   }, []);
 
