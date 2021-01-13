@@ -65,13 +65,12 @@ export default function SignUp() {
   const { signUp } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [userLocation, setUserLocation] = useState({});
   const history = useHistory();
 
   async function handleSubmit(e) {
     e.preventDefault();
 
-    const userRegEx = new RegExp("^[a-zA-Z0-9_-]{5,}[a-zA-Z]+[0-9]*$");
+    const userRegEx = new RegExp("^[a-zA-Z0-9_-]{1,}[a-zA-Z]+[0-9]*$");
 
     if (!userRegEx.test(usernameRef.current.value)) {
       return setError(
