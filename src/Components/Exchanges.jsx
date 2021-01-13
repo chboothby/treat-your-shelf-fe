@@ -23,7 +23,6 @@ function YourRequests() {
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    const updatedExchanges = [];
     getAllExchanges(uid).then((exchanges) => {
       exchanges
         .filter((exchange) => exchange.requester_id === uid)
@@ -34,12 +33,12 @@ function YourRequests() {
           return Promise.all([username, book]).then(([username, book]) => {
             exchange.owner_name = username;
             exchange.artwork = book.book.thumbnail;
-            updatedExchanges.push(exchange);
+            const updatedExchange = exchange;
+            setExchanges([...exchanges, updatedExchange]);
           });
         });
     });
 
-    setExchanges(updatedExchanges);
     setLoading(false);
   }, [setExchanges]);
 
@@ -62,7 +61,7 @@ function YourRequests() {
       <div className="container">
         <h2>Books you have requested</h2>
         <div className="requests-container">
-          {exchanges.map((exchange, i) => {
+          {[...new Set(exchanges)].map((exchange, i) => {
             return (
               <div className="exchange-container" key={i}>
                 <div className="book-artwork">
@@ -127,7 +126,6 @@ function TheirRequests() {
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    const updatedExchanges = [];
     getAllExchanges(uid).then((exchanges) => {
       exchanges
         .filter((exchange) => exchange.requester_id != uid)
@@ -138,12 +136,10 @@ function TheirRequests() {
           return Promise.all([username, book]).then(([username, book]) => {
             exchange.owner_name = username;
             exchange.artwork = book.book.thumbnail;
-            updatedExchanges.push(exchange);
+            setExchanges([...exchanges, exchange]);
           });
         });
     });
-
-    setExchanges(updatedExchanges);
 
     setLoading(false);
   }, [setExchanges]);
@@ -166,7 +162,7 @@ function TheirRequests() {
       <div className="container">
         <h2>Books others have requested from you</h2>
         <div className="requests-container">
-          {exchanges.map((exchange, i) => {
+          {[...new Set(exchanges)].map((exchange, i) => {
             return (
               <div className="exchange-container" key={i}>
                 <div className="book-artwork">
