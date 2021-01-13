@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
-import { Button } from "@material-ui/core";
+import { Button, Box } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 import Alert from "@material-ui/lab/Alert";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
@@ -10,6 +11,11 @@ import { useAuth } from "../Contexts/UserAuth";
 import { useHistory } from "react-router-dom";
 import { Link as RouterLink } from "react-router-dom";
 
+const useStyles = makeStyles((theme) => ({
+  title: {},
+  displayName: {},
+}));
+
 export default function Account() {
   const [error, setError] = useState("");
   const [avatarChange, setAvatarChange] = useState(false);
@@ -18,6 +24,7 @@ export default function Account() {
   const usernameRef = useRef();
   const avatarRef = useRef();
   const history = useHistory();
+  const classes = useStyles();
 
   const handleAvatarDrop = () => {
     setAvatarChange((prev) => !prev);
@@ -70,10 +77,18 @@ export default function Account() {
 
   return (
     <Grid className="account-container">
-      <div className="account-header">
+      <div id="account-header" className="account-header">
         {error && <Alert severity="error">{error}</Alert>}
-        <h2>{currentUser.displayName}'s Profile</h2>
-        <img src={currentUser.photoURL} alt="User avatar"></img>
+        <Box id="title" className={classes.title}>
+          Yo Profile
+        </Box>
+        <Box id="display-name" className={classes.displayName}>
+          {currentUser.displayName}
+        </Box>
+        <img
+          src={currentUser.photoURL}
+          alt={`${currentUser.displayName}'s avatar`}
+        ></img>
         <FormControlLabel
           style={{ background: "white", margin: "3%" }}
           control={
@@ -82,7 +97,7 @@ export default function Account() {
             </Button>
           }
         />
-        <Grid container>
+        <Grid container id="avatar-info">
           <Grid item xs={12}>
             <Collapse in={avatarChange} collapsedHeight={0}>
               <TextField
@@ -106,7 +121,12 @@ export default function Account() {
           </Grid>
         </Grid>
       </div>
-      <Grid container className="account-body" justify="center">
+      <Grid
+        container
+        id="account-body"
+        className="account-body"
+        justify="center"
+      >
         <Grid item xs={12}>
           <FormControlLabel
             style={{ background: "white", margin: "3%" }}
@@ -117,7 +137,7 @@ export default function Account() {
             }
           />
         </Grid>
-        <Grid item xs={12}>
+        <Grid id="username" item xs={12}>
           <Collapse in={usernameChange} collapsedHeight={0}>
             <TextField
               style={{ background: "white", margin: "3%" }}
@@ -138,7 +158,7 @@ export default function Account() {
             </Button>
           </Collapse>
         </Grid>
-        <Grid item xs={12}>
+        <Grid id="pass-reset" item xs={12}>
           <Button
             style={{ background: "white", margin: "3%" }}
             variant="outlined"
@@ -148,7 +168,7 @@ export default function Account() {
             Change Password
           </Button>
         </Grid>
-        <Grid item xs={12}>
+        <Grid id="logout" item xs={12}>
           <Button
             style={{ background: "white", margin: "3%" }}
             variant="outlined"

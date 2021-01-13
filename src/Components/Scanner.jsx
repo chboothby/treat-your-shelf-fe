@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import BarcodeScannerComponent from "react-webcam-barcode-scanner";
 import axios from "axios";
 import "../CSS/ScanResults.css";
@@ -46,16 +46,16 @@ function Scanner() {
   });
 
   return (
-    <div>
+    <div id="scan-page">
       {error ? (
-        <>
+        <div id="scan-error">
           <p>No books found</p>
           <Link to="/scan">
             <Button>Scan Again</Button>
           </Link>
-        </>
+        </div>
       ) : data === "Not Found" ? (
-        <section className="scanner">
+        <section id="scanner" className="scanner">
           <h3>Please scan your book's ISBN number</h3>
           <BarcodeScannerComponent
             width={400}
@@ -63,12 +63,14 @@ function Scanner() {
             onUpdate={(err, result) => {
               if (result) {
                 setData(result.text);
+              } else {
+                setData("Not Found");
               }
             }}
           />
         </section>
       ) : (
-        <div className="scan-results">
+        <div id="scan-results" className="scan-results">
           <Link to="/scan">
             <Button style={{ border: "solid black 0.5px" }}>
               Scan another book
@@ -77,12 +79,12 @@ function Scanner() {
 
           {books.map((book) => {
             return (
-              <div key={book.id} className="book-card">
+              <div id="book-card" key={book.id} className="book-card">
                 <img
                   src={book.images?.thumbnail}
                   alt={`${book.title}'s cover art`}
                 ></img>
-                <div className="book-info">
+                <div id="book-info" className="book-info">
                   <p>Title: {book.title}</p>
                   <p>Author(s): {book.authors.map((author) => author)}</p>
                   <p>Published: {book.publishedDate}</p>
