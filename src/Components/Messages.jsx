@@ -20,8 +20,7 @@ function Messages() {
 }
 function Chats() {
   const [loading, setLoading] = useState(true);
-  const [chats, setChats] = useState({});
-  const [gotChats, setGotChats] = useState(false);
+  const [chats, setChats] = useState([]);
 
   const {
     currentUser: { uid },
@@ -44,7 +43,7 @@ function Chats() {
             });
           })
           .then(() => {
-            setChats(chatInfo);
+            setChats([...new Set([...chats, ...chatInfo])]);
             setLoading(false);
           });
       });
