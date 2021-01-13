@@ -14,6 +14,18 @@ import { Link as RouterLink } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   title: { color: theme.palette.primary.main, fontSize: "24px" },
   displayName: {},
+  accountHeader: {
+    padding: "2%",
+    margin: "2%",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    background: "white",
+    textAlign: "center",
+    alignItems: "center",
+    borderRadius: "8px",
+    background: theme.palette.secondary.light,
+  },
   accountBody: {
     textAlign: "center",
     background: theme.palette.primary.light,
@@ -21,7 +33,9 @@ const useStyles = makeStyles((theme) => ({
     width: "90%",
     borderRadius: "5px",
     margin: "0 auto",
+    boxShadow: "0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)",
   },
+  img: { width: "200px", height: "200px", borderRadius: "5px", padding: "2%" },
 }));
 
 export default function Account() {
@@ -85,7 +99,7 @@ export default function Account() {
 
   return (
     <Grid className="account-container">
-      <div id="account-header" className="account-header">
+      <div id="account-header" className={classes.accountHeader}>
         {error && <Alert severity="error">{error}</Alert>}
         <Box id="title" className={classes.title}>
           Yo Profile
@@ -104,6 +118,7 @@ export default function Account() {
           <img
             src={currentUser.photoURL}
             alt={`${currentUser.displayName}'s avatar`}
+            className={classes.img}
           ></img>
         )}
 
