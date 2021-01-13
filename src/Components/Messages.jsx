@@ -20,7 +20,7 @@ function Messages() {
 }
 function Chats() {
   const [loading, setLoading] = useState(true);
-  const [chats, setChats] = useState([]);
+  const [chats, setChats] = useState({});
   const [gotChats, setGotChats] = useState(false);
 
   const {
@@ -36,18 +36,24 @@ function Chats() {
       const chatInfo = [];
       querySnapshot.forEach((doc, i) => {
         const other_user = doc.id.split(uid).filter((el) => el !== "");
-        getUserName(other_user[0]).then((user) => {
-          chatInfo.push({
-            chat_id: doc.id,
-            other_user: { name: user, id: other_user[0] },
+        getUserName(other_user[0])
+          .then((user) => {
+            console.log(user);
+            chatInfo.push({
+              chat_id: doc.id,
+              other_user: { name: user, id: other_user[0] },
+            });
+          })
+          .then(() => {
+            console.log("setting chat");
+            setChats(chatInfo);
+            setLoading(false);
           });
-        });
-        setGotChats(true);
       });
-      setChats(chatInfo);
-      setLoading(false);
-      console.log(chats);
+
+      console.log("setChat");
     });
+    console.log("logging chats");
   }, []);
 
   return (
