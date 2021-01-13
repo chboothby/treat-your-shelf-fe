@@ -42,12 +42,6 @@ export default function SimpleBottomNavigation() {
         label="Search"
         icon={<SearchIcon />}
       />
-      <BottomNavigationAction
-        component={Link}
-        to="/messages"
-        label="Messages"
-        icon={<ChatIcon />}
-      />
 
       <BottomNavigationAction
         component={Link}
@@ -55,6 +49,14 @@ export default function SimpleBottomNavigation() {
         label="Exchanges"
         icon={<AutorenewIcon />}
       />
+
+      <BottomNavigationAction
+        component={Link}
+        to="/messages"
+        label="Messages"
+        icon={<ChatIcon />}
+      />
+
       {/* <BottomNavigationAction
         component={Link}
         to="/help"

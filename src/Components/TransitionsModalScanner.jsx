@@ -1,12 +1,12 @@
 import React from "react";
+import "../CSS/TransitionsModalScanner.css";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import { Button } from "@material-ui/core";
-import "../CSS/TransitionsModalScanner.css";
-import { Link } from "react-router-dom";
 import Alert from "@material-ui/lab/Alert";
+import { Link } from "react-router-dom";
 import { useAuth } from "../Contexts/UserAuth";
 import { addBookToMyBookshelf } from "../api";
 
@@ -26,10 +26,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function TransitionsModalScanner(props) {
-  const { title, authors, image, book_id } = props.book;
+  const { title, authors } = props.book;
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const [added, setAdded] = React.useState("Book added to bookshelf!");
   const { currentUser } = useAuth();
 
   const handleOpen = () => {

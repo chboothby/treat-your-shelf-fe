@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { auth, user } from "../firebase";
+import { auth } from "../firebase";
 import { createNewUser, changeUsername, changeAvatar } from "../api";
 import Geocode from "react-geocode";
 Geocode.setApiKey("AIzaSyBzdjkehz-69slvbPIwKPOVGzIkG_fuU3I");
@@ -13,7 +13,6 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
-  const [location, setLocation] = useState({});
 
   const signUp = (displayName, email, password, city, postcode) => {
     return auth.createUserWithEmailAndPassword(email, password).then((res) => {

@@ -39,16 +39,18 @@ function Chats() {
       let other_user;
       let chat_id;
       querySnapshot.forEach((doc, i) => {
-        other_user = doc.id.split(uid).filter((el) => el !== "");
-        chat_id = doc.id;
-      });
-      getUserName(other_user[0]).then((user) => {
-        chatInfo.push({
-          chat_id: chat_id,
-          other_user: { name: user, id: other_user[0] },
-        });
-        setChats(chatInfo);
-        setLoading(false);
+        const other_user = doc.id.split(uid).filter((el) => el !== "");
+        getUserName(other_user[0])
+          .then((user) => {
+            chatInfo.push({
+              chat_id: doc.id,
+              other_user: { name: user, id: other_user[0] },
+            });
+          })
+          .then(() => {
+            setChats([...new Set([...chats, ...chatInfo])]);
+            setLoading(false);
+          });
       });
     });
   }, []);

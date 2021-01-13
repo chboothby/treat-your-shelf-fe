@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import "../CSS/Bookshelf.css";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import IconButton from "@material-ui/core/IconButton";
@@ -59,6 +59,7 @@ function Bookshelf(props) {
               <AddCircleOutlineIcon
                 style={{ fontSize: "36px" }}
                 className="add-icon"
+                color="primary"
               ></AddCircleOutlineIcon>
             </IconButton>
           </Link>
