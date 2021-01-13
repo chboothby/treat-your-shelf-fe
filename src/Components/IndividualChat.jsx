@@ -9,15 +9,38 @@ import "../CSS/Messages.css";
 import { useAuth } from "../Contexts/UserAuth";
 import { Link } from "react-router-dom";
 import { getUserName } from "../api";
+import { makeStyles } from "@material-ui/core/styles";
 
 const dbConfig = app;
-
 const firestore = firebase.firestore();
 
+const useStyles = makeStyles((theme) => ({
+  title: { color: theme.palette.primary.main, fontSize: "24px" },
+  header: {
+    color: theme.palette.secondary.light,
+    background: theme.palette.primary.light,
+  },
+  messageForm: {
+    display: "flex",
+    justifyContent: "space-between",
+    width: "80%",
+    // margin: "0 auto",
+    marginBottom: "4%",
+    margin: "0 auto",
+    background: theme.palette.secondary.light,
+    padding: "1%",
+    boxShadow: "0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)",
+  },
+}));
+
 function IndividualChat({ location }) {
+  const classes = useStyles();
   return (
     <div className="messages-container">
-      <h1>Messages</h1>
+      <div className={classes.header}>
+        <h2>Messages</h2>
+      </div>
+
       <Link to="/messages"></Link>
       <ChatRoom info={location} />
     </div>
@@ -29,7 +52,7 @@ function ChatRoom({ info }) {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [otherUser, setOtherUser] = useState({});
-
+  const classes = useStyles();
   const {
     currentUser: { uid, displayName },
   } = useAuth();
@@ -140,18 +163,18 @@ function ChatRoom({ info }) {
         </div>
       )}
 
-      <form onSubmit={sendMessage} className="message-form">
+      <form onSubmit={sendMessage} className={classes.messageForm}>
         <TextField
           autoComplete="off"
           onChange={(e) => setFormValue(e.target.value)}
           value={formValue}
-          style={{ marginRight: "2%", width: "100%" }}
+          // style={{ marginRight: "2%", width: "100%" }}
           id="message"
           label="Message"
         ></TextField>
         <Button
           type="submit"
-          style={{ marginRight: "3%", background: "#18331D", color: "white" }}
+          // style={{ marginRight: "3%", background: "#18331D", color: "white" }}
           variant="outlined"
         >
           Send
