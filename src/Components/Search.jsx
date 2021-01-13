@@ -42,7 +42,11 @@ function Search() {
               book,
             };
           });
-          setBooks(sortedBooks);
+          const sortedByDistance = sortedBooks.sort(
+            (a, b) => a.distance - b.distance
+          );
+
+          setBooks(sortedByDistance);
           setLoading(false);
         });
       });
