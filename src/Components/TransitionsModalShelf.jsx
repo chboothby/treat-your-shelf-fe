@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function TransitionsModalShelf(props) {
-  const { title, authors, thumbnail, book_id } = props.book;
+  const { title, authors, thumbnail, book_id, owner_id } = props.book;
 
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
@@ -85,21 +85,23 @@ export default function TransitionsModalShelf(props) {
                   View Book
                 </Button>
 
-                <Button
+                {/* <Button
                   style={{ border: "solid black 0.5px", marginTop: "2%" }}
                 >
                   Hide Book
-                </Button>
-
-                <Button
-                  onClick={() => {
-                    handleClick(book_id);
-                  }}
-                  // href={`/users/${currentUser.uid}/books`}
-                  style={{ background: "red", marginTop: "2%" }}
-                >
-                  Remove Book
-                </Button>
+                </Button> */}
+                {currentUser.uid === owner_id ? (
+                  <Button
+                    onClick={() => {
+                      handleClick(book_id);
+                    }}
+                    style={{ background: "red", marginTop: "2%" }}
+                  >
+                    Remove Book
+                  </Button>
+                ) : (
+                  <> </>
+                )}
               </div>
             </div>
           </div>
