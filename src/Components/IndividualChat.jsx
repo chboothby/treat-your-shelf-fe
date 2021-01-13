@@ -117,19 +117,24 @@ function ChatRoom({ info }) {
             <Link to={`/users/${otherUser.id}/books`}>{otherUser.name}</Link>
           </p>
           {messages.map((message) => {
-            // const time = message.time.toDate().toString();
             return (
-              <div className="message-content">
-                <p>
-                  {message.uid === uid ? (
-                    <p>You:</p>
-                  ) : (
-                    <p>{message.displayName}:</p>
-                  )}
-                  {message.message}
-                </p>
-                {/* <p>{time}</p> */}
-              </div>
+              <p>
+                {message.uid === uid ? (
+                  <div id="you" className="message-content">
+                    <div>
+                      <p>You:</p>
+                      {message.message}
+                    </div>
+                  </div>
+                ) : (
+                  <div id="them" className="message-content">
+                    <div>
+                      <p>{message.displayName}:</p>
+                      {message.message}
+                    </div>
+                  </div>
+                )}
+              </p>
             );
           })}
         </div>
@@ -146,7 +151,7 @@ function ChatRoom({ info }) {
         ></TextField>
         <Button
           type="submit"
-          style={{ marginRight: "3%", background: "green", color: "white" }}
+          style={{ marginRight: "3%", background: "#18331D", color: "white" }}
           variant="outlined"
         >
           Send

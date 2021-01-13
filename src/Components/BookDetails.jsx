@@ -51,7 +51,7 @@ function BookDetails(props) {
       });
     });
   }, []);
-
+  console.log(bookInfo.owner_id, currentUser.uid);
   return (
     <div className="book-details">
       {loading ? (
@@ -88,8 +88,13 @@ function BookDetails(props) {
           </div>
         </>
       )}
-
-      <TransitionsModalRequest book={bookInfo} />
+      <div className="request-button">
+        {bookInfo.owner_id !== currentUser.uid ? (
+          <TransitionsModalRequest book={bookInfo} />
+        ) : (
+          <></>
+        )}
+      </div>
     </div>
   );
 }

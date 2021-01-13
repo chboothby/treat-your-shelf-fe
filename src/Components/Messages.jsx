@@ -20,7 +20,7 @@ function Messages() {
 }
 function Chats() {
   const [loading, setLoading] = useState(true);
-  const [chats, setChats] = useState([]);
+  const [chats, setChats] = useState({});
 
   const {
     currentUser: { uid },
@@ -32,7 +32,12 @@ function Chats() {
       .where("users", "array-contains", uid);
 
     getChatsRef.onSnapshot((querySnapshot) => {
+      if (querySnapshot.docs.length === 0) {
+        setLoading(false);
+      }
       const chatInfo = [];
+      let other_user;
+      let chat_id;
       querySnapshot.forEach((doc, i) => {
         const other_user = doc.id.split(uid).filter((el) => el !== "");
         getUserName(other_user[0])
@@ -54,6 +59,8 @@ function Chats() {
     <div className="messages">
       {loading ? (
         <p>Loading</p>
+      ) : Object.keys(chats).length === 0 ? (
+        <p>No chats to display</p>
       ) : (
         <div className="message-content-container">
           {chats.map((chat, i) => {

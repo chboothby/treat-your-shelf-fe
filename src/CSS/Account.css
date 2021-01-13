@@ -14,8 +14,13 @@
 }
 
 .account-header img {
-  width: 30%;
+  width: 200px;
+  height: 200px;
   border: solid black 0.5px;
   border-radius: 5px;
   padding: 2%;
+}
+
+.account-body {
+  text-align: center;
 }
