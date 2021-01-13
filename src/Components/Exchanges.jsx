@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
   requestContainer: {
     display: "flex",
+    flexWrap: "wrap",
     justifyContent: "center",
     background: theme.palette.primary.light,
     margin: "3%",
