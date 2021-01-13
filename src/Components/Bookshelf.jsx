@@ -4,15 +4,16 @@ import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import IconButton from "@material-ui/core/IconButton";
 import { Link } from "react-router-dom";
 import TransitionsModalShelf from "./TransitionsModalShelf";
-import { getUserBookshelf } from "../api";
+import { getUserBookshelf, getUserInfo } from "../api";
 import { useAuth } from "../Contexts/UserAuth";
 
 function Bookshelf(props) {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const { owner_id } = props.match.params;
+  const [owner_info, setOwnerInfo] = useState({});
   const { currentUser } = useAuth();
-  const ref = useRef();
+
   useEffect(() => {
     const paramsLength = Object.keys(props.match.params).length;
 
@@ -24,6 +25,11 @@ function Bookshelf(props) {
     } else {
       getUserBookshelf(owner_id).then(({ books }) => {
         setBooks(books);
+        setLoading(false);
+      });
+
+      getUserInfo(owner_id).then(({ user }) => {
+        setOwnerInfo(user);
         setLoading(false);
       });
     }
@@ -40,7 +46,11 @@ function Bookshelf(props) {
     <>
       <div className="bookshelf-container">
         <div className="bookshelf-header">
-          <h3>Yo bookshelf</h3>
+          {owner_id === undefined ? (
+            <h3>Yo bookshelf</h3>
+          ) : (
+            <h3>{owner_info.username}'s bookshelf</h3>
+          )}
 
           <Link to="/scan">
             <IconButton>

@@ -73,7 +73,17 @@ export default function Account() {
       <div className="account-header">
         {error && <Alert severity="error">{error}</Alert>}
         <h2>{currentUser.displayName}'s Profile</h2>
-        <img src={currentUser.photoURL} alt="User avatar"></img>
+        {currentUser.photoURL ? (
+          <img src={currentUser.photoURL} alt="User avatar"></img>
+        ) : (
+          <img
+            alt="stock profile"
+            src={
+              "https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg"
+            }
+          ></img>
+        )}
+
         <FormControlLabel
           style={{ background: "white", margin: "3%" }}
           control={

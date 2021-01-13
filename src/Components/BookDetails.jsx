@@ -78,7 +78,9 @@ function BookDetails(props) {
               }
             ></img>
             <div className="owner-info">
-              <Link to={`/users/${bookInfo.owner_id}/books`}>
+              <Link
+                to={{ pathname: `/users/${bookInfo.owner_id}/books`, bookInfo }}
+              >
                 <p>{userInfo.name}</p>
               </Link>
               <p>📍 {location}</p>
