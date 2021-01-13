@@ -131,7 +131,7 @@ function Search() {
                 <img src={book.thumbnail} alt="book"></img>
                 <div className="search-book-info">
                   <strong>{book.title}</strong>
-                  <p>{book.authors}</p>
+                  <p>{book.authors.split(",").join(", ")}</p>
                   <p>
                     {Math.round(geolib.convertDistance(distance, "mi") / 10)}{" "}
                     miles away

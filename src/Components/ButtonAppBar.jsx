@@ -10,6 +10,8 @@ import { HelpOutline } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    display: "flex",
+    justifyContent: "space-between",
     flexGrow: 1,
   },
   menuButton: {
@@ -27,15 +29,23 @@ export default function MenuAppBar() {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" className={classes.title}>
-            Treat Yo' Shelf
-          </Typography>
-
-          <div>
+          <Link to="/" style={{ textDecoration: "none", color: "#FAF9F4" }}>
+            <Typography variant="h6" className={classes.title}>
+              Treat Yo' Shelf
+            </Typography>
+          </Link>
+          {/* <div style={{ "align-content": "absolute", "margin-right": "-10px" }}> */}
+          <div
+            id="account-button"
+            className="account-button"
+            style={{
+              margin: "-110px",
+              "margin-left": "auto",
+            }}
+          >
             <IconButton
               aria-label="account of current user"
               aria-controls="menu-appbar"
-              //   onClick={handleMenu}
               color="inherit"
               component={Link}
               to="/account"
@@ -43,7 +53,11 @@ export default function MenuAppBar() {
               <AccountCircle />
             </IconButton>
           </div>
-          <div>
+          <div
+            id="help-button"
+            className="help-button"
+            style={{ "margin-left": "auto" }}
+          >
             <IconButton
               aria-label="help"
               aria-controls="menu-appbar"

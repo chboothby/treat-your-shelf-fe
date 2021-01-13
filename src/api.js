@@ -1,5 +1,4 @@
 import axios from "axios";
-import Geocode from "react-geocode";
 
 const treatApi = axios.create({
   baseURL: "https://treat-yo-shelf-backend.herokuapp.com/api/",
@@ -131,3 +130,5 @@ export const removeRequest = (exchange_id, user_id) => {
       console.log(err);
     });
 };
+
+export const geocodeApi = process.env.GEOCODE_API_KEY;

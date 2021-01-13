@@ -6,12 +6,17 @@ import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Collapse from "@material-ui/core/Collapse";
-import "../CSS/Account.css";
 import { useAuth } from "../Contexts/UserAuth";
 import { useHistory } from "react-router-dom";
 import { Link as RouterLink } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
+  accountContainer: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    height: "80vh",
+  },
   title: { color: theme.palette.primary.main, fontSize: "24px" },
   displayName: {},
   accountHeader: {
@@ -20,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-    background: "white",
+    background: theme.palette.secondary.main,
     textAlign: "center",
     alignItems: "center",
     borderRadius: "8px",
@@ -35,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
     margin: "0 auto",
     boxShadow: "0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)",
   },
-  img: { width: "200px", height: "200px", borderRadius: "5px", padding: "2%" },
+  img: { width: "150px", height: "150px", borderRadius: "5px", padding: "2%" },
 }));
 
 export default function Account() {
@@ -98,30 +103,30 @@ export default function Account() {
   }
 
   return (
-    <Grid className="account-container">
+    <Grid className={classes.accountContainer}>
       <div id="account-header" className={classes.accountHeader}>
         {error && <Alert severity="error">{error}</Alert>}
         <Box id="title" className={classes.title}>
-          Yo Profile
+          Yo' Profile
         </Box>
         <Box id="display-name" className={classes.displayName}>
           {currentUser.displayName}
         </Box>
-        {currentUser.photoURL === null ? (
-          <img
-            alt="stock profile"
-            src={
-              "https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg"
-            }
-          ></img>
-        ) : (
-          <img
-            src={currentUser.photoURL}
-            alt={`${currentUser.displayName}'s avatar`}
-            className={classes.img}
-          ></img>
-        )}
-
+        <div id="profile-pic" className={classes.img}>
+          {currentUser.photoURL === null ? (
+            <img
+              alt="stock profile"
+              src={
+                "https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg"
+              }
+            ></img>
+          ) : (
+            <img
+              src={currentUser.photoURL}
+              alt={`${currentUser.displayName}'s avatar`}
+            ></img>
+          )}
+        </div>
         <FormControlLabel
           style={{ background: "white", margin: "3%" }}
           control={
