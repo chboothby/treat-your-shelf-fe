@@ -12,18 +12,16 @@ import Alert from "@material-ui/lab/Alert";
 import { useAuth } from "../Contexts/UserAuth";
 import { useHistory } from "react-router-dom";
 import Geocode from "react-geocode";
-Geocode.setApiKey("AIzaSyBzdjkehz-69slvbPIwKPOVGzIkG_fuU3I");
+import { geocodeApi } from "../api";
+// CHECK THIS WORKS!!!!
+Geocode.setApiKey(geocodeApi);
 Geocode.setRegion("gb");
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
-      <Link color="inherit" href="">
-        Treat Yo Shelf
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
+      Treat Yo Shelf {new Date().getFullYear()}
     </Typography>
   );
 }
@@ -38,19 +36,15 @@ const useStyles = makeStyles((theme) => ({
   form: {
     width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(3),
-    "& .MuiOutlinedInput-root": {
-      "&.Mui-focused fieldset": {
-        borderColor: "#1A5AFF",
-      },
-    },
+    color: theme.palette.primary,
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
-    color: "#FFFFFF",
-    backgroundColor: "#1A5AFF",
+    color: theme.palette.primary.contrastText,
+    backgroundColor: theme.palette.primary.main,
   },
   link: {
-    color: "#1A5AFF",
+    color: theme.palette.primary,
   },
 }));
 

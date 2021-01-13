@@ -15,7 +15,6 @@ import Search from "./Components/Search";
 import Help from "./Components/Help";
 import Account from "./Components/Account";
 import ButtonAppBar from "./Components/ButtonAppBar";
-import LogOutPage from "./Components/LogOutPage";
 import EmailVerifyNotice from "./Components/EmailVerifyNotice";
 import IndividualChat from "./Components/IndividualChat";
 import { ThemeProvider } from "@material-ui/core";
@@ -31,10 +30,10 @@ export default function App() {
             <ButtonAppBar></ButtonAppBar>
             <Switch>
               <PrivateRoute exact path="/" component={Bookshelf} />
-              <Route
+              <PrivateRoute
                 path="/users/:owner_id/books"
                 component={Bookshelf}
-              ></Route>
+              />
               <Route path="/signup" component={SignUp} />
               <Route path="/login" component={LogIn} />
               <Route path="/password-reset" component={PasswordReset} />
@@ -45,12 +44,11 @@ export default function App() {
               <Route path="/search" component={Search} />
               <Route path="/help" component={Help} />
               <PrivateRoute path="/account" component={Account} />
-              <Route path="/loggedout" component={LogOutPage}></Route>
               <PrivateRoute path="/exchanges" component={Exchanges} />
               <PrivateRoute
                 path="/email-verify"
                 component={EmailVerifyNotice}
-              ></PrivateRoute>
+              />
             </Switch>
             <SimpleBottomNavigation></SimpleBottomNavigation>
           </AuthProvider>
