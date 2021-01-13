@@ -38,7 +38,7 @@ function Scanner() {
         }
       });
   };
-
+  console.log(books);
   useEffect(() => {
     if (data !== "Not Found") {
       getBookByISBN(data);
