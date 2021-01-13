@@ -20,38 +20,32 @@ function Messages() {
 }
 function Chats() {
   const [loading, setLoading] = useState(true);
-  const [chats, setChats] = useState({});
+  const [chats, setChats] = useState([]);
 
   const {
     currentUser: { uid },
   } = useAuth();
 
-  useEffect(() => {
-    const getChatsRef = firestore
-      .collection("chats")
-      .where("users", "array-contains", uid);
+  const getChatsRef = firestore
+    .collection("chats")
+    .where("users", "array-contains", uid);
 
+  useEffect(() => {
     getChatsRef.onSnapshot((querySnapshot) => {
-      if (querySnapshot.docs.length === 0) {
-        setLoading(false);
-      }
       const chatInfo = [];
-      let other_user;
-      let chat_id;
-      querySnapshot.forEach((doc, i) => {
+
+      querySnapshot.forEach(async (doc, i) => {
         const other_user = doc.id.split(uid).filter((el) => el !== "");
-        getUserName(other_user[0])
-          .then((user) => {
-            chatInfo.push({
-              chat_id: doc.id,
-              other_user: { name: user, id: other_user[0] },
-            });
-          })
-          .then(() => {
-            setChats([...new Set([...chats, ...chatInfo])]);
-            setLoading(false);
+        getUserName(other_user[0]).then((user) => {
+          chatInfo.push({
+            chat_id: doc.id,
+            other_user: { name: user, id: other_user[0] },
           });
+        });
       });
+
+      setChats(chatInfo);
+      setLoading(false);
     });
   }, []);
 
