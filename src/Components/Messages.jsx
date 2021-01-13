@@ -73,7 +73,6 @@ function Chats() {
         setLoading(false);
       }
       const chatInfo = [];
-
       querySnapshot.forEach((doc, i) => {
         const other_user = doc.id.split(uid).filter((el) => el !== "");
         getUserName(other_user[0])
