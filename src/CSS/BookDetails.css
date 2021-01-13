@@ -6,7 +6,7 @@
 
 .single-book-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-content: center;
   border-bottom: dotted rgba(128, 128, 128, 0.486) 0.25px;
 }
@@ -16,15 +16,18 @@
 }
 
 .single-book-info {
-  background: rgba(128, 128, 128, 0.301);
+  background: rgb(233, 233, 233);
+  color: #18331d;
   width: 40%;
+  margin-top: 10%;
   height: fit-content;
   text-align: center;
   border-radius: 4px;
 }
 
 .single-book-description {
-  background: rgba(128, 128, 128, 0.301);
+  background: rgb(233, 233, 233);
+  color: #18331d;
   margin-top: 6%;
   padding: 2%;
   border-radius: 4px;
@@ -34,11 +37,14 @@
 
 .owner-card {
   padding: 2%;
-  background: rgba(128, 128, 128, 0.301);
+  background: #6a8680;
+  color: #faf9f4;
   border: solid rgb(179, 179, 179) 0.5px;
-  margin: 10%;
+  margin: 10% auto;
+  width: fit-content;
   display: flex;
-  justify-content: space-between;
+  flex-direction: row;
+  justify-content: space-around;
   border-radius: 4px;
 }
 
@@ -47,6 +53,7 @@
   border-radius: 4px;
   width: 30%;
   padding: 3%;
+  min-width: 120px;
 }
 
 .owner-info {
@@ -55,4 +62,10 @@
 
 .request-button {
   text-align: center;
+}
+
+img {
+  max-width: 150px;
+  width: 100%;
+  height: auto;
 }

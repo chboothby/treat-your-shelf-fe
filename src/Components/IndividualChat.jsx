@@ -29,6 +29,7 @@ function ChatRoom({ info }) {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [otherUser, setOtherUser] = useState({});
+  const [defaultMessage, setDefault] = useState(null);
 
   const {
     currentUser: { uid, displayName },
@@ -98,11 +99,6 @@ function ChatRoom({ info }) {
       });
       setLoading(false);
       setMessages(items);
-      if (info.bookInfo) {
-        setFormValue(
-          `Hi there! I'd like to request to swap "${info.bookInfo.title}".`
-        );
-      }
     });
   }, []);
 
@@ -142,6 +138,9 @@ function ChatRoom({ info }) {
 
       <form onSubmit={sendMessage} className="message-form">
         <TextField
+          helperText={
+            info.book ? `Hello! I'd like to swap ${info.book.title}` : ""
+          }
           autoComplete="off"
           onChange={(e) => setFormValue(e.target.value)}
           value={formValue}

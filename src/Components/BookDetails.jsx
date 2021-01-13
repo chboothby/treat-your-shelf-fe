@@ -51,7 +51,6 @@ function BookDetails(props) {
       });
     });
   }, []);
-  console.log(bookInfo.owner_id, currentUser.uid);
   return (
     <div className="book-details">
       {loading ? (
@@ -69,18 +68,13 @@ function BookDetails(props) {
             <p>{bookInfo.description}</p>
           </div>
           <div className="owner-card">
-            <p>Owner</p>
-            <img
-              alt="stock profile"
-              src={
-                "https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg"
-              }
-            ></img>
+            <img alt="stock profile" src={userInfo.avatar_pic}></img>
             <div className="owner-info">
               <Link
+                style={{ textDecoration: "none", color: "#faf9f4" }}
                 to={{ pathname: `/users/${bookInfo.owner_id}/books`, bookInfo }}
               >
-                <p>{userInfo.name}</p>
+                <h3>{userInfo.name}</h3>
               </Link>
               <p>📍 {location}</p>
               <p>{userDistance} miles away</p>
