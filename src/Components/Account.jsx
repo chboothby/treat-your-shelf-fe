@@ -12,8 +12,16 @@ import { useHistory } from "react-router-dom";
 import { Link as RouterLink } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
-  title: {},
+  title: { color: theme.palette.primary.main, fontSize: "24px" },
   displayName: {},
+  accountBody: {
+    textAlign: "center",
+    background: theme.palette.primary.light,
+    padding: "3%",
+    width: "90%",
+    borderRadius: "5px",
+    margin: "0 auto",
+  },
 }));
 
 export default function Account() {
@@ -85,10 +93,20 @@ export default function Account() {
         <Box id="display-name" className={classes.displayName}>
           {currentUser.displayName}
         </Box>
-        <img
-          src={currentUser.photoURL}
-          alt={`${currentUser.displayName}'s avatar`}
-        ></img>
+        {currentUser.photoURL === null ? (
+          <img
+            alt="stock profile"
+            src={
+              "https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg"
+            }
+          ></img>
+        ) : (
+          <img
+            src={currentUser.photoURL}
+            alt={`${currentUser.displayName}'s avatar`}
+          ></img>
+        )}
+
         <FormControlLabel
           style={{ background: "white", margin: "3%" }}
           control={
@@ -124,7 +142,7 @@ export default function Account() {
       <Grid
         container
         id="account-body"
-        className="account-body"
+        className={classes.accountBody}
         justify="center"
       >
         <Grid item xs={12}>
@@ -144,13 +162,13 @@ export default function Account() {
               name="username"
               variant="outlined"
               id="username"
-              label="Username"
+              // label="Username"
               size="small"
               defaultValue={currentUser.displayName}
               inputRef={usernameRef}
             />
             <Button
-              style={{ background: "white", margin: "3%" }}
+              style={{ margin: "3%" }}
               variant="outlined"
               onClick={handleChangeUsername}
             >
