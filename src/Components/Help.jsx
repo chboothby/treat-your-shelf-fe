@@ -9,11 +9,11 @@ const Help = () => {
       </div>
       <hr />
       <div id="help-body" className="help-body">
-        <h3>What is Treat Yo Shelf?</h3>
+        <h3>What is Treat Your Shelf?</h3>
         <p>
-          Treat Yo Shelf is a book sharing app designed to encourage and assist
-          reading &amp; sharing amongst people from all walks of life without
-          needing to pay a penny.
+          Treat Your Shelf is a book sharing app designed to encourage and
+          assist reading &amp; sharing amongst people from all walks of life
+          without needing to pay a penny.
         </p>
         <hr />
         <h3>How do I begin adding books to my bookshelf?</h3>
@@ -62,7 +62,7 @@ const Help = () => {
           Please contact us at:
           <br />
           <a href="mailto: thisemaildoesntactuallyexistlol@treatyoshelf.com">
-            bugs@treatyoshelf.com
+            bugs@treatyourshelf.com
           </a>
           <br />
           and we will aim to fix your issue ASAP!
