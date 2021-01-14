@@ -12,13 +12,12 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
   title: { color: theme.palette.primary.main, fontSize: "24px" },
   header: {
-    color: theme.palette.secondary.light,
-    background: theme.palette.primary.light,
+    color: theme.palette.primary.dark,
+    background: theme.palette.secondary.main,
     height: "50px",
-    paddingBottom: "3%",
+    marginBottom: "1.5%",
     paddingTop: "0.75%",
   },
-
   book: {
     textAlign: "center",
     background: theme.palette.secondary.light,
@@ -33,13 +32,19 @@ const useStyles = makeStyles((theme) => ({
     margin: "1% auto",
     boxShadow: "0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)",
   },
+  addButton: {
+    position: "fixed",
+    right: "5%",
+    bottom: "9%",
+    zIndex: "1",
+  },
 }));
 
 function Bookshelf(props) {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { owner_id } = props.match.params;
   const [owner_info, setOwnerInfo] = useState({});
+  const { owner_id } = props.match.params;
   const { currentUser } = useAuth();
 
   useEffect(() => {
@@ -80,12 +85,17 @@ function Bookshelf(props) {
           {owner_id === undefined ? (
             <h2>Your Bookshelf</h2>
           ) : (
-            <h2>{owner_info.username}'s bookshelf</h2>
+            <h2>{owner_info.username}'s Bookshelf</h2>
           )}
         </div>
         {owner_id === undefined ? (
-          <Link to="/scan" className="add-button">
-            <Fab id="add-button" color="primary" aria-label="add">
+          <Link to="/scan" className={classes.addButton}>
+            <Fab
+              id="add-button"
+              color="primary"
+              // style={{ backgroundColor: "#18331D", color: "#FAF9F4" }}
+              aria-label="add"
+            >
               <AddIcon />
             </Fab>
           </Link>

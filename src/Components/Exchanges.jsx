@@ -9,15 +9,17 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   displayName: {},
-  title: { color: theme.palette.primary.main },
+  title: { color: theme.palette.primary.dark, paddingTop: "0.75%" },
+  subTitle: { color: theme.palette.primary.main },
   recBtn: {
-    background: theme.palette.primary.light,
+    background: theme.palette.primary.dark,
+    color: theme.palette.primary.contrastText,
     width: "45%",
     margin: "1%",
   },
   cancelBtn: {
-    color: "red",
-    background: theme.palette.secondary.main,
+    color: theme.palette.secondary.main,
+    background: "#d71212",
     width: "45%",
     margin: "1%",
   },
@@ -27,12 +29,26 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     background: theme.palette.primary.light,
     margin: "3%",
-    borderRadius: "3px",
+    paddingBottom: "4%",
+    borderRadius: "4px",
     boxShadow: "0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)",
   },
   container: {
     display: "flex",
     flexDirection: "column",
+  },
+  bookDetails: {
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    background: theme.palette.primary.main,
+    height: "30",
+    margin: "3%",
+    padding: "",
+    borderRadius: "6px",
+    boxShadow: "0 10px 16px 0 rgba(0,0,0,0.2),0 6px 10px 0 rgba(0,0,0,0.2)",
+    color: theme.palette.primary.contrastText,
+    fontSize: "16px",
   },
 }));
 
@@ -40,7 +56,6 @@ function Exchanges() {
   const classes = useStyles();
   return (
     <div className="exchanges-container">
-      <p></p>
       <h2 className={classes.title}>Pending Exchanges</h2>
       <YourRequests />
       <TheirRequests />
@@ -97,15 +112,15 @@ function YourRequests() {
   } else {
     return (
       <div className={classes.container}>
-        <h3 className={classes.title}>Your requested books</h3>
+        <h3 className={classes.subTitle}>Your requested books</h3>
         <div className={classes.requestContainer}>
           {exchanges.map((exchange, i) => {
             return (
               <div className="exchange-container" key={i}>
-                <div className="book-artwork">
-                  <p>Owner: {exchange.owner_name}</p>
-                  <img alt="book-artwork" src={exchange.artwork}></img>
+                <div className={classes.bookDetails}>
+                  <h3>Owner: {exchange.owner_name}</h3>
                 </div>
+                <img alt="book-artwork" src={exchange.artwork}></img>
                 {exchange.book_received ? (
                   <Button
                     style={{ width: "40%", margin: "0 auto" }}
@@ -197,12 +212,14 @@ function TheirRequests() {
   } else {
     return (
       <div className={classes.container}>
-        <h3 className={classes.title}>Books others have requested from you</h3>
+        <h3 className={classes.subTitle}>
+          Books others have requested from you
+        </h3>
         <div className={classes.requestContainer}>
           {exchanges.map((exchange, i) => {
             return (
               <div className="exchange-container" key={i}>
-                <div className="book-artwork">
+                <div className={classes.bookDetails}>
                   <p>Requester: {exchange.requester_name}</p>
                   <img alt="book artwork" src={exchange.artwork}></img>
                 </div>
@@ -224,7 +241,7 @@ function TheirRequests() {
                       variant="outlined"
                       size="medium"
                     >
-                      Send
+                      Sent
                     </Button>
                     <Button
                       onClick={() => {

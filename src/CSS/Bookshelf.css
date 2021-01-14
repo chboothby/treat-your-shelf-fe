@@ -38,10 +38,3 @@ img {
   font-size: 0.8em;
   margin-top: 5%;
 }
-
-.add-button {
-  position: fixed;
-  z-index: 1;
-  right: 28%;
-  bottom: 10%;
-}

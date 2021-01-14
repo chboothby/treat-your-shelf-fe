@@ -15,8 +15,10 @@ const firestore = firebase.firestore();
 const useStyles = makeStyles((theme) => ({
   title: { color: theme.palette.primary.main, fontSize: "24px" },
   header: {
-    color: theme.palette.secondary.light,
-    background: theme.palette.primary.light,
+    color: theme.palette.primary.dark,
+    background: theme.palette.secondary.main,
+    paddingTop: "0.75%",
+    marginBottom: "-15px",
   },
   displayName: {},
   accountHeader: {
@@ -44,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Messages() {
   const classes = useStyles();
+
   return (
     <div className="messages-container">
       <div className={classes.header}>
@@ -54,6 +57,7 @@ function Messages() {
     </div>
   );
 }
+
 function Chats() {
   const [loading, setLoading] = useState(true);
   const [chats, setChats] = useState([]);

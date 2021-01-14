@@ -19,8 +19,8 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
-  accountButton: { position: "fixed", right: "75px" },
-  helpButton: { position: "fixed", right: "20px" },
+  accountButton: { position: "absolute", right: "75px" },
+  helpButton: { position: "absolute", right: "20px" },
 }));
 
 export default function MenuAppBar() {
