@@ -54,7 +54,7 @@ function BookDetails(props) {
       });
     });
   }, [book_id, currentUser.uid]);
-
+  console.log(userInfo.avatar_pic);
   return (
     <div className="book-details">
       {loading ? (
@@ -73,7 +73,18 @@ function BookDetails(props) {
             <p>{bookInfo.description}</p>
           </div>
           <div className="owner-card">
-            <img alt="stock profile" src={userInfo.avatar_pic}></img>
+            {userInfo.avatar_pic === undefined ||
+            userInfo.avatar_pic === null ? (
+              <>
+                <img
+                  alt="stock profile"
+                  src="https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg"
+                ></img>
+              </>
+            ) : (
+              <img alt="stock profile" src={userInfo.avatar_pic}></img>
+            )}
+
             <div className="owner-info">
               <Link
                 style={{ textDecoration: "none", color: "#faf9f4" }}

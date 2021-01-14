@@ -19,6 +19,7 @@
   box-sizing: border-box;
 }
 
-.profile-pic {
-  border: solid red;
+#profile-pic {
+  display: flex;
+  justify-content: center;
 }

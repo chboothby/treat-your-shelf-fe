@@ -131,7 +131,7 @@ export default function Account() {
         <Box id="display-name" className={classes.displayName}>
           {currentUser.displayName}
         </Box>
-        <div id="profile-pic" className={classes.img}>
+        <div id="profile-pic">
           {currentUser.photoURL === null ? (
             <img
               className={classes.img}
