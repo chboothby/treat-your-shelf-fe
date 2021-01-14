@@ -43,45 +43,20 @@ function Search() {
   const [loading, setLoading] = useState(true);
   const [userLocation, setUserLocation] = useState({});
   const { currentUser } = useAuth();
+
   useEffect(() => {
     const geolib = require("geolib");
     let usersLocation = {};
-    getUserInfo(currentUser.uid)
-      .then(({ user }) => {
-        usersLocation = user.location;
-        setUserLocation(user.location);
-      })
-      .then(() => {})
-      .then(() => {
-        getAllBooks().then((data) => {
-          const filtered = data.books.books.filter((book) => {
-            return book.owner_id !== currentUser.uid;
-          });
 
-          const sortedBooks = filtered.map((book) => {
-            return {
-              distance: geolib.getPathLength([
-                {
-                  latitude: book.book_location.x,
-                  longitude: book.book_location.y,
-                },
-                {
-                  latitude: usersLocation.x,
-                  longitude: usersLocation.y,
-                },
-              ]),
-              book,
-            };
-          });
-          const sortedByDistance = sortedBooks.sort(
-            (a, b) => a.distance - b.distance
-          );
-
-          setBooks(sortedByDistance);
-          setLoading(false);
-        });
+    getAllBooks().then((data) => {
+      const filtered = data.books.books.filter((book) => {
+        return book.owner_id !== currentUser.uid;
       });
-  }, [currentUser.uid]);
+      console.log(filtered);
+      setBooks(filtered);
+      setLoading(false);
+    });
+  }, []);
 
   const [formValue, setFormValue] = useState({});
   const handleChange = (event) => {
@@ -98,22 +73,22 @@ function Search() {
         return book.owner_id !== currentUser.uid;
       });
 
-      const sortedBooks = filtered.map((book) => {
-        return {
-          distance: geolib.getPathLength([
-            {
-              latitude: book.book_location.x,
-              longitude: book.book_location.y,
-            },
-            {
-              latitude: userLocation.x,
-              longitude: userLocation.y,
-            },
-          ]),
-          book,
-        };
-      });
-      setBooks(sortedBooks);
+      // const sortedBooks = filtered.map((book) => {
+      //   return {
+      //     distance: geolib.getPathLength([
+      //       {
+      //         latitude: book.book_location.x,
+      //         longitude: book.book_location.y,
+      //       },
+      //       {
+      //         latitude: userLocation.x,
+      //         longitude: userLocation.y,
+      //       },
+      //     ]),
+      //     book,
+      //   };
+      // });
+      setBooks(filtered);
       setLoading(false);
     });
   };
@@ -161,18 +136,14 @@ function Search() {
           {loading ? (
             <Loading />
           ) : (
-            books.map(({ distance, book }, i) => {
+            books.map((book, i) => {
+              console.log(book);
               return (
                 <div key={i} className={classes.book}>
                   <img src={book.thumbnail} alt="book"></img>
                   <div className="search-book-info">
                     <strong>{book.title}</strong>
                     <p>{book.authors.split(",").join(", ")}</p>
-                    <p>
-                      {Math.round(geolib.convertDistance(distance, "mi") / 10)}{" "}
-                      miles away
-                    </p>
-
                     <TransitionsModalSearch
                       book={book}
                     ></TransitionsModalSearch>
