@@ -15,7 +15,6 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     height: "90vh",
-    justifyContent: "center",
   },
   title: { color: theme.palette.primary.main, fontSize: "24px" },
   displayName: {},
@@ -24,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     margin: "2%",
     display: "flex",
     flexDirection: "column",
-    justifyContent: "center",
+    justifyContent: "space-between",
     textAlign: "center",
     alignItems: "center",
     borderRadius: "8px",
@@ -39,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     margin: "0 auto",
     boxShadow: "0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)",
   },
-  img: { width: "150px", height: "150px", borderRadius: "5px", padding: "2%" },
+  img: { width: "150px", height: "200px", borderRadius: "5px", padding: "2%" },
 }));
 
 export default function Account() {
