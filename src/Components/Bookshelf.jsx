@@ -78,9 +78,9 @@ function Bookshelf(props) {
       <div id="bookshelf-container" className="bookshelf-container">
         <div id="bookshelf-header" className={classes.header}>
           {owner_id === undefined ? (
-            <h3>Yo bookshelf</h3>
+            <h2>Yo bookshelf</h2>
           ) : (
-            <h3>{owner_info.username}'s bookshelf</h3>
+            <h2>{owner_info.username}'s bookshelf</h2>
           )}
         </div>
         <Link to="/scan" className="add-button">
