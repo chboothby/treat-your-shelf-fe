@@ -14,14 +14,13 @@ function BookDetails(props) {
   const [loading, setLoading] = useState(true);
   const [userInfo, setUserInfo] = useState({});
   const [location, setLocation] = useState("");
-  const [myLocation, setMyLocation] = useState({});
   const [userDistance, setUserDistance] = useState({});
   const { book_id } = props.match.params;
-
+  const { book_location } = props.location;
+  console.log(props);
   useEffect(() => {
     getSingleBook(book_id).then(({ book }) => {
       setBook(book);
-
       getUserInfo(book.owner_id).then(({ user }) => {
         setUserInfo(user);
         const { x, y } = user.location;
@@ -30,15 +29,14 @@ function BookDetails(props) {
           setLocation(city);
         });
         getUserInfo(currentUser.uid).then((res) => {
-          setMyLocation(res.user.location);
           const distance = geolib.getPathLength([
             {
               latitude: res.user.location.x,
               longitude: res.user.location.y,
             },
             {
-              latitude: user.location.x,
-              longitude: `-${user.location.y}`,
+              latitude: book_location.x,
+              longitude: book_location.y,
             },
           ]);
           const converted = Math.round(
@@ -50,7 +48,7 @@ function BookDetails(props) {
         });
       });
     });
-  }, []);
+  }, [book_id, currentUser.uid]);
 
   return (
     <div className="book-details">

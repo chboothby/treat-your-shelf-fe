@@ -1,29 +1,13 @@
 .bookshelf-container {
-  margin-top: 10%;
   text-align: center;
   display: flex;
   flex-direction: column;
-  width: 100vw;
+  /* width: 100vw; */
 }
 
 img {
   height: 200px;
   align-self: center;
-}
-
-.book-list-card {
-  text-align: center;
-  border: solid grey 0.5px;
-  border-radius: 4px;
-  margin: 1%;
-  padding: 2%;
-  transition: background 0.5s;
-  background: white;
-  width: 40%;
-  display: flex;
-  flex-direction: column;
-  align-content: space-between;
-  justify-content: space-between;
 }
 
 .book-list-card:hover {
@@ -34,6 +18,7 @@ img {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
+  margin-top: 2%;
 }
 
 .bookshelf-header {
@@ -47,14 +32,16 @@ img {
 .my-book-info {
   display: flex;
   flex-direction: column;
-  min-height: 35%;
-  justify-content: flex-end;
+  min-height: 100px;
+  justify-content: flex-start;
+  align-content: stretch;
   font-size: 0.8em;
+  margin-top: 5%;
 }
 
 .add-button {
   position: fixed;
   z-index: 1;
-  right: 20px;
-  bottom: 70px;
+  right: 28%;
+  bottom: 10%;
 }

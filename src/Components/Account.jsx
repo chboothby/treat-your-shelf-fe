@@ -14,8 +14,7 @@ const useStyles = makeStyles((theme) => ({
   accountContainer: {
     display: "flex",
     flexDirection: "column",
-    justifyContent: "center",
-    height: "80vh",
+    height: "90vh",
   },
   title: { fontSize: "32px", margin: "2%" },
   displayName: {
@@ -28,8 +27,7 @@ const useStyles = makeStyles((theme) => ({
     margin: "2%",
     display: "flex",
     flexDirection: "column",
-    justifyContent: "center",
-    background: theme.palette.secondary.main,
+    justifyContent: "space-between",
     textAlign: "center",
     alignItems: "center",
     borderRadius: "8px",

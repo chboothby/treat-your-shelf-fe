@@ -44,7 +44,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function TransitionsModalSearch(props) {
-  const { title, authors, thumbnail, book_id, owner_id } = props.book;
+  const {
+    title,
+    authors,
+    thumbnail,
+    book_id,
+    owner_id,
+    book_location,
+  } = props.book;
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [ownerInfo, setOwnerInfo] = useState({});

@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
 import "firebase/analytics";
-import app from "../firebase";
 import { Button, TextField } from "@material-ui/core";
 import "../CSS/Messages.css";
 import { useAuth } from "../Contexts/UserAuth";
@@ -12,7 +11,6 @@ import { getUserName } from "../api";
 import Loading from "./Loading";
 import { makeStyles } from "@material-ui/core/styles";
 
-const dbConfig = app;
 const firestore = firebase.firestore();
 
 const useStyles = makeStyles((theme) => ({
@@ -23,11 +21,13 @@ const useStyles = makeStyles((theme) => ({
   },
   messageForm: {
     display: "flex",
+    position: "relative",
+    bottom: "0",
     justifyContent: "space-between",
-    width: "80%",
-    // margin: "0 auto",
-    marginBottom: "4%",
-    margin: "0 auto",
+    textAlign: "center",
+    width: "90%",
+    // marginBottom: "10%",
+    margin: "-7% auto",
     background: theme.palette.secondary.light,
     padding: "1%",
     boxShadow: "0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)",
@@ -54,7 +54,6 @@ function ChatRoom({ info }) {
   const [loading, setLoading] = useState(true);
   const [otherUser, setOtherUser] = useState({});
   const classes = useStyles();
-  const [defaultMessage, setDefault] = useState(null);
 
   const {
     currentUser: { uid, displayName },
@@ -86,7 +85,7 @@ function ChatRoom({ info }) {
         setOtherUser(user);
       });
     }
-  }, []);
+  }, [info.book, info.chat]);
 
   const getMessagesRef = firestore
     .collection("chats")
@@ -125,7 +124,7 @@ function ChatRoom({ info }) {
       setLoading(false);
       setMessages(items);
     });
-  }, []);
+  }, [getMessagesRef]);
 
   return (
     <div className="messages">
@@ -139,7 +138,7 @@ function ChatRoom({ info }) {
           </p>
           {messages.map((message) => {
             return (
-              <p>
+              <>
                 {message.uid === uid ? (
                   <div id="you" className="message-content">
                     <div>
@@ -155,7 +154,7 @@ function ChatRoom({ info }) {
                     </div>
                   </div>
                 )}
-              </p>
+              </>
             );
           })}
         </div>

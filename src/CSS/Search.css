@@ -3,30 +3,19 @@
   flex-direction: column;
 }
 
+.books-container {
+  text-align: center;
+}
+
 .results-list {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
 }
 
-.results-list .book {
-  text-align: center;
-  border: solid grey 0.5px;
-  border-radius: 4px;
-  margin: 1%;
-  padding: 2%;
-  transition: background 0.5s;
-  background: white;
-  width: 40%;
-  max-width: 50%;
-  display: flex;
-  flex-direction: column;
-  align-content: space-between;
-  justify-content: space-between;
-}
-
-.results-list img {
-  max-width: 100%;
+img {
+  height: 200px;
+  align-self: center;
 }
 
 .results-list .book:hover {
@@ -34,7 +23,7 @@
 }
 
 .search-form {
-  margin-top: 5%;
+  margin-top: 2%;
   display: flex;
   flex-direction: column;
 }
@@ -42,7 +31,9 @@
 .search-book-info {
   display: flex;
   flex-direction: column;
-  min-height: 35%;
-  justify-content: flex-end;
-  font-size: 1em;
+  min-height: 100px;
+  justify-content: flex-start;
+  align-content: stretch;
+  font-size: 0.8em;
+  margin-top: 10%;
 }

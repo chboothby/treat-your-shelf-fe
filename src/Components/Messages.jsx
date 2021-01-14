@@ -25,7 +25,6 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-    background: "white",
     textAlign: "center",
     alignItems: "center",
     borderRadius: "8px",
@@ -56,7 +55,6 @@ function Messages() {
   );
 }
 function Chats() {
-  const classes = useStyles();
   const [loading, setLoading] = useState(true);
   const [chats, setChats] = useState([]);
 
@@ -89,7 +87,7 @@ function Chats() {
           });
       });
     });
-  }, []);
+  }, [uid]);
 
   return (
     <div className="messages">
