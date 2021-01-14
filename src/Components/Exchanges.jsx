@@ -57,29 +57,32 @@ function YourRequests() {
   const classes = useStyles();
 
   useEffect(() => {
-    getAllExchanges(uid).then((exchanges) => {
-      exchanges
-        .filter((exchange) => exchange.requester_id === uid)
-        .forEach((exchange) => {
-          const { book_id, owner_id } = exchange;
-          const username = getUserName(owner_id);
-          const book = getSingleBook(book_id);
-          return Promise.all([username, book]).then(([username, book]) => {
-            exchange.owner_name = username;
-            exchange.artwork = book.book.thumbnail;
-            const updatedExchanges = [...exchanges, exchange];
-            setExchanges([...new Set(updatedExchanges)]);
-            setLoading(false);
+    getAllExchanges(uid)
+      .then((exchanges) => {
+        exchanges
+          .filter((exchange) => exchange.requester_id === uid)
+          .forEach((exchange) => {
+            const { book_id, owner_id } = exchange;
+            const username = getUserName(owner_id);
+            const book = getSingleBook(book_id);
+            return Promise.all([username, book]).then(([username, book]) => {
+              exchange.owner_name = username;
+              exchange.artwork = book.book.thumbnail;
+              const updatedExchanges = [...exchanges, exchange];
+              setExchanges([...new Set(updatedExchanges)]);
+            });
           });
-        });
-    });
+      })
+      .then(() => {
+        setLoading(false);
+      });
   }, []);
 
   const handleReceived = (exchange_id, i) => {
-    receiveBook(exchange_id, uid);
     const newExchanges = [...exchanges];
     newExchanges[i].book_received = true;
     setExchanges(newExchanges);
+    receiveBook(exchange_id, uid);
   };
 
   const handleCancel = (exchange_id, i) => {
@@ -154,29 +157,32 @@ function TheirRequests() {
   const classes = useStyles();
 
   useEffect(() => {
-    getAllExchanges(uid).then((exchanges) => {
-      exchanges
-        .filter((exchange) => exchange.requester_id != uid)
-        .forEach((exchange) => {
-          const { book_id, owner_id } = exchange;
-          const username = getUserName(owner_id);
-          const book = getSingleBook(book_id);
-          return Promise.all([username, book]).then(([username, book]) => {
-            exchange.owner_name = username;
-            exchange.artwork = book.book.thumbnail;
-            const newExchanges = [...exchanges, exchange];
-            setExchanges([...new Set(newExchanges)]);
-            setLoading(false);
+    getAllExchanges(uid)
+      .then((exchanges) => {
+        exchanges
+          .filter((exchange) => exchange.requester_id != uid)
+          .forEach((exchange) => {
+            const { book_id, requester_id } = exchange;
+            const username = getUserName(requester_id);
+            const book = getSingleBook(book_id);
+            return Promise.all([username, book]).then(([username, book]) => {
+              exchange.requester_name = username;
+              exchange.artwork = book.book.thumbnail;
+              const newExchanges = [...exchanges, exchange];
+              setExchanges([...new Set(newExchanges)]);
+            });
           });
-        });
-    });
+      })
+      .then(() => {
+        setLoading(false);
+      });
   }, []);
 
   const handleSend = (book_id, i) => {
-    sendBook(book_id, uid);
     const newExchanges = [...exchanges];
     newExchanges[i].book_sent = true;
     setExchanges(newExchanges);
+    sendBook(book_id, uid);
   };
 
   const handleDecline = (exchange_id, i) => {
@@ -197,6 +203,7 @@ function TheirRequests() {
             return (
               <div className="exchange-container" key={i}>
                 <div className="book-artwork">
+                  <p>Requester: {exchange.requester_name}</p>
                   <img src={exchange.artwork}></img>
                 </div>
                 {exchange.book_sent ? (
