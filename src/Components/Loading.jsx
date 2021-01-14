@@ -5,6 +5,7 @@ const useStyles = makeStyles((theme) => ({
   loading: {
     color: theme.palette.primary.main,
     padding: "1.5rem",
+    margin: "0 auto",
   },
 }));
 
