@@ -3,7 +3,6 @@ import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
 import "firebase/analytics";
-import app from "../firebase";
 import { Button, TextField } from "@material-ui/core";
 import "../CSS/Messages.css";
 import { useAuth } from "../Contexts/UserAuth";
@@ -12,7 +11,6 @@ import { getUserName } from "../api";
 import Loading from "./Loading";
 import { makeStyles } from "@material-ui/core/styles";
 
-const dbConfig = app;
 const firestore = firebase.firestore();
 
 const useStyles = makeStyles((theme) => ({
@@ -54,7 +52,6 @@ function ChatRoom({ info }) {
   const [loading, setLoading] = useState(true);
   const [otherUser, setOtherUser] = useState({});
   const classes = useStyles();
-  const [defaultMessage, setDefault] = useState(null);
 
   const {
     currentUser: { uid, displayName },
@@ -86,7 +83,7 @@ function ChatRoom({ info }) {
         setOtherUser(user);
       });
     }
-  }, []);
+  }, [info.book, info.chat]);
 
   const getMessagesRef = firestore
     .collection("chats")
@@ -125,7 +122,7 @@ function ChatRoom({ info }) {
       setLoading(false);
       setMessages(items);
     });
-  }, []);
+  }, [getMessagesRef]);
 
   return (
     <div className="messages">
@@ -139,7 +136,7 @@ function ChatRoom({ info }) {
           </p>
           {messages.map((message) => {
             return (
-              <p>
+              <>
                 {message.uid === uid ? (
                   <div id="you" className="message-content">
                     <div>
@@ -155,7 +152,7 @@ function ChatRoom({ info }) {
                     </div>
                   </div>
                 )}
-              </p>
+              </>
             );
           })}
         </div>

@@ -76,7 +76,7 @@ function YourRequests() {
       .then(() => {
         setLoading(false);
       });
-  }, []);
+  }, [uid]);
 
   const handleReceived = (exchange_id, i) => {
     const newExchanges = [...exchanges];
@@ -104,7 +104,7 @@ function YourRequests() {
               <div className="exchange-container" key={i}>
                 <div className="book-artwork">
                   <p>Owner: {exchange.owner_name}</p>
-                  <img src={exchange.artwork}></img>
+                  <img alt="book-artwork" src={exchange.artwork}></img>
                 </div>
                 {exchange.book_received ? (
                   <Button
@@ -160,7 +160,7 @@ function TheirRequests() {
     getAllExchanges(uid)
       .then((exchanges) => {
         exchanges
-          .filter((exchange) => exchange.requester_id != uid)
+          .filter((exchange) => exchange.requester_id !== uid)
           .forEach((exchange) => {
             const { book_id, requester_id } = exchange;
             const username = getUserName(requester_id);
@@ -176,7 +176,7 @@ function TheirRequests() {
       .then(() => {
         setLoading(false);
       });
-  }, []);
+  }, [uid]);
 
   const handleSend = (book_id, i) => {
     const newExchanges = [...exchanges];
@@ -204,7 +204,7 @@ function TheirRequests() {
               <div className="exchange-container" key={i}>
                 <div className="book-artwork">
                   <p>Requester: {exchange.requester_name}</p>
-                  <img src={exchange.artwork}></img>
+                  <img alt="book artwork" src={exchange.artwork}></img>
                 </div>
                 {exchange.book_sent ? (
                   <Button

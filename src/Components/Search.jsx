@@ -42,7 +42,6 @@ function Search() {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [userLocation, setUserLocation] = useState({});
-  const [bookLocation, setBookLocation] = useState([]);
   const { currentUser } = useAuth();
   useEffect(() => {
     const geolib = require("geolib");
@@ -82,7 +81,7 @@ function Search() {
           setLoading(false);
         });
       });
-  }, []);
+  }, [currentUser.uid]);
 
   const [formValue, setFormValue] = useState({});
   const handleChange = (event) => {
@@ -162,9 +161,9 @@ function Search() {
           {loading ? (
             <Loading />
           ) : (
-            books.map(({ distance, book }) => {
+            books.map(({ distance, book }, i) => {
               return (
-                <div className={classes.book}>
+                <div key={i} className={classes.book}>
                   <img src={book.thumbnail} alt="book"></img>
                   <div className="search-book-info">
                     <strong>{book.title}</strong>

@@ -24,7 +24,6 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-    background: theme.palette.secondary.main,
     textAlign: "center",
     alignItems: "center",
     borderRadius: "8px",
