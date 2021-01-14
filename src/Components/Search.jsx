@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     background: theme.palette.secondary.light,
     padding: "3%",
-    maxWidth: "50%",
+    maxWidth: "300px",
     width: "40%",
     display: "flex",
     flexDirection: "column",
