@@ -20,7 +20,6 @@ function BookDetails(props) {
   useEffect(() => {
     getSingleBook(book_id).then(({ book }) => {
       setBook(book);
-
       getUserInfo(book.owner_id).then(({ user }) => {
         setUserInfo(user);
         const { x, y } = user.location;

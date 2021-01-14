@@ -10,7 +10,6 @@ import { HelpOutline } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: "flex",
     justifyContent: "space-between",
     flexGrow: 1,
   },

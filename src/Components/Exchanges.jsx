@@ -33,7 +33,6 @@ const useStyles = makeStyles((theme) => ({
   container: {
     display: "flex",
     flexDirection: "column",
-    margin: "2%",
   },
 }));
 
@@ -41,6 +40,7 @@ function Exchanges() {
   const classes = useStyles();
   return (
     <div className="exchanges-container">
+      <p></p>
       <h2 className={classes.title}>Pending Exchanges</h2>
       <YourRequests />
       <TheirRequests />

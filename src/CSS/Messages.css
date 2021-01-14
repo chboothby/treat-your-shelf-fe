@@ -1,11 +1,14 @@
 .messages-container {
-  height: 95vh;
   overflow-y: scroll;
   display: flex;
   flex-direction: column;
   text-align: center;
 }
-
+.messages {
+  height: 90vh;
+  justify-content: center;
+  text-align: center;
+}
 .message-content {
   margin: 2%;
   background: rgb(233, 233, 233);
@@ -14,7 +17,9 @@
 }
 
 .message-content-container {
+  height: 80%;
   margin: 3%;
+  overflow: scroll;
 }
 
 #you {
