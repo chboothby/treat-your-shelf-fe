@@ -1,8 +1,7 @@
 import "./CSS/App.css";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { AuthProvider } from "./Contexts/UserAuth";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { useLocation } from "react-router-dom";
 import LogIn from "./Components/LogIn";
 import SignUp from "./Components/SignUp";
 import PrivateRoute from "./Components/PrivateRoute";
