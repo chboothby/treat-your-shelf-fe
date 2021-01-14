@@ -17,11 +17,13 @@ function BookDetails(props) {
   const [userDistance, setUserDistance] = useState({});
   const { book_id } = props.match.params;
   const { book_location } = props.location;
-  console.log(props);
+
   useEffect(() => {
     getSingleBook(book_id).then(({ book }) => {
       setBook(book);
+
       getUserInfo(book.owner_id).then(({ user }) => {
+        const userLocation = user.location;
         setUserInfo(user);
         const { x, y } = user.location;
         Geocode.fromLatLng(x, -y).then((res) => {
@@ -35,8 +37,8 @@ function BookDetails(props) {
               longitude: res.user.location.y,
             },
             {
-              latitude: book_location.x,
-              longitude: book_location.y,
+              latitude: userLocation.x,
+              longitude: userLocation.y,
             },
           ]);
           const converted = Math.round(
@@ -75,8 +77,17 @@ function BookDetails(props) {
               >
                 <h3>{userInfo.name}</h3>
               </Link>
-              <p>📍 {location}</p>
-              <p>{userDistance} miles away</p>
+              <>
+                {bookInfo.owner_id !== currentUser.uid ? (
+                  <>
+                    {" "}
+                    <p>📍 {location}</p>
+                    <p>{userDistance} miles away</p>{" "}
+                  </>
+                ) : (
+                  <> </>
+                )}
+              </>
             </div>
           </div>
         </>
