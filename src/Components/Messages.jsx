@@ -109,7 +109,11 @@ function Chats() {
         <div className="message-content-container">
           {chats.map((chat, i) => {
             return (
-              <Link to={{ pathname: "/message", chat }} key={i}>
+              <Link
+                to={{ pathname: "/message", chat }}
+                key={i}
+                style={{ textDecoration: "none", color: "#2C4A41" }}
+              >
                 <div key={i} className="message-content">
                   <p>{chat.other_user.name}</p>
                 </div>
