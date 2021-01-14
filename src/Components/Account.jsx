@@ -17,8 +17,12 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     height: "80vh",
   },
-  title: { color: theme.palette.primary.main, fontSize: "24px" },
-  displayName: {},
+  title: { fontSize: "32px", margin: "2%" },
+  displayName: {
+    color: theme.palette.primary.main,
+    fontSize: "22px",
+    margin: "2%",
+  },
   accountHeader: {
     padding: "2%",
     margin: "2%",
@@ -41,6 +45,16 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: "0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)",
   },
   img: { width: "150px", height: "150px", borderRadius: "5px", padding: "2%" },
+  avatarUpdate: {
+    background: theme.palette.primary.dark,
+    color: theme.palette.primary.contrastText,
+    margin: "3%",
+  },
+  userUpdate: {
+    background: theme.palette.primary.dark,
+    color: theme.palette.primary.contrastText,
+    margin: "3%",
+  },
 }));
 
 export default function Account() {
@@ -149,7 +163,7 @@ export default function Account() {
                 inputRef={avatarRef}
               />
               <Button
-                style={{ background: "white", margin: "3%" }}
+                className={classes.avatarUpdate}
                 variant="outlined"
                 onClick={handleChangeAvatar}
               >
@@ -182,13 +196,12 @@ export default function Account() {
               name="username"
               variant="outlined"
               id="username"
-              // label="Username"
               size="small"
               defaultValue={currentUser.displayName}
               inputRef={usernameRef}
             />
             <Button
-              style={{ margin: "3%" }}
+              className={classes.userUpdate}
               variant="outlined"
               onClick={handleChangeUsername}
             >
