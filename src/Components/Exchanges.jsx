@@ -69,11 +69,10 @@ function YourRequests() {
             exchange.artwork = book.book.thumbnail;
             const updatedExchanges = [...exchanges, exchange];
             setExchanges([...new Set(updatedExchanges)]);
+            setLoading(false);
           });
         });
     });
-
-    setLoading(false);
   }, []);
 
   const handleReceived = (exchange_id, i) => {
@@ -167,11 +166,10 @@ function TheirRequests() {
             exchange.artwork = book.book.thumbnail;
             const newExchanges = [...exchanges, exchange];
             setExchanges([...new Set(newExchanges)]);
+            setLoading(false);
           });
         });
     });
-
-    setLoading(false);
   }, []);
 
   const handleSend = (book_id, i) => {
