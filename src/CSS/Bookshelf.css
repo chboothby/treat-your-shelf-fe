@@ -32,9 +32,9 @@ img {
 .my-book-info {
   display: flex;
   flex-direction: column;
-  min-height: 35%;
-  height: 120px;
-  justify-content: space-evenly;
+  min-height: 100px;
+  justify-content: flex-start;
+  align-content: stretch;
   font-size: 0.8em;
   margin-top: 5%;
 }
