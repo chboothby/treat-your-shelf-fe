@@ -85,6 +85,10 @@ export default function SignUp() {
       return setError("Passwords do not match");
     }
 
+    if (!cityRef.current.value || !postCodeRef.current.value) {
+      return setError("Please enter a city and first part of your postcode");
+    }
+
     try {
       setError("");
       setLoading(true);

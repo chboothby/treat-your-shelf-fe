@@ -51,7 +51,6 @@ function Bookshelf(props) {
 
   useEffect(() => {
     const paramsLength = Object.keys(props.match.params).length;
-
     if (paramsLength === 0) {
       getUserBookshelf(currentUser.uid).then(({ books }) => {
         setBooks(books);

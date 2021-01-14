@@ -9,10 +9,11 @@
   justify-content: space-around;
   align-content: center;
   border-bottom: dotted rgba(128, 128, 128, 0.486) 0.25px;
+  padding: 2%;
 }
 
 .single-book-header img {
-  width: 40%;
+  width: 30%;
 }
 
 .single-book-info {
@@ -31,7 +32,7 @@
   margin-top: 6%;
   padding: 2%;
   border-radius: 4px;
-  max-height: 300px;
+  max-height: 200px;
   overflow: scroll;
 }
 
@@ -46,6 +47,7 @@
   flex-direction: row;
   justify-content: space-around;
   border-radius: 4px;
+  height: 200px;
 }
 
 .owner-card img {
@@ -54,6 +56,9 @@
   width: 30%;
   padding: 3%;
   min-width: 120px;
+  max-width: 150px;
+  width: 100%;
+  height: auto;
 }
 
 .owner-info {
@@ -62,10 +67,4 @@
 
 .request-button {
   text-align: center;
-}
-
-img {
-  max-width: 150px;
-  width: 100%;
-  height: auto;
 }

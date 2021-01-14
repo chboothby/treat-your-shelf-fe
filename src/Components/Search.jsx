@@ -53,7 +53,6 @@ function Search() {
       const filtered = data.books.books.filter((book) => {
         return book.owner_id !== currentUser.uid;
       });
-      console.log(filtered);
       setBooks(filtered);
       setLoading(false);
     });
@@ -73,27 +72,10 @@ function Search() {
       const filtered = data.books.books.filter((book) => {
         return book.owner_id !== currentUser.uid;
       });
-
-      // const sortedBooks = filtered.map((book) => {
-      //   return {
-      //     distance: geolib.getPathLength([
-      //       {
-      //         latitude: book.book_location.x,
-      //         longitude: book.book_location.y,
-      //       },
-      //       {
-      //         latitude: userLocation.x,
-      //         longitude: userLocation.y,
-      //       },
-      //     ]),
-      //     book,
-      //   };
-      // });
       setBooks(filtered);
       setLoading(false);
     });
   };
-  console.log(books);
   return (
     <div className="books-container">
       <div className={classes.header}>
@@ -133,7 +115,6 @@ function Search() {
             <Loading />
           ) : (
             books.map((book, i) => {
-              console.log(book);
               return (
                 <div key={i} className={classes.book}>
                   <img src={book.thumbnail} alt="book"></img>

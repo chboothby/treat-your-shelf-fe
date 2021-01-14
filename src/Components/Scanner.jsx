@@ -4,11 +4,27 @@ import axios from "axios";
 import "../CSS/ScanResults.css";
 import { Button, Link } from "@material-ui/core";
 import TransitionsModalScanner from "./TransitionsModalScanner";
+import { makeStyles } from "@material-ui/core/styles";
 
 function Scanner() {
   const [data, setData] = useState("Not Found");
   const [books, setBooks] = useState([]);
   const [error, setError] = useState("");
+
+  const useStyles = makeStyles((theme) => ({
+    bookCard: {
+      background: theme.palette.primary.contrastText,
+      color: theme.palette.primary.dark,
+      border: "dotted black 0.5px",
+      borderRadius: "4px",
+      display: "flex",
+      justifyContent: "space-between",
+      margin: "2%",
+      textAlign: "center",
+    },
+  }));
+
+  const classes = useStyles();
 
   const getBookByISBN = (isbn) => {
     return axios
@@ -80,7 +96,7 @@ function Scanner() {
 
           {books.map((book) => {
             return (
-              <div id="book-card" key={book.id} className="book-card">
+              <div id="book-card" key={book.id} className={classes.bookCard}>
                 <img
                   src={book.images?.thumbnail}
                   alt={`${book.title}'s cover art`}

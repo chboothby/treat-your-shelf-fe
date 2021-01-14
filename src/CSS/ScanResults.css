@@ -15,9 +15,9 @@
 .book-info {
   padding: 1%;
   width: 100%;
-  background: rgba(128, 128, 128, 0.603);
+  /* background: rgba(128, 128, 128, 0.603); */
 }
 
 .book-card img {
-  min-width: 30%;
+  max-width: 150px;
 }

@@ -134,6 +134,7 @@ export default function Account() {
         <div id="profile-pic" className={classes.img}>
           {currentUser.photoURL === null ? (
             <img
+              className={classes.img}
               alt="stock profile"
               src={
                 "https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg"
@@ -141,6 +142,7 @@ export default function Account() {
             ></img>
           ) : (
             <img
+              className={classes.img}
               src={currentUser.photoURL}
               alt={`${currentUser.displayName}'s avatar`}
             ></img>

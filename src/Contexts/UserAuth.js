@@ -2,7 +2,8 @@ import React, { useContext, useState, useEffect } from "react";
 import { auth } from "../firebase";
 import { createNewUser, changeUsername, changeAvatar } from "../api";
 import Geocode from "react-geocode";
-Geocode.setApiKey("AIzaSyBzdjkehz-69slvbPIwKPOVGzIkG_fuU3I");
+import { geocodeApi } from "../api";
+Geocode.setApiKey(geocodeApi);
 Geocode.setRegion("gb");
 
 export const AuthContext = React.createContext();

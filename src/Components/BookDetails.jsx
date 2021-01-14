@@ -2,10 +2,13 @@ import React, { useEffect, useState } from "react";
 import "../CSS/BookDetails.css";
 import { getSingleBook, getUserInfo } from "../api";
 import { Link } from "react-router-dom";
-import Geocode from "react-geocode";
 import { useAuth } from "../Contexts/UserAuth";
 import TransitionsModalRequest from "./TransitionsModalRequest";
 import Loading from "./Loading";
+import { geocodeApi } from "../api";
+import Geocode from "react-geocode";
+Geocode.setApiKey(geocodeApi);
+Geocode.setRegion("gb");
 const geolib = require("geolib");
 
 function BookDetails(props) {
@@ -62,10 +65,11 @@ function BookDetails(props) {
             <img alt="book" src={bookInfo.thumbnail}></img>
             <div className="single-book-info">
               <h4>{bookInfo.title}</h4>
-              <h4>{bookInfo.authors}</h4>
+              <p>{bookInfo.authors.split(",").join(", ")}</p>
             </div>
           </div>
           <div className="single-book-description">
+            <strong>Description:</strong>
             <p>{bookInfo.description}</p>
           </div>
           <div className="owner-card">
@@ -75,13 +79,13 @@ function BookDetails(props) {
                 style={{ textDecoration: "none", color: "#faf9f4" }}
                 to={{ pathname: `/users/${bookInfo.owner_id}/books`, bookInfo }}
               >
-                <h3>{userInfo.name}</h3>
+                <h4>{userInfo.username}</h4>
               </Link>
               <>
                 {bookInfo.owner_id !== currentUser.uid ? (
                   <>
                     {" "}
-                    <p>📍 {location}</p>
+                    <p>{location}📍 </p>
                     <p>{userDistance} miles away</p>{" "}
                   </>
                 ) : (

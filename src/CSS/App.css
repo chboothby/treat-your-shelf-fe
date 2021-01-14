@@ -1,11 +1,10 @@
 .App {
   scroll-behavior: smooth;
   overflow: scroll;
-  margin-bottom: 100px;
   width: 100%;
   overflow-x: hidden;
   max-width: 1200px;
-  margin: 0 auto 0 auto;
+  margin: 0 auto 75px auto;
   display: flex;
   flex-direction: column;
   background: #faf9f4;
@@ -18,4 +17,8 @@
 
 * {
   box-sizing: border-box;
+}
+
+.profile-pic {
+  border: solid red;
 }
