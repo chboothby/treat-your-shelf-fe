@@ -12,6 +12,8 @@ const useStyles = makeStyles((theme) => ({
   root: {
     justifyContent: "space-between",
     flexGrow: 1,
+    width: "100vw",
+    maxWidth: "1200px",
   },
   menuButton: {
     marginRight: theme.spacing(2),

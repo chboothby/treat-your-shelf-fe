@@ -8,7 +8,6 @@ import Loading from "./Loading";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
-  displayName: {},
   title: { color: theme.palette.primary.dark, paddingTop: "0.75%" },
   subTitle: { color: theme.palette.primary.main },
   recBtn: {
@@ -54,6 +53,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Exchanges() {
   const classes = useStyles();
+
   return (
     <div className="exchanges-container">
       <h2 className={classes.title}>Pending Exchanges</h2>

@@ -10,6 +10,7 @@ import Loading from "./Loading";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
+  root: { width: "100vw", maxWidth: "1200px", minHeight: "100vh" },
   title: { color: theme.palette.primary.main, fontSize: "24px" },
   header: {
     color: theme.palette.primary.dark,
@@ -17,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
     height: "50px",
     marginBottom: "1.5%",
     paddingTop: "0.75%",
+    textAlign: "center",
   },
   book: {
     textAlign: "center",
@@ -76,11 +78,12 @@ function Bookshelf(props) {
       setLoading(false);
     });
   };
+
   const classes = useStyles();
 
   return (
     <>
-      <div id="bookshelf-container" className="bookshelf-container">
+      <div id="bookshelf-container" className={classes.root}>
         <div id="bookshelf-header" className={classes.header}>
           {owner_id === undefined ? (
             <h2>Your Bookshelf</h2>

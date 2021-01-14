@@ -10,7 +10,8 @@ import AutorenewIcon from "@material-ui/icons/Autorenew";
 import { useAuth } from "../Contexts/UserAuth";
 const useStyles = makeStyles({
   root: {
-    width: "400px",
+    width: "100vw",
+    maxWidth: "1200px",
     position: "fixed",
     bottom: 0,
     margin: "0 auto",
@@ -63,7 +64,6 @@ export default function SimpleBottomNavigation() {
             label="Messages"
             icon={<ChatIcon />}
           />
-
           {/* <BottomNavigationAction
         component={Link}
         to="/help"

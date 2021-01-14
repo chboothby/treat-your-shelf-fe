@@ -13,6 +13,12 @@ const { getUserName } = require("../api");
 const firestore = firebase.firestore();
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    width: "100vw",
+    maxWidth: "1200px",
+    minHeight: "100vh",
+    textAlign: "center",
+  },
   title: { color: theme.palette.primary.main, fontSize: "24px" },
   header: {
     color: theme.palette.primary.dark,
@@ -20,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: "0.75%",
     marginBottom: "-15px",
   },
-  displayName: {},
   accountHeader: {
     padding: "2%",
     margin: "2%",
@@ -48,7 +53,7 @@ function Messages() {
   const classes = useStyles();
 
   return (
-    <div className="messages-container">
+    <div className={classes.root}>
       <div className={classes.header}>
         <h2>Chats</h2>
       </div>
@@ -59,6 +64,7 @@ function Messages() {
 }
 
 function Chats() {
+  const classes = useStyles();
   const [loading, setLoading] = useState(true);
   const [chats, setChats] = useState([]);
 
@@ -94,11 +100,11 @@ function Chats() {
   }, [uid]);
 
   return (
-    <div className="messages">
+    <div className={classes.root}>
       {loading ? (
         <Loading />
       ) : Object.keys(chats).length === 0 ? (
-        <p>No chats to display</p>
+        <p style={{ marginTop: "30px" }}>No chats to display</p>
       ) : (
         <div className="message-content-container">
           {chats.map((chat, i) => {
