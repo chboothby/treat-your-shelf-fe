@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import Geocode from "react-geocode";
 import { useAuth } from "../Contexts/UserAuth";
 import TransitionsModalRequest from "./TransitionsModalRequest";
+import Loading from "./Loading";
 const geolib = require("geolib");
 
 function BookDetails(props) {
@@ -54,7 +55,7 @@ function BookDetails(props) {
   return (
     <div className="book-details">
       {loading ? (
-        <p>Loading</p>
+        <Loading />
       ) : (
         <>
           <div className="single-book-header">

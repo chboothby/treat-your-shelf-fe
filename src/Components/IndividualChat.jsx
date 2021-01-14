@@ -9,6 +9,7 @@ import "../CSS/Messages.css";
 import { useAuth } from "../Contexts/UserAuth";
 import { Link } from "react-router-dom";
 import { getUserName } from "../api";
+import Loading from "./Loading";
 
 const dbConfig = app;
 
@@ -105,7 +106,7 @@ function ChatRoom({ info }) {
   return (
     <div className="messages">
       {loading ? (
-        <p>Loading</p>
+        <Loading />
       ) : (
         <div className="message-content-container">
           <p>

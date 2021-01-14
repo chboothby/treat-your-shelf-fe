@@ -6,6 +6,7 @@ import "firebase/analytics";
 import "../CSS/Messages.css";
 import { useAuth } from "../Contexts/UserAuth";
 import { Link } from "react-router-dom";
+import Loading from "./Loading";
 const { getUserName } = require("../api");
 
 const firestore = firebase.firestore();
@@ -56,7 +57,7 @@ function Chats() {
   return (
     <div className="messages">
       {loading ? (
-        <p>Loading</p>
+        <Loading />
       ) : Object.keys(chats).length === 0 ? (
         <p>No chats to display</p>
       ) : (

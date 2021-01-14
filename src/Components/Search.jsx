@@ -4,6 +4,7 @@ import "../CSS/Search.css";
 import TransitionsModalSearch from "./TransitionsModalSearch";
 import { getAllBooks, getUserInfo } from "../api";
 import { useAuth } from "../Contexts/UserAuth";
+import Loading from "./Loading";
 const geolib = require("geolib");
 
 function Search() {
@@ -119,7 +120,7 @@ function Search() {
       </div>
       <div className="results-list">
         {loading ? (
-          <p>Loading books...</p>
+          <Loading />
         ) : (
           books.map(({ distance, book }) => {
             return (

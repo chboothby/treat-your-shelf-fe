@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import TransitionsModalShelf from "./TransitionsModalShelf";
 import { getUserBookshelf, getUserInfo } from "../api";
 import { useAuth } from "../Contexts/UserAuth";
+import Loading from "./Loading";
 
 function Bookshelf(props) {
   const [books, setBooks] = useState([]);
@@ -67,7 +68,7 @@ function Bookshelf(props) {
 
         <div className="book-grid">
           {loading ? (
-            <p>Loading...</p>
+            <Loading />
           ) : (
             books.books.map((book) => {
               return (

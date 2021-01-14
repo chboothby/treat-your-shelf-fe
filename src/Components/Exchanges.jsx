@@ -4,6 +4,7 @@ import Button from "@material-ui/core/Button";
 import { getSingleBook, getUserName } from "../api";
 import "../CSS/Exchanges.css";
 import { getAllExchanges, sendBook, receiveBook, removeRequest } from "../api";
+import Loading from "./Loading";
 
 function Exchanges() {
   return (
@@ -57,7 +58,7 @@ function YourRequests() {
   };
 
   if (isLoading) {
-    return <p>Loading</p>;
+    return <Loading />;
   } else {
     return (
       <div className="container">
@@ -163,7 +164,7 @@ function TheirRequests() {
   };
 
   if (isLoading) {
-    return <p>Loading</p>;
+    return <Loading />;
   } else {
     return (
       <div className="container">
