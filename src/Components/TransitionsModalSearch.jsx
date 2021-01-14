@@ -25,7 +25,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function TransitionsModalSearch(props) {
-  const { title, author, thumbnail, book_id, owner_id } = props.book;
+  const {
+    title,
+    author,
+    thumbnail,
+    book_id,
+    owner_id,
+    book_location,
+  } = props.book;
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [ownerInfo, setOwnerInfo] = useState({});
@@ -72,7 +79,7 @@ export default function TransitionsModalSearch(props) {
                   <Link to={`/users/${owner_id}/books`}>
                     {ownerInfo.username}
                   </Link>
-                  <Link to={`/books/${book_id}`}>
+                  <Link to={{ pathname: `/books/${book_id}`, book_location }}>
                     <Button variant="outlined" size="medium" color="primary">
                       View
                     </Button>
