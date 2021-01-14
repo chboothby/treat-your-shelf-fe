@@ -57,17 +57,19 @@ function Scanner() {
       ) : data === "Not Found" ? (
         <section id="scanner" className="scanner">
           <h3>Please scan your book's ISBN number</h3>
-          <BarcodeScannerComponent
-            width={400}
-            height={400}
-            onUpdate={(err, result) => {
-              if (result) {
-                setData(result.text);
-              } else {
-                setData("Not Found");
-              }
-            }}
-          />
+          <div className="scan-screen">
+            <BarcodeScannerComponent
+              width={400}
+              height={400}
+              onUpdate={(err, result) => {
+                if (result) {
+                  setData(result.text);
+                } else {
+                  setData("Not Found");
+                }
+              }}
+            />
+          </div>
         </section>
       ) : (
         <div id="scan-results" className="scan-results">

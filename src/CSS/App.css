@@ -1,11 +1,18 @@
 .App {
   scroll-behavior: smooth;
-  overflow: hidden;
+  overflow: scroll;
   margin-bottom: 100px;
-  background: #faf9f4;
-  height: auto;
+  width: 400px;
+  margin: 0 auto 90px auto;
+  display: flex;
+  flex-direction: column;
+  background: rgba(219, 219, 219, 0.24);
 }
 
 .scanner {
   text-align: center;
+}
+
+* {
+  box-sizing: border-box;
 }
