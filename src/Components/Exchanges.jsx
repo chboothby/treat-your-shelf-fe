@@ -5,11 +5,43 @@ import { getSingleBook, getUserName } from "../api";
 import "../CSS/Exchanges.css";
 import { getAllExchanges, sendBook, receiveBook, removeRequest } from "../api";
 import Loading from "./Loading";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  displayName: {},
+  title: { color: theme.palette.primary.main },
+  recBtn: {
+    background: theme.palette.primary.light,
+    width: "45%",
+    margin: "1%",
+  },
+  cancelBtn: {
+    color: "red",
+    background: theme.palette.secondary.main,
+    width: "45%",
+    margin: "1%",
+  },
+  requestContainer: {
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    background: theme.palette.primary.light,
+    margin: "3%",
+    borderRadius: "3px",
+    boxShadow: "0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)",
+  },
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    margin: "2%",
+  },
+}));
 
 function Exchanges() {
+  const classes = useStyles();
   return (
     <div className="exchanges-container">
-      <h1>Pending Exchanges</h1>
+      <h2 className={classes.title}>Pending Exchanges</h2>
       <YourRequests />
       <TheirRequests />
     </div>
@@ -22,6 +54,7 @@ function YourRequests() {
   } = useAuth();
   const [exchanges, setExchanges] = useState([]);
   const [isLoading, setLoading] = useState(true);
+  const classes = useStyles();
 
   useEffect(() => {
     getAllExchanges(uid).then((exchanges) => {
@@ -61,10 +94,9 @@ function YourRequests() {
     return <Loading />;
   } else {
     return (
-      <div className="container">
-        <h2>Books you have requested</h2>
-        <div className="requests-container">
-          {console.log(exchanges)}
+      <div className={classes.container}>
+        <h3 className={classes.title}>Your requested books</h3>
+        <div className={classes.requestContainer}>
           {exchanges.map((exchange, i) => {
             return (
               <div className="exchange-container" key={i}>
@@ -88,11 +120,7 @@ function YourRequests() {
                       onClick={() => {
                         handleReceived(exchange.exchange_id, i);
                       }}
-                      style={{
-                        background: "blue",
-                        width: "40%",
-                        margin: "0 auto",
-                      }}
+                      className={classes.recBtn}
                       variant="outlined"
                       size="medium"
                     >
@@ -102,11 +130,7 @@ function YourRequests() {
                       onClick={() => {
                         handleCancel(exchange.exchange_id, i);
                       }}
-                      style={{
-                        background: "red",
-                        width: "40%",
-                        margin: "0 auto",
-                      }}
+                      className={classes.cancelBtn}
                       variant="outlined"
                       size="medium"
                     >
@@ -128,6 +152,7 @@ function TheirRequests() {
   } = useAuth();
   const [exchanges, setExchanges] = useState([]);
   const [isLoading, setLoading] = useState(true);
+  const classes = useStyles();
 
   useEffect(() => {
     getAllExchanges(uid).then((exchanges) => {
@@ -167,9 +192,9 @@ function TheirRequests() {
     return <Loading />;
   } else {
     return (
-      <div className="container">
-        <h2>Books others have requested from you</h2>
-        <div className="requests-container">
+      <div className={classes.container}>
+        <h3 className={classes.title}>Books others have requested from you</h3>
+        <div className={classes.requestContainer}>
           {exchanges.map((exchange, i) => {
             return (
               <div className="exchange-container" key={i}>
@@ -190,11 +215,7 @@ function TheirRequests() {
                       onClick={() => {
                         handleSend(exchange.exchange_id, i);
                       }}
-                      style={{
-                        background: "blue",
-                        width: "40%",
-                        margin: "0 auto",
-                      }}
+                      className={classes.recBtn}
                       variant="outlined"
                       size="medium"
                     >
@@ -204,11 +225,7 @@ function TheirRequests() {
                       onClick={() => {
                         handleDecline(exchange.exchange_id, i);
                       }}
-                      style={{
-                        background: "red",
-                        width: "40%",
-                        margin: "0 auto",
-                      }}
+                      className={classes.cancelBtn}
                       variant="outlined"
                       size="medium"
                     >

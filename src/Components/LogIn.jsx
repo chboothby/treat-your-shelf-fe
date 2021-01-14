@@ -16,11 +16,7 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
-      <Link color="inherit" href="">
-        Treat Yo Shelf
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
+      Treat Yo Shelf {new Date().getFullYear()}
     </Typography>
   );
 }
@@ -35,21 +31,16 @@ const useStyles = makeStyles((theme) => ({
   form: {
     width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(1),
-    "& .MuiOutlinedInput-root": {
-      "&.Mui-focused fieldset": {
-        borderColor: "#1A5AFF",
-      },
-    },
+    color: theme.palette.primary,
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
-    color: "#FFFFFF",
-    backgroundColor: "#1A5AFF",
+    color: theme.palette.primary.contrastText,
+    backgroundColor: theme.palette.primary.main,
   },
   link: {
-    color: "#1A5AFF",
+    color: theme.palette.primary,
   },
-  checkbox: {},
 }));
 
 export default function LogIn() {
@@ -80,7 +71,7 @@ export default function LogIn() {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Typography component="h1" variant="h4">
+        <Typography component="h1" variant="h4" className={classes.header}>
           Log In
         </Typography>
 

@@ -16,11 +16,7 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
-      <Link color="inherit" href="">
-        Treat Yo Shelf
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
+      Treat Yo Shelf {new Date().getFullYear()}
     </Typography>
   );
 }
@@ -39,8 +35,8 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
-    color: "#FFFFFF",
-    backgroundColor: "#1A5AFF",
+    color: theme.palette.primary.contrastText,
+    backgroundColor: theme.palette.primary.main,
     textTransform: "none",
   },
 }));

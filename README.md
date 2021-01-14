@@ -8,4 +8,4 @@ Treat Yo Shelf allows users to scan & upload their books onto a virtual bookshel
 
 Tech Used:
 
-JavaScript | React | React-router |Firebase Hosting | Firebase Authentication | Firebase Messaging | PostgreSQL | Heroku | Material-UI
+JavaScript | React | React-Router-DOM | Firebase Hosting | Firebase Authentication | Firebase Cloud Firestore | PostgreSQL | Heroku | Material-UI | Jest

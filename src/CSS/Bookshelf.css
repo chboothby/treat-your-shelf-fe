@@ -3,6 +3,7 @@
   text-align: center;
   display: flex;
   flex-direction: column;
+  width: 100vw;
 }
 
 img {
@@ -49,4 +50,11 @@ img {
   min-height: 35%;
   justify-content: flex-end;
   font-size: 0.8em;
+}
+
+.add-button {
+  position: fixed;
+  z-index: 1;
+  right: 20px;
+  bottom: 70px;
 }

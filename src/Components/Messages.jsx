@@ -7,19 +7,56 @@ import "../CSS/Messages.css";
 import { useAuth } from "../Contexts/UserAuth";
 import { Link } from "react-router-dom";
 import Loading from "./Loading";
+import { makeStyles } from "@material-ui/core/styles";
 const { getUserName } = require("../api");
 
 const firestore = firebase.firestore();
 
+const useStyles = makeStyles((theme) => ({
+  title: { color: theme.palette.primary.main, fontSize: "24px" },
+  header: {
+    color: theme.palette.secondary.light,
+    background: theme.palette.primary.light,
+  },
+  displayName: {},
+  accountHeader: {
+    padding: "2%",
+    margin: "2%",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    background: "white",
+    textAlign: "center",
+    alignItems: "center",
+    borderRadius: "8px",
+    background: theme.palette.secondary.light,
+  },
+  accountBody: {
+    textAlign: "center",
+    background: theme.palette.primary.light,
+    padding: "3%",
+    width: "90%",
+    borderRadius: "5px",
+    margin: "0 auto",
+    boxShadow: "0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)",
+  },
+  img: { width: "200px", height: "200px", borderRadius: "5px", padding: "2%" },
+}));
+
 function Messages() {
+  const classes = useStyles();
   return (
     <div className="messages-container">
-      <h1>Chats</h1>
+      <div className={classes.header}>
+        <h2>Chats</h2>
+      </div>
+
       <Chats />
     </div>
   );
 }
 function Chats() {
+  const classes = useStyles();
   const [loading, setLoading] = useState(true);
   const [chats, setChats] = useState([]);
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../CSS/Bookshelf.css";
-import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
-import IconButton from "@material-ui/core/IconButton";
+import Fab from "@material-ui/core/Fab";
+import AddIcon from "@material-ui/icons/Add";
 import { Link } from "react-router-dom";
 import TransitionsModalShelf from "./TransitionsModalShelf";
 import { getUserBookshelf, getUserInfo } from "../api";
@@ -47,36 +47,30 @@ function Bookshelf(props) {
 
   return (
     <>
-      <div className="bookshelf-container">
-        <div className="bookshelf-header">
+      <div id="bookshelf-container" className="bookshelf-container">
+        <div id="bookshelf-header" className="bookshelf-header">
           {owner_id === undefined ? (
             <h3>Yo bookshelf</h3>
           ) : (
             <h3>{owner_info.username}'s bookshelf</h3>
           )}
-
-          <Link to="/scan">
-            <IconButton>
-              <AddCircleOutlineIcon
-                style={{ fontSize: "36px" }}
-                className="add-icon"
-                color="primary"
-              ></AddCircleOutlineIcon>
-            </IconButton>
-          </Link>
         </div>
-
-        <div className="book-grid">
+        <Link to="/scan" className="add-button">
+          <Fab id="add-button" color="primary" aria-label="add">
+            <AddIcon />
+          </Fab>
+        </Link>
+        <div id="book-grid" className="book-grid">
           {loading ? (
             <Loading />
           ) : (
             books.books.map((book) => {
               return (
-                <div className="book-list-card">
+                <div id="book-list-card" className="book-list-card">
                   <img alt="book" src={book.thumbnail}></img>
-                  <div className="my-book-info">
+                  <div id="my-book-info" className="my-book-info">
                     <strong>{book.title}</strong>
-                    <p>{book.authors}</p>
+                    <p>{book.authors.split(",").join(", ")}</p>
                     <div>
                       <TransitionsModalShelf
                         refreshBookshelf={refreshBookshelf}
