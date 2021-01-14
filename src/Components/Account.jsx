@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
   accountContainer: {
     display: "flex",
     flexDirection: "column",
+    height: "90vh",
     justifyContent: "center",
   },
   title: { color: theme.palette.primary.main, fontSize: "24px" },

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
@@ -23,11 +23,13 @@ const useStyles = makeStyles((theme) => ({
   },
   messageForm: {
     display: "flex",
+    position: "relative",
+    bottom: "0",
     justifyContent: "space-between",
-    width: "80%",
-    // margin: "0 auto",
-    marginBottom: "4%",
-    margin: "0 auto",
+    textAlign: "center",
+    width: "90%",
+    // marginBottom: "10%",
+    margin: "-7% auto",
     background: theme.palette.secondary.light,
     padding: "1%",
     boxShadow: "0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)",
@@ -54,7 +56,6 @@ function ChatRoom({ info }) {
   const [loading, setLoading] = useState(true);
   const [otherUser, setOtherUser] = useState({});
   const classes = useStyles();
-  const [defaultMessage, setDefault] = useState(null);
 
   const {
     currentUser: { uid, displayName },

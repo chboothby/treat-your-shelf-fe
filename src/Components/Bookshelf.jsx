@@ -83,11 +83,16 @@ function Bookshelf(props) {
             <h2>{owner_info.username}'s bookshelf</h2>
           )}
         </div>
-        <Link to="/scan" className="add-button">
-          <Fab id="add-button" color="primary" aria-label="add">
-            <AddIcon />
-          </Fab>
-        </Link>
+        {owner_id === undefined ? (
+          <Link to="/scan" className="add-button">
+            <Fab id="add-button" color="primary" aria-label="add">
+              <AddIcon />
+            </Fab>
+          </Link>
+        ) : (
+          <> </>
+        )}
+
         <div id="book-grid" className="book-grid">
           {loading ? (
             <Loading />

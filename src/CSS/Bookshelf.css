@@ -2,7 +2,7 @@
   text-align: center;
   display: flex;
   flex-direction: column;
-  width: 100vw;
+  /* width: 100vw; */
 }
 
 img {
@@ -42,6 +42,6 @@ img {
 .add-button {
   position: fixed;
   z-index: 1;
-  right: 20px;
-  bottom: 70px;
+  right: 28%;
+  bottom: 10%;
 }

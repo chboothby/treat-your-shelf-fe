@@ -2,20 +2,23 @@
   text-align: center;
   display: flex;
   flex-direction: column;
+  margin-bottom: 0;
+  position: relative;
 }
 
 img {
   width: 100%;
 }
-
+/* 
 .requests-container {
   display: flex;
-  /* justify-content: space-around; */
+ 
   flex-direction: row wrap;
-}
+} */
 
-.exchange-container {
+/* .exchange-container {
   text-align: center;
+  border: solid red;
   border: solid grey 0.5px;
   border-radius: 4px;
   margin: 1%;
@@ -25,8 +28,8 @@ img {
   width: 40%;
   display: flex;
   flex-direction: column;
-}
+} */
 
 .exchange-container:hover {
-  background: rgb(206, 205, 205);
+  /* background: rgb(206, 205, 205); */
 }
