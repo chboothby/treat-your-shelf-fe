@@ -15,7 +15,6 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-    height: "80vh",
   },
   title: { color: theme.palette.primary.main, fontSize: "24px" },
   displayName: {},
