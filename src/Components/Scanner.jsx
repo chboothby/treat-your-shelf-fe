@@ -54,7 +54,7 @@ function Scanner() {
           </Link>
         </div>
       ) : data === "Not Found" ? (
-        <section id="scanner" className="scanner">
+        <section id="scanner" className="scanner" style={{ color: "#18331D" }}>
           <h3>Please scan your book's ISBN number</h3>
           <div className="scan-screen">
             <BarcodeScannerComponent

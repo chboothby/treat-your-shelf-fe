@@ -221,8 +221,8 @@ function TheirRequests() {
               <div className="exchange-container" key={i}>
                 <div className={classes.bookDetails}>
                   <p>Requester: {exchange.requester_name}</p>
-                  <img alt="book artwork" src={exchange.artwork}></img>
                 </div>
+                <img alt="book artwork" src={exchange.artwork}></img>
                 {exchange.book_sent ? (
                   <Button
                     style={{ width: "40%", margin: "0 auto" }}

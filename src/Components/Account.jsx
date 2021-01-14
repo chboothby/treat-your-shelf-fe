@@ -48,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "5px",
     padding: "2%",
     margin: "2%",
+    objectFit: "contain",
   },
   avatarUpdate: {
     background: theme.palette.primary.dark,

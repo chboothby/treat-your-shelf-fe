@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
@@ -16,8 +16,8 @@ const firestore = firebase.firestore();
 const useStyles = makeStyles((theme) => ({
   title: { color: theme.palette.primary.main, fontSize: "24px" },
   header: {
-    color: theme.palette.secondary.light,
-    background: theme.palette.primary.light,
+    color: theme.palette.primary.dark,
+    background: theme.palette.primary.contrastText,
   },
   messageForm: {
     display: "flex",

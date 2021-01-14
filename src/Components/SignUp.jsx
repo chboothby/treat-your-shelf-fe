@@ -13,7 +13,6 @@ import { useAuth } from "../Contexts/UserAuth";
 import { useHistory } from "react-router-dom";
 import Geocode from "react-geocode";
 import { geocodeApi } from "../api";
-// CHECK THIS WORKS!!!!
 Geocode.setApiKey(geocodeApi);
 Geocode.setRegion("gb");
 

@@ -110,4 +110,4 @@ export const removeRequest = (exchange_id, user_id) => {
     });
 };
 
-export const geocodeApi = process.env.GEOCODE_API_KEY;
+export const geocodeApi = process.env.REACT_APP_GEOCODE_API_KEY;

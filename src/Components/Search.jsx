@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Button, TextField } from "@material-ui/core";
 import "../CSS/Search.css";
-import TransitionsModalSearch from "./TransitionsModalSearch";
-import { getAllBooks, getUserInfo } from "../api";
+import { getAllBooks } from "../api";
 import { useAuth } from "../Contexts/UserAuth";
 import Loading from "./Loading";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
-const geolib = require("geolib");
 
 const useStyles = makeStyles((theme) => ({
   title: { color: theme.palette.primary.main, fontSize: "24px" },
@@ -48,13 +46,9 @@ function Search() {
   const classes = useStyles();
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [userLocation, setUserLocation] = useState({});
   const { currentUser } = useAuth();
 
   useEffect(() => {
-    const geolib = require("geolib");
-    let usersLocation = {};
-
     getAllBooks().then((data) => {
       const filtered = data.books.books.filter((book) => {
         return book.owner_id !== currentUser.uid;
