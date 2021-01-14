@@ -3,6 +3,10 @@
   flex-direction: column;
 }
 
+.books-container {
+  text-align: center;
+}
+
 .results-list {
   display: flex;
   justify-content: space-around;
