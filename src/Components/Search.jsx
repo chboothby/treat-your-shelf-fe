@@ -1,25 +1,28 @@
-import { Button, TextField } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
+import { Button, TextField } from "@material-ui/core";
 import "../CSS/Search.css";
 import TransitionsModalSearch from "./TransitionsModalSearch";
 import { getAllBooks, getUserInfo } from "../api";
 import { useAuth } from "../Contexts/UserAuth";
 import Loading from "./Loading";
 import { makeStyles } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
 const geolib = require("geolib");
 
 const useStyles = makeStyles((theme) => ({
   title: { color: theme.palette.primary.main, fontSize: "24px" },
   header: {
-    color: theme.palette.secondary.light,
-    background: theme.palette.primary.light,
+    color: theme.palette.primary.dark,
+    background: theme.palette.secondary.main,
     height: "50px",
-    paddingBottom: "3%",
+    marginBottom: "1%",
     paddingTop: "0.75%",
   },
   btn: {
-    background: theme.palette.primary.light,
-    width: "45%",
+    background: theme.palette.primary.main,
+    color: theme.palette.primary.contrastText,
+    width: "70%",
+    margin: "2% auto",
   },
   book: {
     textAlign: "center",
@@ -34,6 +37,10 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "5px",
     margin: "1% auto",
     boxShadow: "0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)",
+  },
+  viewBtn: {
+    background: theme.palette.primary.main,
+    color: theme.palette.primary.contrastText,
   },
 }));
 
@@ -96,7 +103,7 @@ function Search() {
   return (
     <div className="books-container">
       <div className={classes.header}>
-        <h2>All Books</h2>
+        <h2>Book Search</h2>
       </div>
       <div className="search-results-container">
         <div>
@@ -122,12 +129,7 @@ function Search() {
               label="Author"
               variant="filled"
             />
-            <Button
-              className={classes.btn}
-              type="submit"
-              variant="outlined"
-              style={{ width: "70%", margin: "2% auto" }}
-            >
+            <Button className={classes.btn} type="submit" variant="outlined">
               Search
             </Button>
           </form>
@@ -144,9 +146,18 @@ function Search() {
                   <div className="search-book-info">
                     <strong>{book.title}</strong>
                     <p>{book.authors.split(",").join(", ")}</p>
-                    <TransitionsModalSearch
-                      book={book}
-                    ></TransitionsModalSearch>
+                    <Link
+                      to={`/books/${book.book_id}`}
+                      className={classes.modalBtn}
+                    >
+                      <Button
+                        variant="outlined"
+                        size="medium"
+                        className={classes.viewBtn}
+                      >
+                        View
+                      </Button>
+                    </Link>
                   </div>
                 </div>
               );

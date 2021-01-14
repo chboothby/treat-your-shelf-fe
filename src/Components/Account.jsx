@@ -16,8 +16,12 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     height: "90vh",
   },
-  title: { color: theme.palette.primary.main, fontSize: "24px" },
-  displayName: {},
+  title: { fontSize: "30px", margin: "2%", color: theme.palette.primary.dark },
+  displayName: {
+    color: theme.palette.primary.main,
+    fontSize: "28px",
+    margin: "2%",
+  },
   accountHeader: {
     padding: "2%",
     margin: "2%",
@@ -38,7 +42,23 @@ const useStyles = makeStyles((theme) => ({
     margin: "0 auto",
     boxShadow: "0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)",
   },
-  img: { width: "150px", height: "200px", borderRadius: "5px", padding: "2%" },
+  img: {
+    maxWidth: "150px",
+    maxHeight: "150px",
+    borderRadius: "5px",
+    padding: "2%",
+    margin: "2%",
+  },
+  avatarUpdate: {
+    background: theme.palette.primary.dark,
+    color: theme.palette.primary.contrastText,
+    margin: "3%",
+  },
+  userUpdate: {
+    background: theme.palette.primary.dark,
+    color: theme.palette.primary.contrastText,
+    margin: "3%",
+  },
 }));
 
 export default function Account() {
@@ -105,7 +125,7 @@ export default function Account() {
       <div id="account-header" className={classes.accountHeader}>
         {error && <Alert severity="error">{error}</Alert>}
         <Box id="title" className={classes.title}>
-          Yo' Profile
+          Your Profile
         </Box>
         <Box id="display-name" className={classes.displayName}>
           {currentUser.displayName}
@@ -147,7 +167,7 @@ export default function Account() {
                 inputRef={avatarRef}
               />
               <Button
-                style={{ background: "white", margin: "3%" }}
+                className={classes.avatarUpdate}
                 variant="outlined"
                 onClick={handleChangeAvatar}
               >
@@ -180,13 +200,12 @@ export default function Account() {
               name="username"
               variant="outlined"
               id="username"
-              // label="Username"
               size="small"
               defaultValue={currentUser.displayName}
               inputRef={usernameRef}
             />
             <Button
-              style={{ margin: "3%" }}
+              className={classes.userUpdate}
               variant="outlined"
               onClick={handleChangeUsername}
             >

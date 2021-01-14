@@ -16,18 +16,37 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
-    border: "2px solid #000",
     boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
+    padding: theme.spacing(2, 2, 2),
     textAlign: "center",
     textTransform: "capitalize",
   },
+  viewBtn: {
+    background: theme.palette.primary.main,
+    color: theme.palette.primary.contrastText,
+  },
+  modalBookInfo: {
+    marginLeft: "0px 0px 0px 0px",
+    padding: "0px 0px 0px 5px",
+    textAlign: "center",
+    maxWidth: "175px",
+  },
+  modalImage: {
+    boxShadow: "0 10px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
+  },
+  userInfo: {
+    position: "relative",
+    bottom: "-20px",
+    margin: "-25px",
+    textAlign: "center",
+  },
+  modalBtn: { position: "relative", bottom: "-40px" },
 }));
 
 export default function TransitionsModalSearch(props) {
   const {
     title,
-    author,
+    authors,
     thumbnail,
     book_id,
     owner_id,
@@ -52,7 +71,12 @@ export default function TransitionsModalSearch(props) {
 
   return (
     <div>
-      <Button variant="outlined" size="medium" onClick={handleOpen}>
+      <Button
+        variant="outlined"
+        size="medium"
+        onClick={handleOpen}
+        className={classes.viewBtn}
+      >
         View
       </Button>
 
@@ -70,21 +94,27 @@ export default function TransitionsModalSearch(props) {
       >
         <Fade in={open}>
           <div className={classes.paper}>
-            <div className="modal-content">
+            <div className={classes.modalImage}>
               <img alt="book" src={thumbnail}></img>
-              <div className="modal-book-info">
-                <p>{title}</p>
-                <p>{author}</p>
-                <div className="user-info">
-                  <Link to={`/users/${owner_id}/books`}>
-                    {ownerInfo.username}
-                  </Link>
-                  <Link to={{ pathname: `/books/${book_id}`, book_location }}>
-                    <Button variant="outlined" size="medium" color="primary">
-                      View
-                    </Button>
-                  </Link>
-                </div>
+            </div>
+            <div className={classes.modalBookInfo}>
+              <p>{title}</p>
+              <p>{authors.split(",").join(", ")}</p>
+              <div className={classes.userInfo}>
+                <Link to={`/users/${owner_id}/books`}>
+                  {ownerInfo.username}
+                </Link>
+              </div>
+              <div>
+                <Link to={`/books/${book_id}`} className={classes.modalBtn}>
+                  <Button
+                    variant="outlined"
+                    size="medium"
+                    className={classes.viewBtn}
+                  >
+                    View Book
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>

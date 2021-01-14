@@ -12,6 +12,8 @@ const useStyles = makeStyles((theme) => ({
   root: {
     justifyContent: "space-between",
     flexGrow: 1,
+    width: "100vw",
+    maxWidth: "1200px",
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -19,6 +21,8 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
+  accountButton: { position: "absolute", right: "75px" },
+  helpButton: { position: "absolute", right: "20px" },
 }));
 
 export default function MenuAppBar() {
@@ -30,18 +34,11 @@ export default function MenuAppBar() {
         <Toolbar>
           <Link to="/" style={{ textDecoration: "none", color: "#FAF9F4" }}>
             <Typography variant="h6" className={classes.title}>
-              Treat Yo' Shelf
+              Treat Your Shelf
             </Typography>
           </Link>
           {/* <div style={{ "align-content": "absolute", "margin-right": "-10px" }}> */}
-          <div
-            id="account-button"
-            className="account-button"
-            style={{
-              margin: "-110px",
-              marginLeft: "auto",
-            }}
-          >
+          <div id="account-button" className={classes.accountButton}>
             <IconButton
               aria-label="account of current user"
               aria-controls="menu-appbar"
@@ -52,11 +49,7 @@ export default function MenuAppBar() {
               <AccountCircle />
             </IconButton>
           </div>
-          <div
-            id="help-button"
-            className="help-button"
-            style={{ marginLeft: "auto" }}
-          >
+          <div id="help-button" className={classes.helpButton}>
             <IconButton
               aria-label="help"
               aria-controls="menu-appbar"
