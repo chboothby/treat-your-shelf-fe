@@ -124,6 +124,7 @@ export default function TransitionsModalShelf(props) {
                   <Button
                     onClick={() => {
                       handleClick(book_id);
+                      handleClose();
                     }}
                     className={classes.removeBtn}
                   >
