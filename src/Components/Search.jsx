@@ -117,7 +117,7 @@ function Search() {
       setLoading(false);
     });
   };
-
+  console.log(books);
   return (
     <div className="books-container">
       <div className={classes.header}>

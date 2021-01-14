@@ -16,7 +16,8 @@ function BookDetails(props) {
   const [location, setLocation] = useState("");
   const [userDistance, setUserDistance] = useState({});
   const { book_id } = props.match.params;
-
+  const { book_location } = props.location;
+  console.log(props);
   useEffect(() => {
     getSingleBook(book_id).then(({ book }) => {
       setBook(book);
@@ -34,8 +35,8 @@ function BookDetails(props) {
               longitude: res.user.location.y,
             },
             {
-              latitude: user.location.x,
-              longitude: `-${user.location.y}`,
+              latitude: book_location.x,
+              longitude: book_location.y,
             },
           ]);
           const converted = Math.round(
