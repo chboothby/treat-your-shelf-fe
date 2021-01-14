@@ -6,7 +6,6 @@ import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import { Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import { useHistory } from "react-router-dom";
 import { deleteBookFromBookshelf } from "../api";
 import { useAuth } from "../Contexts/UserAuth";
 
@@ -31,7 +30,6 @@ export default function TransitionsModalShelf(props) {
   const [open, setOpen] = React.useState(false);
   const { refreshBookshelf } = props;
   const { currentUser } = useAuth();
-  const history = useHistory();
 
   const handleOpen = () => {
     setOpen(true);
@@ -49,11 +47,9 @@ export default function TransitionsModalShelf(props) {
 
   return (
     <div>
-      <Link>
-        <Button onClick={handleOpen} variant="outlined">
-          View
-        </Button>
-      </Link>
+      <Button onClick={handleOpen} variant="outlined">
+        View
+      </Button>
 
       <Modal
         aria-labelledby="transition-modal-title"
@@ -84,12 +80,6 @@ export default function TransitionsModalShelf(props) {
                 >
                   View Book
                 </Button>
-
-                {/* <Button
-                  style={{ border: "solid black 0.5px", marginTop: "2%" }}
-                >
-                  Hide Book
-                </Button> */}
                 {currentUser.uid === owner_id ? (
                   <Button
                     onClick={() => {

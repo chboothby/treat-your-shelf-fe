@@ -14,7 +14,6 @@ function BookDetails(props) {
   const [loading, setLoading] = useState(true);
   const [userInfo, setUserInfo] = useState({});
   const [location, setLocation] = useState("");
-  const [myLocation, setMyLocation] = useState({});
   const [userDistance, setUserDistance] = useState({});
   const { book_id } = props.match.params;
 
@@ -29,7 +28,6 @@ function BookDetails(props) {
           setLocation(city);
         });
         getUserInfo(currentUser.uid).then((res) => {
-          setMyLocation(res.user.location);
           const distance = geolib.getPathLength([
             {
               latitude: res.user.location.x,
@@ -49,7 +47,7 @@ function BookDetails(props) {
         });
       });
     });
-  }, []);
+  }, [book_id, currentUser.uid]);
 
   return (
     <div className="book-details">

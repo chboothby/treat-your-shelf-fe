@@ -39,7 +39,7 @@ export default function MenuAppBar() {
             className="account-button"
             style={{
               margin: "-110px",
-              "margin-left": "auto",
+              marginLeft: "auto",
             }}
           >
             <IconButton
@@ -55,7 +55,7 @@ export default function MenuAppBar() {
           <div
             id="help-button"
             className="help-button"
-            style={{ "margin-left": "auto" }}
+            style={{ marginLeft: "auto" }}
           >
             <IconButton
               aria-label="help"

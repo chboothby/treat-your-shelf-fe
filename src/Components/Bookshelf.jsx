@@ -63,7 +63,7 @@ function Bookshelf(props) {
           });
         });
     }
-  }, []);
+  }, [currentUser.uid, owner_id, props.match]);
 
   const refreshBookshelf = () => {
     getUserBookshelf(currentUser.uid).then(({ books }) => {
@@ -97,9 +97,9 @@ function Bookshelf(props) {
           {loading ? (
             <Loading />
           ) : (
-            books.books.map((book) => {
+            books.books.map((book, i) => {
               return (
-                <div id="book-list-card" className={classes.book}>
+                <div id="book-list-card" key={i} className={classes.book}>
                   <img alt="book" src={book.thumbnail}></img>
                   <div id="my-book-info" className="my-book-info">
                     <strong>{book.title}</strong>
