@@ -67,15 +67,13 @@ export default function TransitionsModalShelf(props) {
 
   return (
     <div>
-      <Link>
-        <Button
-          onClick={handleOpen}
-          variant="outlined"
-          className={classes.viewBtn}
-        >
-          View
-        </Button>
-      </Link>
+      <Button
+        onClick={handleOpen}
+        variant="outlined"
+        className={classes.viewBtn}
+      >
+        View
+      </Button>
 
       <Modal
         aria-labelledby="transition-modal-title"

@@ -124,6 +124,7 @@ function Search() {
                     <Link
                       to={`/books/${book.book_id}`}
                       className={classes.modalBtn}
+                      style={{ textDecoration: "none" }}
                     >
                       <Button
                         variant="outlined"
