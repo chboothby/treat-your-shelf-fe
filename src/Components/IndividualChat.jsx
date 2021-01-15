@@ -111,7 +111,7 @@ function ChatRoom({ info }) {
       .catch((err) => {
         console.log(err);
       });
-
+    console.log("setting form value");
     setFormValue("");
   };
 
