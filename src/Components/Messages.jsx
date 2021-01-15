@@ -16,13 +16,18 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: "100vw",
     maxWidth: "1200px",
-    minHeight: "100vh",
+    height: "82vh",
     textAlign: "center",
+    background: theme.palette.primary.contrastText,
   },
-  title: { color: theme.palette.primary.main, fontSize: "24px" },
+  title: {
+    color: theme.palette.primary.main,
+    background: theme.palette.primary.contrastText,
+    fontSize: "24px",
+  },
   header: {
     color: theme.palette.primary.dark,
-    background: theme.palette.secondary.main,
+    background: theme.palette.primary.contrastText,
     paddingTop: "0.75%",
     marginBottom: "-15px",
   },

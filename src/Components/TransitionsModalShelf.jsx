@@ -18,7 +18,8 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
+    padding: theme.spacing(1, 4, 2),
+    border: "1px solid #8c8c8c",
     textAlign: "center",
     minWidth: "275px",
   },
@@ -37,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: "0 10px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
   },
   removeBtn: {
-    background: "#d71212",
+    background: "#C21E1E",
     color: theme.palette.primary.contrastText,
     marginTop: "2%",
   },

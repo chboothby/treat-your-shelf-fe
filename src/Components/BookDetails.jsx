@@ -63,9 +63,18 @@ function BookDetails(props) {
         <>
           <div className="single-book-header">
             <img alt="book" src={bookInfo.thumbnail}></img>
-            <div className="single-book-info">
-              <h4>{bookInfo.title}</h4>
-              <p>{bookInfo.authors.split(",").join(", ")}</p>
+            <div className="single-book-container">
+              <div className="single-book-info">
+                <h4>{bookInfo.title}</h4>
+                <p>{bookInfo.authors.split(",").join(", ")}</p>
+              </div>
+              <div className="request-button">
+                {bookInfo.owner_id !== currentUser.uid ? (
+                  <TransitionsModalRequest book={bookInfo} />
+                ) : (
+                  <></>
+                )}
+              </div>
             </div>
           </div>
           <div className="single-book-description">
@@ -107,13 +116,6 @@ function BookDetails(props) {
           </div>
         </>
       )}
-      <div className="request-button">
-        {bookInfo.owner_id !== currentUser.uid ? (
-          <TransitionsModalRequest book={bookInfo} />
-        ) : (
-          <></>
-        )}
-      </div>
     </div>
   );
 }

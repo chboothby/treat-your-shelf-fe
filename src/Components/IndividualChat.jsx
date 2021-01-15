@@ -32,6 +32,20 @@ const useStyles = makeStyles((theme) => ({
     padding: "1%",
     boxShadow: "0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)",
   },
+  allMessages: {
+    background: theme.palette.primary.contrastText,
+    height: "80vh",
+    justifyContent: "center",
+    textAlign: "center",
+  },
+  username: { color: theme.palette.primary.main },
+  submit: {
+    margin: "1%",
+    background: theme.palette.primary.main,
+    color: "#ffffff",
+  },
+  displayName: { fontWeight: "bold", margin: "4px", padding: "0" },
+  message: { margin: "8px 4px 4px 4px", padding: "0" },
 }));
 
 function IndividualChat({ location }) {
@@ -127,14 +141,19 @@ function ChatRoom({ info }) {
   }, [getMessagesRef]);
 
   return (
-    <div className="messages">
+    <div className={classes.allMessages}>
       {loading ? (
         <Loading />
       ) : (
         <div className="message-content-container">
           <p>
             Chatting with:{" "}
-            <Link to={`/users/${otherUser.id}/books`}>{otherUser.name}</Link>
+            <Link
+              to={`/users/${otherUser.id}/books`}
+              className={classes.username}
+            >
+              {otherUser.name}
+            </Link>
           </p>
           {messages.map((message) => {
             return (
@@ -142,15 +161,17 @@ function ChatRoom({ info }) {
                 {message.uid === uid ? (
                   <div id="you" className="message-content">
                     <div>
-                      <p>You:</p>
-                      {message.message}
+                      <p className={classes.displayName}>You:</p>
+                      <p className={classes.message}>{message.message}</p>
                     </div>
                   </div>
                 ) : (
                   <div id="them" className="message-content">
                     <div>
-                      <p>{message.displayName}:</p>
-                      {message.message}
+                      <p className={classes.displayName}>
+                        {message.displayName}:
+                      </p>
+                      <p className={classes.message}>{message.message}</p>
                     </div>
                   </div>
                 )}
@@ -172,11 +193,7 @@ function ChatRoom({ info }) {
           id="message"
           label="Message"
         ></TextField>
-        <Button
-          type="submit"
-          // style={{ marginRight: "3%", background: "#18331D", color: "white" }}
-          variant="outlined"
-        >
+        <Button type="submit" className={classes.submit} variant="outlined">
           Send
         </Button>
       </form>
