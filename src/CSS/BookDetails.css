@@ -16,20 +16,31 @@
   width: 30%;
 }
 
+.single-book-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 60%;
+}
+
 .single-book-info {
   background: rgb(233, 233, 233);
   color: #18331d;
-  width: 40%;
-  margin-top: 10%;
+  width: 80%;
   height: fit-content;
   text-align: center;
   border-radius: 4px;
 }
 
+.request-button {
+  text-align: center;
+  margin-top: 10%;
+}
 .single-book-description {
   background: rgb(233, 233, 233);
   color: #18331d;
-  margin-top: 6%;
+  margin-top: 3%;
   padding: 2%;
   border-radius: 4px;
   max-height: 200px;
@@ -37,17 +48,17 @@
 }
 
 .owner-card {
-  padding: 2%;
+  padding: 1%;
   background: #6a8680;
   color: #faf9f4;
   border: solid rgb(179, 179, 179) 0.5px;
-  margin: 10% auto;
+  margin: 5% auto;
   width: fit-content;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   border-radius: 4px;
-  height: 200px;
+  height: 150px;
 }
 
 .owner-card img {
@@ -62,9 +73,5 @@
 }
 
 .owner-info {
-  text-align: center;
-}
-
-.request-button {
   text-align: center;
 }

@@ -5,7 +5,6 @@
   text-align: center;
 }
 .messages {
-  height: 90vh;
   justify-content: center;
   text-align: center;
 }
@@ -13,7 +12,7 @@
   margin: 2%;
   background: rgb(233, 233, 233);
   border-radius: 3px;
-  padding: 2%;
+  padding: 3%;
 }
 
 .message-content-container {
@@ -25,14 +24,11 @@
 #you {
   text-align: right;
   color: #18331d;
+  background: #ddddd8;
 }
 
 #them {
   text-align: left;
   background: #6a8680;
   color: #faf9f4;
-}
-
-.message-content p {
-  font-weight: bold;
 }

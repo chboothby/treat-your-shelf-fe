@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
+    border: "1px solid #8c8c8c",
     padding: theme.spacing(2, 2, 2),
     textAlign: "center",
     textTransform: "capitalize",

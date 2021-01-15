@@ -17,10 +17,22 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
-    border: "2px solid #000",
+    border: "1px solid #8c8c8c",
     boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
+    padding: theme.spacing(1, 4, 2),
     textAlign: "center",
+  },
+  confirm: {
+    background: theme.palette.primary.main,
+    color: theme.palette.primary.contrastText,
+  },
+  cancel: {
+    background: "#C21E1E",
+    color: theme.palette.primary.contrastText,
+    marginTop: "10px",
+  },
+  modalHeader: {
+    color: theme.palette.primary.dark,
   },
 }));
 
@@ -46,7 +58,11 @@ export default function TransitionsModalRequest({ book }) {
 
   return (
     <div>
-      <Button onClick={handleOpen} variant="outlined">
+      <Button
+        onClick={handleOpen}
+        variant="outlined"
+        style={{ background: "#C21E1E", color: "#f0efeb" }}
+      >
         Request Swap
       </Button>
       <Modal
@@ -64,32 +80,31 @@ export default function TransitionsModalRequest({ book }) {
         <Fade in={open}>
           <div className={classes.paper}>
             <div className="modal-content">
-              <img alt="book" src={thumbnail}></img>
-              <div className="modal-buttons">
-                <Button
-                  onClick={() => {
-                    handleClick();
-                  }}
-                  component={Link}
-                  to={{ pathname: "/message", book }}
-                  style={{ border: "solid black 0.5px" }}
-                >
-                  Confirm request
-                </Button>
-
-                <Button
-                  onClick={() => {
-                    handleClose();
-                  }}
-                  style={{ background: "red" }}
-                >
-                  Cancel
-                </Button>
+              <div className={classes.modalHeader}>
+                <h2 id="transition-modal-title">{title}</h2>
               </div>
             </div>
+            <img alt="book" src={thumbnail}></img>
+            <div className="modal-buttons">
+              <Button
+                onClick={() => {
+                  handleClick();
+                }}
+                component={Link}
+                to={{ pathname: "/message", book }}
+                className={classes.confirm}
+              >
+                Confirm request
+              </Button>
 
-            <div className="modal-footer">
-              <h2 id="transition-modal-title">{title}</h2>
+              <Button
+                onClick={() => {
+                  handleClose();
+                }}
+                className={classes.cancel}
+              >
+                Cancel
+              </Button>
             </div>
           </div>
         </Fade>

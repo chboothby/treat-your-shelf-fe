@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
   cancelBtn: {
     color: theme.palette.secondary.main,
-    background: "#d71212",
+    background: "#C21E1E",
     width: "45%",
     margin: "1%",
   },
@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     background: theme.palette.primary.light,
     margin: "3%",
-    paddingBottom: "4%",
+    paddingBottom: "2%",
     borderRadius: "4px",
     boxShadow: "0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)",
   },
@@ -43,12 +43,13 @@ const useStyles = makeStyles((theme) => ({
     background: theme.palette.primary.main,
     height: "30",
     margin: "3%",
-    padding: "",
     borderRadius: "6px",
     boxShadow: "0 10px 16px 0 rgba(0,0,0,0.2),0 6px 10px 0 rgba(0,0,0,0.2)",
     color: theme.palette.primary.contrastText,
     fontSize: "16px",
   },
+  pendingBtn: { width: "70%", margin: "0 auto" },
+  exchangeContainer: { margin: "3%" },
 }));
 
 function Exchanges() {
@@ -116,20 +117,26 @@ function YourRequests() {
         <div className={classes.requestContainer}>
           {exchanges.map((exchange, i) => {
             return (
-              <div className="exchange-container" key={i}>
+              <div className={classes.exchangeContainer} key={i}>
                 <div className={classes.bookDetails}>
-                  <h3>Owner: {exchange.owner_name}</h3>
+                  <p>Owner: {exchange.owner_name}</p>
                 </div>
-                <img alt="book-artwork" src={exchange.artwork}></img>
+                <img
+                  alt="book-artwork"
+                  src={exchange.artwork}
+                  style={{ margin: "2%" }}
+                ></img>
                 {exchange.book_received ? (
-                  <Button
-                    style={{ width: "40%", margin: "0 auto" }}
-                    variant="outlined"
-                    size="medium"
-                    disabled={exchange.book_received}
-                  >
-                    Pending...
-                  </Button>
+                  <div className="actions">
+                    <Button
+                      className={classes.pendingBtn}
+                      variant="outlined"
+                      size="medium"
+                      disabled={exchange.book_received}
+                    >
+                      Pending...
+                    </Button>
+                  </div>
                 ) : (
                   <div className="actions">
                     {" "}
@@ -218,19 +225,25 @@ function TheirRequests() {
         <div className={classes.requestContainer}>
           {exchanges.map((exchange, i) => {
             return (
-              <div className="exchange-container" key={i}>
+              <div className={classes.exchangeContainer} key={i}>
                 <div className={classes.bookDetails}>
                   <p>Requester: {exchange.requester_name}</p>
                 </div>
-                <img alt="book artwork" src={exchange.artwork}></img>
+                <img
+                  alt="book artwork"
+                  src={exchange.artwork}
+                  style={{ margin: "2%" }}
+                ></img>
                 {exchange.book_sent ? (
-                  <Button
-                    style={{ width: "40%", margin: "0 auto" }}
-                    variant="outlined"
-                    size="medium"
-                  >
-                    Pending...
-                  </Button>
+                  <div className="actions">
+                    <Button
+                      className={classes.pendingBtn}
+                      variant="outlined"
+                      size="medium"
+                    >
+                      Pending...
+                    </Button>
+                  </div>
                 ) : (
                   <div className="actions">
                     <Button

@@ -61,7 +61,7 @@ const Help = () => {
           <br />
           Please contact us at:
           <br />
-          <a href="mailto: thisemaildoesntactuallyexistlol@treatyoshelf.com">
+          <a href="mailto: thisemaildoesntactuallyexistlol@treatyourshelf.com">
             bugs@treatyourshelf.com
           </a>
           <br />

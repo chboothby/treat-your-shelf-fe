@@ -38,9 +38,14 @@ export const changeUsername = (user_id, username) => {
 };
 
 export const changeAvatar = (user_id, avatar_pic) => {
-  return treatApi.patch(`/users/${user_id}`, { avatar_pic }).catch((err) => {
-    console.log(err);
-  });
+  return treatApi
+    .patch(`/users/${user_id}`, { avatar_pic })
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 export const addBookToMyBookshelf = (book, user_id) => {
