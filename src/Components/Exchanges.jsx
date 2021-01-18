@@ -73,26 +73,32 @@ function YourRequests() {
   const classes = useStyles();
 
   useEffect(() => {
+    const newExchanges = [];
     getAllExchanges(uid)
-      .then((pending) => {
-        pending
-          .filter((exchange) => exchange.requester_id === uid)
-          .forEach((exchange) => {
+      .then((pendingRequests) => {
+        pendingRequests
+          .filter((pendingRequest) => pendingRequest.requester_id === uid)
+          .forEach((exchange, i, arr) => {
             const { book_id, owner_id } = exchange;
+
             const username = getUserName(owner_id);
             const book = getSingleBook(book_id);
-            return Promise.all([username, book]).then(([username, book]) => {
-              exchange.owner_name = username;
-              exchange.artwork = book.book.thumbnail;
-              const updatedExchanges = [...exchanges, exchange];
-              setExchanges(updatedExchanges);
-            });
+            return Promise.all([username, book, exchange]).then(
+              ([username, book, request]) => {
+                request.owner_name = username;
+                request.artwork = book.book.thumbnail;
+                newExchanges.push(request);
+                if (newExchanges.length === arr.length) {
+                  setExchanges(newExchanges);
+                }
+              }
+            );
           });
       })
       .then(() => {
         setLoading(false);
       });
-  }, []);
+  }, [uid]);
 
   const handleReceived = (exchange_id, i) => {
     const newExchanges = [...exchanges];
@@ -118,7 +124,7 @@ function YourRequests() {
         <h3 className={classes.subTitle}>Your requested books</h3>
         <div className={classes.requestContainer}>
           {exchanges
-            .filter((exchange) => exchange.artwork)
+            .filter((request) => request.artwork)
             .map((exchange, i) => {
               return (
                 <div className={classes.exchangeContainer} key={i}>
@@ -183,28 +189,31 @@ function TheirRequests() {
   const classes = useStyles();
 
   useEffect(() => {
+    const newExchanges = [];
     getAllExchanges(uid)
-      .then((pending) => {
-        pending
-          .filter((exchange) => exchange.requester_id !== uid)
-          .forEach((exchange) => {
+      .then((pendingRequests) => {
+        pendingRequests
+          .filter((pendingRequest) => pendingRequest.requester_id !== uid)
+          .forEach((exchange, i, arr) => {
             const { book_id, requester_id } = exchange;
             const username = getUserName(requester_id);
             const book = getSingleBook(book_id);
-            return Promise.all([username, book]).then(([username, book]) => {
-              console.log(username);
-              exchange.requester_name = username;
-              exchange.artwork = book.book.thumbnail;
-              const newExchanges = [...exchanges, exchange];
-              setExchanges(newExchanges);
-              console.log(exchanges);
-            });
+            return Promise.all([username, book, exchange]).then(
+              ([username, book, request]) => {
+                request.requester_name = username;
+                request.artwork = book.book.thumbnail;
+                newExchanges.push(request);
+                if (newExchanges.length === arr.length) {
+                  setExchanges(newExchanges);
+                }
+              }
+            );
           });
       })
       .then(() => {
         setLoading(false);
       });
-  }, []);
+  }, [uid]);
 
   const handleSend = (book_id, i) => {
     const newExchanges = [...exchanges];
@@ -232,7 +241,7 @@ function TheirRequests() {
         </h3>
         <div className={classes.requestContainer}>
           {exchanges
-            .filter((exchange) => exchange.artwork)
+            .filter((request) => request.artwork)
             .map((exchange, i) => {
               return (
                 <div className={classes.exchangeContainer} key={i}>
