@@ -115,56 +115,58 @@ function YourRequests() {
       <div className={classes.container}>
         <h3 className={classes.subTitle}>Your requested books</h3>
         <div className={classes.requestContainer}>
-          {exchanges.map((exchange, i) => {
-            return (
-              <div className={classes.exchangeContainer} key={i}>
-                <div className={classes.bookDetails}>
-                  <p>Owner: {exchange.owner_name}</p>
+          {exchanges
+            .filter((exchange) => exchange.artwork)
+            .map((exchange, i) => {
+              return (
+                <div className={classes.exchangeContainer} key={i}>
+                  <div className={classes.bookDetails}>
+                    <p>Owner: {exchange.owner_name}</p>
+                  </div>
+                  <img
+                    alt="book-artwork"
+                    src={exchange.artwork}
+                    style={{ margin: "2%" }}
+                  ></img>
+                  {exchange.book_received ? (
+                    <div className="actions">
+                      <Button
+                        className={classes.pendingBtn}
+                        variant="outlined"
+                        size="medium"
+                        disabled={exchange.book_received}
+                      >
+                        Pending...
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="actions">
+                      {" "}
+                      <Button
+                        onClick={() => {
+                          handleReceived(exchange.exchange_id, i);
+                        }}
+                        className={classes.recBtn}
+                        variant="outlined"
+                        size="medium"
+                      >
+                        Received
+                      </Button>
+                      <Button
+                        onClick={() => {
+                          handleCancel(exchange.exchange_id, i);
+                        }}
+                        className={classes.cancelBtn}
+                        variant="outlined"
+                        size="medium"
+                      >
+                        Cancel
+                      </Button>
+                    </div>
+                  )}
                 </div>
-                <img
-                  alt="book-artwork"
-                  src={exchange.artwork}
-                  style={{ margin: "2%" }}
-                ></img>
-                {exchange.book_received ? (
-                  <div className="actions">
-                    <Button
-                      className={classes.pendingBtn}
-                      variant="outlined"
-                      size="medium"
-                      disabled={exchange.book_received}
-                    >
-                      Pending...
-                    </Button>
-                  </div>
-                ) : (
-                  <div className="actions">
-                    {" "}
-                    <Button
-                      onClick={() => {
-                        handleReceived(exchange.exchange_id, i);
-                      }}
-                      className={classes.recBtn}
-                      variant="outlined"
-                      size="medium"
-                    >
-                      Received
-                    </Button>
-                    <Button
-                      onClick={() => {
-                        handleCancel(exchange.exchange_id, i);
-                      }}
-                      className={classes.cancelBtn}
-                      variant="outlined"
-                      size="medium"
-                    >
-                      Cancel
-                    </Button>
-                  </div>
-                )}
-              </div>
-            );
-          })}
+              );
+            })}
         </div>
       </div>
     );
@@ -223,54 +225,56 @@ function TheirRequests() {
           Books others have requested from you
         </h3>
         <div className={classes.requestContainer}>
-          {exchanges.map((exchange, i) => {
-            return (
-              <div className={classes.exchangeContainer} key={i}>
-                <div className={classes.bookDetails}>
-                  <p>Requester: {exchange.requester_name}</p>
+          {exchanges
+            .filter((exchange) => exchange.artwork)
+            .map((exchange, i) => {
+              return (
+                <div className={classes.exchangeContainer} key={i}>
+                  <div className={classes.bookDetails}>
+                    <p>Requester: {exchange.requester_name}</p>
+                  </div>
+                  <img
+                    alt="book artwork"
+                    src={exchange.artwork}
+                    style={{ margin: "2%" }}
+                  ></img>
+                  {exchange.book_sent ? (
+                    <div className="actions">
+                      <Button
+                        className={classes.pendingBtn}
+                        variant="outlined"
+                        size="medium"
+                      >
+                        Pending...
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="actions">
+                      <Button
+                        onClick={() => {
+                          handleSend(exchange.exchange_id, i);
+                        }}
+                        className={classes.recBtn}
+                        variant="outlined"
+                        size="medium"
+                      >
+                        Sent
+                      </Button>
+                      <Button
+                        onClick={() => {
+                          handleDecline(exchange.exchange_id, i);
+                        }}
+                        className={classes.cancelBtn}
+                        variant="outlined"
+                        size="medium"
+                      >
+                        Decline
+                      </Button>
+                    </div>
+                  )}
                 </div>
-                <img
-                  alt="book artwork"
-                  src={exchange.artwork}
-                  style={{ margin: "2%" }}
-                ></img>
-                {exchange.book_sent ? (
-                  <div className="actions">
-                    <Button
-                      className={classes.pendingBtn}
-                      variant="outlined"
-                      size="medium"
-                    >
-                      Pending...
-                    </Button>
-                  </div>
-                ) : (
-                  <div className="actions">
-                    <Button
-                      onClick={() => {
-                        handleSend(exchange.exchange_id, i);
-                      }}
-                      className={classes.recBtn}
-                      variant="outlined"
-                      size="medium"
-                    >
-                      Sent
-                    </Button>
-                    <Button
-                      onClick={() => {
-                        handleDecline(exchange.exchange_id, i);
-                      }}
-                      className={classes.cancelBtn}
-                      variant="outlined"
-                      size="medium"
-                    >
-                      Decline
-                    </Button>
-                  </div>
-                )}
-              </div>
-            );
-          })}
+              );
+            })}
         </div>
       </div>
     );

@@ -99,7 +99,7 @@ function ChatRoom({ info }) {
         setOtherUser(user);
       });
     }
-  }, [info.book, info.chat]);
+  }, []);
 
   const getMessagesRef = firestore
     .collection("chats")
@@ -125,7 +125,7 @@ function ChatRoom({ info }) {
       .catch((err) => {
         console.log(err);
       });
-    console.log("setting form value");
+
     setFormValue("");
   };
 
@@ -138,7 +138,7 @@ function ChatRoom({ info }) {
       setLoading(false);
       setMessages(items);
     });
-  }, [getMessagesRef]);
+  }, []);
 
   return (
     <div className={classes.allMessages}>

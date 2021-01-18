@@ -102,7 +102,7 @@ function Chats() {
           });
       });
     });
-  }, [uid]);
+  }, []);
 
   return (
     <div className={classes.root}>
