@@ -74,8 +74,8 @@ function YourRequests() {
 
   useEffect(() => {
     getAllExchanges(uid)
-      .then((exchanges) => {
-        exchanges
+      .then((pending) => {
+        pending
           .filter((exchange) => exchange.requester_id === uid)
           .forEach((exchange) => {
             const { book_id, owner_id } = exchange;
@@ -85,18 +85,20 @@ function YourRequests() {
               exchange.owner_name = username;
               exchange.artwork = book.book.thumbnail;
               const updatedExchanges = [...exchanges, exchange];
-              setExchanges([...new Set(updatedExchanges)]);
+              setExchanges(updatedExchanges);
             });
           });
       })
       .then(() => {
         setLoading(false);
       });
-  }, [uid]);
+  }, []);
 
   const handleReceived = (exchange_id, i) => {
     const newExchanges = [...exchanges];
-    newExchanges[i].book_received = true;
+    if (newExchanges.book_sent) {
+      newExchanges.splice(i, 1);
+    } else newExchanges[i].book_received = true;
     setExchanges(newExchanges);
     receiveBook(exchange_id, uid);
   };
@@ -182,29 +184,33 @@ function TheirRequests() {
 
   useEffect(() => {
     getAllExchanges(uid)
-      .then((exchanges) => {
-        exchanges
+      .then((pending) => {
+        pending
           .filter((exchange) => exchange.requester_id !== uid)
           .forEach((exchange) => {
             const { book_id, requester_id } = exchange;
             const username = getUserName(requester_id);
             const book = getSingleBook(book_id);
             return Promise.all([username, book]).then(([username, book]) => {
+              console.log(username);
               exchange.requester_name = username;
               exchange.artwork = book.book.thumbnail;
               const newExchanges = [...exchanges, exchange];
-              setExchanges([...new Set(newExchanges)]);
+              setExchanges(newExchanges);
+              console.log(exchanges);
             });
           });
       })
       .then(() => {
         setLoading(false);
       });
-  }, [uid]);
+  }, []);
 
   const handleSend = (book_id, i) => {
     const newExchanges = [...exchanges];
-    newExchanges[i].book_sent = true;
+    if (newExchanges.book_received) {
+      newExchanges.splice(i, 1);
+    } else newExchanges[i].book_sent = true;
     setExchanges(newExchanges);
     sendBook(book_id, uid);
   };
