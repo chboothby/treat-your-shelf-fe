@@ -27,7 +27,6 @@ function BookDetails(props) {
   useEffect(() => {
     getSingleBook(book_id).then(({ book }) => {
       setBook(book);
-      console.log("here");
       getUserInfo(book.owner_id).then(({ user }) => {
         const userLocation = user.location;
 
@@ -35,17 +34,11 @@ function BookDetails(props) {
         const { x, y } = user.location;
 
         Geocode.fromLatLng(x, y).then((res) => {
-          console.log(x, y);
-          console.log(res);
           const city = res.results[0].address_components[2].long_name;
-          console.log(city);
           setLocation(city);
-          console.log(city);
         });
-        console.log(userLocation);
 
         getUserInfo(currentUser.uid).then((res) => {
-          console.log(res.user.location);
           const distance = geolib.getDistance(
             {
               latitude: res.user.location.x,
@@ -56,17 +49,13 @@ function BookDetails(props) {
               longitude: userLocation.y,
             }
           );
-
-          console.log(geolib.convertDistance(distance, "mi"));
           const converted = Math.round(geolib.convertDistance(distance, "mi"));
-          console.log(converted);
           setUserDistance(converted);
           setLoading(false);
         });
       });
     });
   }, [book_id, currentUser.uid]);
-  console.log(userInfo.avatar_pic);
   return (
     <div className="book-details">
       {loading ? (

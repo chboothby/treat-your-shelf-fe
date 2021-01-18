@@ -111,7 +111,7 @@ export default function SignUp() {
             <Grid item xs={12}>
               {error && <Alert severity="error">{error}</Alert>}
             </Grid>
-            <Grid item xs={12} lg={1}>
+            <Grid item xs={12}>
               <TextField
                 autoComplete="username"
                 name="username"
