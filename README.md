@@ -12,4 +12,4 @@ JavaScript | React | React-Router-DOM | React Webcam Barcode Scanner | Firebase 
 
 ---
 
-Link to our Back-End repo [here.](https://github.com/chboothby/treat-yo-shelf-BE)
+Link to our Back-End repo [here.](https://github.com/chboothby/treat-yo-shelf-be)
