@@ -11,5 +11,5 @@ Tech Used:
 JavaScript | React | React-Router-DOM | React Webcam Barcode Scanner | Firebase Hosting | Firebase Authentication | Firebase Cloud Firestore | Google Books API | Geocode | Geolib | Material-UI | PostgreSQL | Heroku | Knex | Express | Axios | Jest
 
 ---
-
+Check out the hosted App [here](https://treat-your-shelf-4f7d0.web.app/login)
 Link to our Back-End repo [here.](https://github.com/chboothby/treat-yo-shelf-be)
