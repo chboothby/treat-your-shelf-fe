@@ -22,4 +22,4 @@ Check out the hosted App [here](https://treat-your-shelf-4f7d0.web.app/login)
 
 ---
 
-Link to our Back-End repo [here.](https://github.com/chboothby/treat-yo-shelf-be)
+Link to our Back-End repo [here.](https://github.com/chboothby/treat-your-shelf-be)
